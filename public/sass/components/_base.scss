@@ -1,3 +1,15 @@
 body {
-  background-color: red;
+  padding-top: 50px;
+  padding-bottom: 30px;
+}
+.row {
+  .col-md-10 {
+    border: 1px solid;
+    border-radius: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    img {
+      border-radius: 15px;
+    }
+  }
 }
