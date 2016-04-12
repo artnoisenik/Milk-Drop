@@ -1,30 +1,56 @@
-<div class="row">
-  <div class="col-md-12">
-    <img class="placeholder" src="http://placehold.it/1x1" alt="placeholder" />
+<div class="row secondary_nav">
+  <div class="col-md-offset-1 col-md-2">
+    <form action="/location" method="post">
+      <div class="form-group">
+        <input type="text" class="form-control" name="" placeholder="Enter a location...">
+      </div>
+    </form>
+  </div>
+  <div class="col-md-offset-6 col-md-2 text-right">
+    <form action="/newposting" method="post">
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a Listing</button>
+      </div>
+    </form>
   </div>
 </div>
 
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<div class="row map">
+  <div class="col-md-12">
+    <img src="http://placehold.it/1x1" alt="placeholder" />
+  </div>
+</div>
 
-<div class="row">
-  <div class="col-md-offset-1 col-md-10">
-    <div class="row">
-      <div class="col-md-2 text-center">
-        <img src="http://placehold.it/100x100" alt="placeholder" />
-        <p><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-        </p>
-      </div>
-      <div class="col-md-8">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-          irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </div>
-      <div class="col-md-2">
-        <p>Amount: 20oz</p>
-        <p>Cost: $2.50</p>
-        <p>Date: 4/20/2016</p>
-        <button type="button" name="button" class="btn-primary">Request</button>
+{{#each listings}}
+  <div class="row listing">
+    <div class="col-md-offset-1 col-md-10">
+      <div class="row">
+        <div class="col-md-2 text-center">
+          <img src="{{portrait_link}}" alt="{{title}}" />
+          <p>
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+          </p>
+        </div>
+        <div class="col-md-7">
+          <span class="glyphicon glyphicon-star verified {{verified}}" aria-hidden="true"></span>
+          <p>{{description}}</p>
+        </div>
+        <div class="col-md-3">
+          <p>City: {{city}}</p>
+          <p>Amount: {{amount}}oz</p>
+          <p>Cost: ${{cost_per_ounce}}</p>
+          <p>Date: {{created_at}}</p>
+          <form action="/request" method="post">
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Request {{requested}}</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
+{{/each}}
