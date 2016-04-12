@@ -5,13 +5,11 @@ body {
   padding-top: 15px; }
 
 .map {
-  margin-bottom: 15px;
-  background: transparent url(http://downgraf.com/wp-content/uploads/2014/09/01-progress.gif) no-repeat center center;
-  height: 300px; }
-  .map img {
-    width: 100%;
-    height: 300px;
-    }
+  margin-bottom: 15px; }
+  .map #map {
+    background: transparent url("http://downgraf.com/wp-content/uploads/2014/09/01-progress.gif") no-repeat center center;
+    background-size: 150px;
+    height: 300px; }
 
 .profile {
   margin-bottom: 15px;
