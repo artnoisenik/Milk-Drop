@@ -1,3 +1,6 @@
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.16.0/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.16.0/mapbox-gl.css' rel='stylesheet' />
+
 <div class="row secondary_nav">
   <div class="col-md-offset-1 col-md-2">
     <form action="/location" method="post">
@@ -15,10 +18,8 @@
   </div>
 </div>
 
-<div class="row map">
-  <div class="col-md-12">
-    <img src="http://placehold.it/1x1" alt="placeholder" />
-  </div>
+<div class="row">
+  <div id="map" class="map col-md-12"></div>
 </div>
 
 {{#each listings}}
@@ -50,3 +51,89 @@
     </div>
   </div>
 {{/each}}
+
+<script>
+    var latitude;
+    var longitude;
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success);
+    } else {
+        console.log("Geolocation is not supported by this browser.");
+    }
+
+    function success(pos) {
+        var crd = pos.coords;
+        console.log('Latitude : ' + crd.latitude);
+        console.log('Longitude: ' + crd.longitude);
+        console.log('More or less ' + crd.accuracy + ' meters.');
+
+      //L.mapbox.accessToken = 'pk.eyJ1IjoiY2hlaW5yaWNocyIsImEiOiJjaW13bGQ3dW0wMzcxdW5tNDY4enhjNXp0In0.Yp48WNc-1xlHBLX9PcA5oQ';
+      // var map = L.mapbox.map('map', 'mapbox.streets')
+          // .setView([38.91338, -77.03236], 16);
+
+      mapboxgl.accessToken = 'pk.eyJ1IjoiY2hlaW5yaWNocyIsImEiOiJjaW13bGQ3dW0wMzcxdW5tNDY4enhjNXp0In0.Yp48WNc-1xlHBLX9PcA5oQ';
+
+      var map = new mapboxgl.Map({
+        container: 'map',
+        center: [crd.longitude, crd.latitude],
+        zoom: 10,
+        // style: 'mapbox://styles/cheinrichs/cimwlkrp60118b8m7dziwqzik',
+        style: 'mapbox://styles/mapbox/streets-v8'
+      });
+
+      map.on('style.load', function (){
+
+        map.addSource("markers", {
+          "type": "geojson",
+          "data": {
+              "type": "FeatureCollection",
+              "features": [{
+                  "type": "Feature",
+                  "geometry": {
+                      "type": "Point",
+                      "coordinates": [crd.longitude, crd.latitude]
+                  },
+              }, {
+                  "type": "Feature",
+                  "geometry": {
+                      "type": "Point",
+                      "coordinates": [-122.414, 37.776]
+                  },
+              }]
+          }
+        });
+
+        map.addLayer({
+          "id": "markers",
+          "type": "symbol",
+          "source": "markers",
+          "layout": {
+              "icon-image": "harbor-15",
+          }
+        });
+
+      });
+
+      var big = true;
+      $('#mapSizeChange').on('click', function(){
+        if(big){
+          $( '#map' ).animate({
+            width: "+=300",
+            height: "+=100"
+          }, 1000, function() {
+            map.resize();
+            big = false;
+          });
+        } else {
+          $( '#map' ).animate({
+            width: "-=300",
+            height: "-=100"
+          }, 1000, function() {
+            map.resize();
+            big = true;
+          });
+        }
+      });
+    }
+    </script>
