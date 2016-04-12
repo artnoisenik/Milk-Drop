@@ -27,6 +27,9 @@ body {
       max-width: 100%; }
     .listing .col-md-10 .verified {
       font-size: 30px; }
+    .listing .col-md-10 h3 {
+      margin-left: 15px;
+      display: inline-block; }
     .listing .col-md-10 .true {
       color: yellow; }
 
