@@ -25,6 +25,8 @@ body {
     .listing .col-md-10 img {
       border-radius: 15px;
       max-width: 100%; }
+    .listing .col-md-10 .glyphicon-star {
+      color: yellow; }
     .listing .col-md-10 .verified {
       font-size: 30px; }
     .listing .col-md-10 h3 {

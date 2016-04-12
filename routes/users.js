@@ -8,9 +8,9 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.get('/post', function(req, res, next) {
+router.get('/posting', function(req, res, next) {
   res.render('newposting', {
-    title: 'MilConnect'
+    title: 'Milk Exchange - Add Posting'
   });
 })
 
