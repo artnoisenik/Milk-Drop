@@ -14,6 +14,8 @@ body {
 .profile {
   margin-bottom: 15px;
   margin-top: 15px; }
+  .profile img {
+    max-width: 100%; }
 
 .listing {
   margin-bottom: 15px; }
@@ -25,8 +27,11 @@ body {
     .listing .col-md-10 img {
       border-radius: 15px;
       max-width: 100%; }
-    .listing .col-md-10 .glyphicon-star {
-      color: yellow; }
+    .listing .col-md-10 .ratings .glyphicon {
+      font-size: 22px;
+      margin-top: 15px; }
+    .listing .col-md-10 .ratings .glyphicon-star {
+      color: #41a1f4; }
     .listing .col-md-10 .verified {
       font-size: 30px; }
     .listing .col-md-10 h3 {

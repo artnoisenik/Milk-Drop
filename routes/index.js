@@ -10,8 +10,6 @@ router.get('/', function(req, res, next) {
     .join('ratings', 'reciever_id', 'listings.user_id')
     .join('users', 'users.id', 'listings.user_id')
     .then(function(listings) {
-      res.clearCookie('id');
-      res.cookie('id', Math.floor(Math.random() * (4)) + 1, { signed: true } );
       res.render('index', {
         title: 'Milk Exchange',
         id: req.signedCookies.id,
@@ -23,6 +21,12 @@ router.get('/', function(req, res, next) {
 
 router.get('/signup', function(req, res, next) {
   res.render('signup', { title: 'MilConnect' });
+});
+
+router.post('/login', function(req, res, next) {
+  res.clearCookie('id');
+  res.cookie('id', Math.floor(Math.random() * (4)) + 1, { signed: true } );
+  res.redirect('/');
 });
 
 module.exports = router;

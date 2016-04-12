@@ -15,6 +15,9 @@ body {
 .profile {
   margin-bottom: 15px;
   margin-top: 15px;
+  img {
+    max-width: 100%;
+  }
 }
 .listing {
   margin-bottom: 15px;
@@ -27,8 +30,14 @@ body {
       border-radius: 15px;
       max-width: 100%;
     }
-    .glyphicon-star {
-      color: yellow;
+    .ratings {
+      .glyphicon {
+        font-size: 22px;
+        margin-top: 15px;
+      }
+      .glyphicon-star {
+        color: #41a1f4;
+      }
     }
     .verified {
       font-size: 30px;
