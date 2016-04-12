@@ -6,8 +6,9 @@ body {
 
 .map {
   margin-bottom: 15px; }
-  .map img {
-    width: 100%;
+  .map #map {
+    background: transparent url("http://downgraf.com/wp-content/uploads/2014/09/01-progress.gif") no-repeat center center;
+    background-size: 150px;
     height: 300px; }
 
 .profile {
@@ -26,6 +27,9 @@ body {
       max-width: 100%; }
     .listing .col-md-10 .verified {
       font-size: 30px; }
+    .listing .col-md-10 h3 {
+      margin-left: 15px;
+      display: inline-block; }
     .listing .col-md-10 .true {
       color: yellow; }
 
@@ -95,3 +99,6 @@ body {
 .starRating:not(old) > label:hover ~ label:before,
 .starRating:not(:hover) > :checked ~ label:before {
   opacity: 1; }
+
+.listings .glyphicon {
+  color: #41a1f4; }

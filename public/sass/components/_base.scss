@@ -6,8 +6,9 @@ body {
 }
 .map {
   margin-bottom: 15px;
-  img {
-    width: 100%;
+  #map {
+    background: transparent url("http://downgraf.com/wp-content/uploads/2014/09/01-progress.gif") no-repeat center center;
+    background-size: 150px;
     height: 300px;
   }
 }
@@ -28,6 +29,10 @@ body {
     }
     .verified {
       font-size: 30px;
+    }
+    h3 {
+      margin-left: 15px;
+      display: inline-block;
     }
     .true {
       color: yellow;
@@ -106,6 +111,9 @@ body {
 .starRating:not(:hover) > :checked ~ label:before{
   opacity : 1;
 }
-// path {
-//   fill: blue;
-// }
+
+.listings {
+  .glyphicon {
+    color: #41a1f4;
+  }
+}
