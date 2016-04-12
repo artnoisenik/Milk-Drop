@@ -31,3 +31,6 @@ body {
   color: white;
   background-color: #2d2d2d;
   height: 400px; }
+
+.custom {
+  width: 100px !important; }
