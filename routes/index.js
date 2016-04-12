@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
     .join('users', 'users.id', 'listings.user_id')
     .then(function(listings) {
       res.render('index', {
-        title: 'Unlatched',
+        title: 'MilKonnect',
         listings: listings
       });
       console.log(listings);
@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/signup', function(req, res, next) {
-  res.render('signup', { title: 'Lact2Go' });
+  res.render('signup', { title: 'MilKonnect' });
 });
 
 module.exports = router;

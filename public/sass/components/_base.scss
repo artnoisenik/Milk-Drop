@@ -31,6 +31,7 @@ body {
   }
 }
 #footer {
+  margin-top: 100px;
   padding: 50px;
   text-align: center;
   color: white;
@@ -38,5 +39,27 @@ body {
   height: 400px;
 }
 .custom {
-  width: 100px !important;
+  width: 230px;
+}
+.space {
+  height: 150px;
+  width: 100%;
+}
+.loginBox {
+  border-left: 2px solid black;
+}
+.signupButton {
+  margin-left: 29%;
+}
+.rememberMe {
+  font-size: 18px;
+}
+.text {
+  text-align: center;
+}
+.face {
+  width: 80%;
+}
+.facebookLoginButton {
+  padding-left: 10%;
 }
