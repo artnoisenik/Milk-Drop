@@ -19,9 +19,9 @@ router.post('/request', function(req, res, next){
   res.redirect('/signup');
 });
 
-router.get('/post', function(req, res, next) {
+router.get('/posting', function(req, res, next) {
   res.render('newposting', {
-    title: 'MilConnect'
+    title: 'Milk Exchange - Add Posting'
   });
 })
 

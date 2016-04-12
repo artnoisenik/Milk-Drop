@@ -84,6 +84,11 @@ exports.seed = function(knex, Promise) {
           reciever_id: 3,
           giver_id: 1,
           rating: 4
+        }),
+        knex('ratings').insert({
+          reciever_id: 4,
+          giver_id: 3,
+          rating: 2
         })
       );
     })
