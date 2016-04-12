@@ -1,0 +1,42 @@
+<h1>{{title}}</h1>
+<p>Welcome to {{title}}</p>
+
+<div class="row">
+  <div class="col-md-offset-1 col-md-10">
+    <div class="row">
+      <form class="" action="/users/post/edit/{{post.id}}" method="post">
+        <div class="col-md-4">
+          <label for="title">Title
+        <br />
+            <input type="text" name="title" value="{{post.title}}">
+          </label>
+
+          <label for="post_end">End of date
+        <br />
+            <input type="text" name="post_end" value="{{post.post_end}}">
+          </label>
+
+          <label for="amount">Amount of milk (in ounces)
+        <br />
+            <input type="number" name="amount" value="{{post.amount}}">
+          </label>
+
+          <label for="cost_per_ounce">Cost per ounce
+        <br />
+            <input type="number" name="cost_per_ounce" value="{{post.cost_per_ounce}}">
+          </label>
+
+      <br />
+      <br />
+      </div>
+
+      <div class="col-md-8">
+      <textarea name="description" rows="10" cols="80">{{post.description}}</textarea>
+      <br />
+      <button type="submit" name="button" class="btn-primary">Submit Post</button>
+      </div>
+    </form>
+
+    </div>
+  </div>
+</div>
