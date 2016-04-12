@@ -10,16 +10,17 @@ router.get('/', function(req, res, next) {
     .join('users', 'users.id', 'listings.user_id')
     .then(function(listings) {
       res.clearCookie('id');
-      res.cookie('id', Math.floor(Math.random() * (4)) + 1);
+      res.cookie('id', Math.floor(Math.random() * (4)) + 1, { signed: true } );
       res.render('index', {
-        title: 'MilKonnect',
+        title: 'MilConnect',
+        id: req.signedCookies.id,
         listings: listings
       });
     });
 });
 
 router.get('/signup', function(req, res, next) {
-  res.render('signup', { title: 'MilKonnect' });
+  res.render('signup', { title: 'MilConnect' });
 });
 
 module.exports = router;
