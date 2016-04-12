@@ -10,7 +10,6 @@ var Strategy = require('passport-facebook').Strategy;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-// var auth = require('./routes/auth');
 
 var app = express();
 
@@ -30,7 +29,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('morgan')('combined'));
-// app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -75,7 +73,6 @@ passport.use(new Strategy({
 
 app.use('/', routes);
 app.use('/users', users);
-// app.use('/auth', auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
