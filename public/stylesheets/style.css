@@ -25,6 +25,8 @@ body {
     .listing .col-md-10 img {
       border-radius: 15px;
       max-width: 100%; }
+    .listing .col-md-10 .glyphicon-star {
+      color: yellow; }
     .listing .col-md-10 .verified {
       font-size: 30px; }
     .listing .col-md-10 h3 {
@@ -32,16 +34,6 @@ body {
       display: inline-block; }
     .listing .col-md-10 .true {
       color: yellow; }
-  .listing .a1 {
-    display: none; }
-  .listing .a2 {
-    display: none; }
-  .listing .a3 {
-    display: none; }
-  .listing .a4 {
-    display: none; }
-  .listing .a5 {
-    display: none; }
 
 #footer {
   margin-top: 100px;
