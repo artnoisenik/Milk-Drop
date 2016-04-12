@@ -12,8 +12,8 @@ router.get('/', function(req, res, next) {
     .then(function(listings) {
       res.render('index', {
         title: 'Milk Exchange',
-        id: req.signedCookies.id,
-        listings: listings
+        listings: listings,
+        user: req.user
       });
       console.log(listings);
     });
