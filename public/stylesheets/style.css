@@ -1,40 +1,36 @@
 body {
-  padding-top: 50px;
-  padding-bottom: 30px; }
+  padding-top: 50px; }
 
-.row img.placeholder {
-  width: 100%;
-  height: 300px; }
+.secondary_nav {
+  padding-top: 15px; }
 
-.row .col-md-10 {
-  border: 1px solid;
-  border-radius: 15px;
-  padding-top: 15px;
-  padding-bottom: 15px; }
-  .row .col-md-10 img {
-    border-radius: 15px; }
+.map {
+  margin-bottom: 15px; }
+  .map img {
+    width: 100%;
+    height: 300px; }
+
+.listing {
+  margin-bottom: 15px; }
+  .listing .col-md-10 {
+    border: 1px solid;
+    border-radius: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px; }
+    .listing .col-md-10 img {
+      border-radius: 15px;
+      max-width: 100%; }
+    .listing .col-md-10 .verified {
+      font-size: 30px; }
+    .listing .col-md-10 .true {
+      color: yellow; }
+
+#footer {
+  padding: 50px;
+  text-align: center;
+  color: white;
+  background-color: #2d2d2d;
+  height: 400px; }
 
 .custom {
-  width: 230px; }
-
-.space {
-  height: 150px;
-  width: 100%; }
-
-.loginBox {
-  border-left: 2px solid black; }
-
-.signupButton {
-  margin-left: 29%; }
-
-.rememberMe {
-  font-size: 18px; }
-
-.text {
-  text-align: center; }
-
-.face {
-  width: 80%;}
-
-.facebookLoginButton {
-  padding-left: 10%; }
+  width: 100px !important; }

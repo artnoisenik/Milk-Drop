@@ -5,7 +5,16 @@ var queries = require('../lib');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Lact2Go' });
+  knex('listings')
+    .select('created_at', 'title', 'amount', 'cost_per_ounce', 'description', 'requested', 'portrait_link', 'city', 'verified')
+    .join('users', 'users.id', 'listings.user_id')
+    .then(function(listings) {
+      res.render('index', {
+        title: 'Unlatched',
+        listings: listings
+      });
+      console.log(listings);
+    });
 });
 
 router.get('/signup', function(req, res, next) {

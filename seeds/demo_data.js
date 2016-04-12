@@ -101,7 +101,7 @@ exports.seed = function(knex, Promise) {
         }),
         knex('listings').insert({
           user_id: 3,
-          post_end: '4/20/2016',
+          post_end: '4/20z/2016',
           title: 'Want my milk?',
           amount: 7,
           cost_per_ounce: 3,
