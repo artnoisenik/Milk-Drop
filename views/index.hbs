@@ -59,88 +59,52 @@
   </div>
 {{/each}}
 
+<script src='https://api.tiles.mapbox.com/mapbox.js/v2.2.4/mapbox.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox.js/v2.2.4/mapbox.css' rel='stylesheet' />
+
 <script>
-    var latitude;
-    var longitude;
+  if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success);
+  } else {
+      console.log("Geolocation is not supported by this browser.");
+  }
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success);
-    } else {
-        console.log("Geolocation is not supported by this browser.");
-    }
+  function success(pos) {
+      var crd = pos.coords;
+      console.log(pos.coords);
+      console.log('Latitude : ' + crd.latitude);
+      console.log('Longitude: ' + crd.longitude);
+      console.log('More or less ' + crd.accuracy + ' meters.');
 
-    function success(pos) {
-        var crd = pos.coords;
-        console.log('Latitude : ' + crd.latitude);
-        console.log('Longitude: ' + crd.longitude);
-        console.log('More or less ' + crd.accuracy + ' meters.');
+      L.mapbox.accessToken = 'pk.eyJ1IjoiY2hlaW5yaWNocyIsImEiOiJjaW13bGQ3dW0wMzcxdW5tNDY4enhjNXp0In0.Yp48WNc-1xlHBLX9PcA5oQ';
+      var map = L.mapbox.map('map', 'mapbox.light')
+        .setView([crd.latitude, crd.longitude], 10);
+      var myLayer = L.mapbox.featureLayer().addTo(map);
 
-      //L.mapbox.accessToken = 'pk.eyJ1IjoiY2hlaW5yaWNocyIsImEiOiJjaW13bGQ3dW0wMzcxdW5tNDY4enhjNXp0In0.Yp48WNc-1xlHBLX9PcA5oQ';
-      // var map = L.mapbox.map('map', 'mapbox.streets')
-          // .setView([38.91338, -77.03236], 16);
 
-      mapboxgl.accessToken = 'pk.eyJ1IjoiY2hlaW5yaWNocyIsImEiOiJjaW13bGQ3dW0wMzcxdW5tNDY4enhjNXp0In0.Yp48WNc-1xlHBLX9PcA5oQ';
-
-      var map = new mapboxgl.Map({
-        container: 'map',
-        center: [crd.longitude, crd.latitude],
-        zoom: 10,
-        // style: 'mapbox://styles/cheinrichs/cimwlkrp60118b8m7dziwqzik',
-        style: 'mapbox://styles/mapbox/streets-v8'
-      });
-
-      map.on('style.load', function (){
-
-        map.addSource("markers", {
-          "type": "geojson",
-          "data": {
-              "type": "FeatureCollection",
-              "features": [{
-                  "type": "Feature",
-                  "geometry": {
-                      "type": "Point",
-                      "coordinates": [crd.longitude, crd.latitude]
-                  },
-              }, {
-                  "type": "Feature",
-                  "geometry": {
-                      "type": "Point",
-                      "coordinates": [-122.414, 37.776]
-                  },
-              }]
+      var geojson = [];
+      for(var i = 0; i <= 10; i++){
+        var newlat = crd.latitude + Math.random();
+        var newlong = crd.longitude + Math.random();
+        var newJson = {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [newlong, newlat]
+          },
+          "properties": {
+            "title": "Galvanize",
+            "description": "Pearl Street, CO",
+            "marker-color": "#63b6e5",
+            "marker-size": "medium",
+            "marker-symbol": "water"
           }
-        });
+        };
+        geojson.push(newJson);
+      }
 
-        map.addLayer({
-          "id": "markers",
-          "type": "symbol",
-          "source": "markers",
-          "layout": {
-              "icon-image": "harbor-15",
-          }
-        });
+      console.log(geojson);
 
-      });
-
-      var big = true;
-      $('#mapSizeChange').on('click', function(){
-        if(big){
-          $( '#map' ).animate({
-            width: "+=300",
-            height: "+=100"
-          }, 1000, function() {
-            map.resize();
-            big = false;
-          });
-        } else {
-          $( '#map' ).animate({
-            width: "-=300",
-            height: "-=100"
-          }, 1000, function() {
-            map.resize();
-            big = true;
-          });
-        }
-      });
-    }
-    </script>
+      myLayer.setGeoJSON(geojson);
+  }
+</script>
