@@ -3,7 +3,7 @@ body {
   padding-bottom: 30px;
 }
 .row {
-  .col-md-10 {
+  .col-md-8 {
     border: 1px solid;
     border-radius: 15px;
     padding-top: 15px;
@@ -12,4 +12,7 @@ body {
       border-radius: 15px;
     }
   }
+}
+.custom {
+  width: 100px !important;
 }

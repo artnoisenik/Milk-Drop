@@ -9,3 +9,28 @@ body {
   padding-bottom: 15px; }
   .row .col-md-10 img {
     border-radius: 15px; }
+
+.custom {
+  width: 230px; }
+
+.space {
+  height: 150px;
+  width: 100%; }
+
+.loginBox {
+  border-left: 2px solid black; }
+
+.signupButton {
+  margin-left: 29%; }
+
+.rememberMe {
+  font-size: 18px; }
+
+.text {
+  text-align: center; }
+
+.face {
+  width: 80%;}
+
+.facebookLoginButton {
+  padding-left: 10%; }
