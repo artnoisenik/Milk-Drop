@@ -13,7 +13,8 @@ router.get('/', function(req, res, next) {
       res.cookie('id', Math.floor(Math.random() * (4)) + 1);
       res.render('index', {
         title: 'MilKonnect',
-        listings: listings
+        listings: listings,
+        user: req.user
       });
     });
 });
