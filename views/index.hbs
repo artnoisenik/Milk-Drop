@@ -11,8 +11,8 @@
   </div>
   <div class="col-md-offset-6 col-md-2 text-right">
     <div class="form-group">
-      <a href="/users/post">
-        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a Listing</button>
+      <a href="/users/posting">
+        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Posting</button>
       </a>
     </div>
   </div>
@@ -30,13 +30,7 @@
       <div class="row">
         <div class="col-md-2 text-center">
           <img src="{{portrait_link}}" alt="{{title}}" />
-          <p>
-            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-          </p>
+          <div class="ratings {{rating}}"></div>
         </div>
         <div class="col-md-7">
           <span class="glyphicon glyphicon-star verified {{verified}}" aria-hidden="true"></span>
