@@ -6,7 +6,7 @@ var queries = require('../lib');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   knex('listings')
-    .select('created_at', 'title', 'amount', 'cost_per_ounce', 'description', 'requested', 'portrait_link', 'city', 'verified')
+    .select('listings.id', 'created_at', 'title', 'amount', 'cost_per_ounce', 'description', 'requested', 'portrait_link', 'city', 'verified')
     .join('users', 'users.id', 'listings.user_id')
     .then(function(listings) {
       res.clearCookie('id');

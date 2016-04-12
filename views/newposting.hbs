@@ -1,47 +1,35 @@
 <h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
 
-<div class="row">
-  <div class="col-md-offset-1 col-md-10">
-    <div class="row">
-      <form action="/users/post" method="post">
-        <div class="col-md-4">
-          <p>
-            {{#if success}}
-              {{success}}
-            {{/if}}
-          </p>
-          <label for="title">Title
-            <br />
-            <input type="text" name="title" value="">
-          </label>
+<div class="row posting">
+  <div class="col-md-12">
+    <form action="/users/post" method="post">
+      <div class="form-group">
+        <p>
+          {{#if success}}
+            {{success}}
+          {{/if}}
+        </p>
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" name="title" placeholder="Title">
+      </div>
+      <div class="form-group">
+        <label for="expiration_date">Expiration Date</label>
+        <input type="date" class="form-control" id="expiration_date" name="expiration_date" placeholder="Expiration Date">
+      </div>
+      <div class="form-group">
+        <label for="amount">Number of Ounces Available</label>
+        <input type="number" class="form-control" id="amount" name="amount" placeholder="0">
+      </div>
+      <div class="form-group">
+        <label for="cost_per_ounce">Cost Per Ounce</label>
+        <input type="number" class="form-control" id="cost_per_ounce" name="cost_per_ounce" placeholder="0">
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" rows="3" id="description" name="description"></textarea>
+      </div>
 
-          <label for="post_end">End of date
-            <br />
-            <input type="text" name="post_end" value="">
-          </label>
-
-          <label for="amount">Amount of milk (in ounces)
-            <br />
-            <input type="number" name="amount" value="">
-          </label>
-
-          <label for="cost_per_ounce">Cost per ounce
-            <br />
-            <input type="number" name="cost_per_ounce" value="">
-          </label>
-
-          <br />
-          <br />
-        </div>
-
-        <div class="col-md-8">
-          <textarea name="description" rows="10" cols="80"></textarea>
-          <br />
-          <button type="submit" name="button" class="btn-primary">Submit Post</button>
-        </div>
-      </form>
-
-    </div>
+      <button type="submit" class="btn btn-default">Add Posting</button>
+    </form>
   </div>
 </div>

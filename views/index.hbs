@@ -11,8 +11,8 @@
   </div>
   <div class="col-md-offset-6 col-md-2 text-right">
     <div class="form-group">
-      <a href="/users/post">
-        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a Listing</button>
+      <a href="/users/posting">
+        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Posting</button>
       </a>
     </div>
   </div>
@@ -32,8 +32,8 @@
           <img src="{{portrait_link}}" alt="{{title}}" />
           <p>
             <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
             <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
             <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
           </p>
@@ -60,87 +60,87 @@
 {{/each}}
 
 <script>
-    var latitude;
-    var longitude;
+  var latitude;
+  var longitude;
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success);
-    } else {
-        console.log("Geolocation is not supported by this browser.");
-    }
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(success);
+  } else {
+    console.log("Geolocation is not supported by this browser.");
+  }
 
-    function success(pos) {
-        var crd = pos.coords;
-        console.log('Latitude : ' + crd.latitude);
-        console.log('Longitude: ' + crd.longitude);
-        console.log('More or less ' + crd.accuracy + ' meters.');
+  function success(pos) {
+    var crd = pos.coords;
+    console.log('Latitude : ' + crd.latitude);
+    console.log('Longitude: ' + crd.longitude);
+    console.log('More or less ' + crd.accuracy + ' meters.');
 
-      //L.mapbox.accessToken = 'pk.eyJ1IjoiY2hlaW5yaWNocyIsImEiOiJjaW13bGQ3dW0wMzcxdW5tNDY4enhjNXp0In0.Yp48WNc-1xlHBLX9PcA5oQ';
-      // var map = L.mapbox.map('map', 'mapbox.streets')
-          // .setView([38.91338, -77.03236], 16);
+    //L.mapbox.accessToken = 'pk.eyJ1IjoiY2hlaW5yaWNocyIsImEiOiJjaW13bGQ3dW0wMzcxdW5tNDY4enhjNXp0In0.Yp48WNc-1xlHBLX9PcA5oQ';
+    // var map = L.mapbox.map('map', 'mapbox.streets')
+    // .setView([38.91338, -77.03236], 16);
 
-      mapboxgl.accessToken = 'pk.eyJ1IjoiY2hlaW5yaWNocyIsImEiOiJjaW13bGQ3dW0wMzcxdW5tNDY4enhjNXp0In0.Yp48WNc-1xlHBLX9PcA5oQ';
+    mapboxgl.accessToken = 'pk.eyJ1IjoiY2hlaW5yaWNocyIsImEiOiJjaW13bGQ3dW0wMzcxdW5tNDY4enhjNXp0In0.Yp48WNc-1xlHBLX9PcA5oQ';
 
-      var map = new mapboxgl.Map({
-        container: 'map',
-        center: [crd.longitude, crd.latitude],
-        zoom: 10,
-        // style: 'mapbox://styles/cheinrichs/cimwlkrp60118b8m7dziwqzik',
-        style: 'mapbox://styles/mapbox/streets-v8'
-      });
+    var map = new mapboxgl.Map({
+      container: 'map',
+      center: [crd.longitude, crd.latitude],
+      zoom: 10,
+      // style: 'mapbox://styles/cheinrichs/cimwlkrp60118b8m7dziwqzik',
+      style: 'mapbox://styles/mapbox/streets-v8'
+    });
 
-      map.on('style.load', function (){
+    map.on('style.load', function() {
 
-        map.addSource("markers", {
-          "type": "geojson",
-          "data": {
-              "type": "FeatureCollection",
-              "features": [{
-                  "type": "Feature",
-                  "geometry": {
-                      "type": "Point",
-                      "coordinates": [crd.longitude, crd.latitude]
-                  },
-              }, {
-                  "type": "Feature",
-                  "geometry": {
-                      "type": "Point",
-                      "coordinates": [-122.414, 37.776]
-                  },
-              }]
-          }
-        });
-
-        map.addLayer({
-          "id": "markers",
-          "type": "symbol",
-          "source": "markers",
-          "layout": {
-              "icon-image": "harbor-15",
-          }
-        });
-
-      });
-
-      var big = true;
-      $('#mapSizeChange').on('click', function(){
-        if(big){
-          $( '#map' ).animate({
-            width: "+=300",
-            height: "+=100"
-          }, 1000, function() {
-            map.resize();
-            big = false;
-          });
-        } else {
-          $( '#map' ).animate({
-            width: "-=300",
-            height: "-=100"
-          }, 1000, function() {
-            map.resize();
-            big = true;
-          });
+      map.addSource("markers", {
+        "type": "geojson",
+        "data": {
+          "type": "FeatureCollection",
+          "features": [{
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [crd.longitude, crd.latitude]
+            },
+          }, {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [-122.414, 37.776]
+            },
+          }]
         }
       });
-    }
-    </script>
+
+      map.addLayer({
+        "id": "markers",
+        "type": "symbol",
+        "source": "markers",
+        "layout": {
+          "icon-image": "harbor-15",
+        }
+      });
+
+    });
+
+    var big = true;
+    $('#mapSizeChange').on('click', function() {
+      if (big) {
+        $('#map').animate({
+          width: "+=300",
+          height: "+=100"
+        }, 1000, function() {
+          map.resize();
+          big = false;
+        });
+      } else {
+        $('#map').animate({
+          width: "-=300",
+          height: "-=100"
+        }, 1000, function() {
+          map.resize();
+          big = true;
+        });
+      }
+    });
+  }
+</script>

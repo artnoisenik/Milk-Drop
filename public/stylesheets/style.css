@@ -32,6 +32,16 @@ body {
       display: inline-block; }
     .listing .col-md-10 .true {
       color: yellow; }
+  .listing .a1 {
+    display: none; }
+  .listing .a2 {
+    display: none; }
+  .listing .a3 {
+    display: none; }
+  .listing .a4 {
+    display: none; }
+  .listing .a5 {
+    display: none; }
 
 #footer {
   margin-top: 100px;
