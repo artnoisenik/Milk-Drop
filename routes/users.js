@@ -10,14 +10,14 @@ router.get('/', function(req, res, next) {
 
 router.get('/post', function(req, res, next) {
   res.render('newposting', {
-    title: 'MilKonnect'
+    title: 'MilConnect'
   });
 })
 
 router.post('/post', function(req, res, next) {
   knex('listings')
     .insert({
-      'user_id': req.cookies.id,
+      'user_id': req.signedCookies.id,
       'title': req.body.title,
       'post_end': req.body.post_end,
       'amount': req.body.amount,
@@ -60,18 +60,18 @@ router.post('/post/edit/:id', function(req, res, next) {
     });
 })
 
-router.get('/profile/:id', function(req, res, next) {
+router.get('/profile/', function(req, res, next) {
   knex('listings')
-    .where('user_id', req.params.id)
+    .where('user_id', req.signedCookies.id)
     .select('created_at', 'portrait_link', 'title', 'amount', 'cost_per_ounce', 'description', 'requested', 'verified', 'user_id')
     .join('users', 'users.id', 'listings.user_id')
     .then(function(listings) {
       knex('users')
-      .where('id', req.params.id)
-      .select('portrait_link', 'email', 'address_1', 'address_2', 'city', 'state', 'zip_code', 'id')
-        .then(function(user){
+        .where('id', req.signedCookies.id)
+        .select('first_name', 'last_name', 'portrait_link', 'email', 'address_1', 'address_2', 'city', 'state', 'zip_code', 'id')
+        .then(function(user) {
           res.render('profile', {
-            title: 'Unlatched',
+            title: 'MilConnect',
             listings: listings,
             user: user[0]
           });
@@ -79,22 +79,24 @@ router.get('/profile/:id', function(req, res, next) {
     });
 });
 
-router.post('/profile/:id', function(req, res, next){
+router.post('/profile/:id', function(req, res, next) {
   knex('users')
     .where('id', req.params.id).first()
     .returning('id')
     .update({
-    'email':req.body.email,
-    'portrait_link':req.body.portrait_link,
-    'address_1':req.body.address_1,
-    'address_2':req.body.address_2,
-    'city':req.body.city,
-    'state':req.body.state,
-    'zip_code':req.body.zip_code
-  })
-  .then(function(profile_id) {
-    res.redirect(302, '/users/profile/' + profile_id);
-  });
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email: req.body.email,
+      portrait_link: req.body.portrait_link,
+      address_1: req.body.address_1,
+      address_2: req.body.address_2,
+      city: req.body.city,
+      state: req.body.state,
+      zip_code: req.body.zip_code
+    })
+    .then(function(profile_id) {
+      res.redirect('/users/profile/');
+    });
 })
 
 

@@ -1,28 +1,62 @@
-<div class="col-md-12">
-  <img src="{{user.portrait_link}}" alt="profile picture" width="140px"/>
-  <form class="profileUpdate" action="/users/profile/{{user.id}}" method="post">
-    <label for="email">Email
-      <input type="text" name="email" value="{{user.email}}">
-    </label>
-    <br />
-    <label for="portrait_link">Portait Link
-      <input type="text" name="portrait_link" value="{{user.portrait_link}}">
-    </label>
-    <br />
-    <label for="address_1">Address
-      <input type="text" name="address_1" value="{{user.address_1}}">
-        <br />
-      <input type="text" name="address_2" value="{{user.address_2}}">
-        <br />
-      <input type="text" name="city" value="{{user.city}}">
-        <br />
-      <input type="text" name="state" value="{{user.state}}">
-        <br />
-      <input type="integer" name="zip_code" value="{{user.zip_code}}">
-    </label>
-      <br />
-    <input type="submit" name="submit" value="Update your profile information">
-  </form>
+<div class="row profile">
+  <div class="col-md-12">
+    <div class="col-md-3">
+      <img src="{{user.portrait_link}}" alt="profile picture" width="100%" />
+    </div>
+    <div class="col-md-offset-1 col-md-8">
+      <form action="/users/profile/{{user.id}}" method="post">
+        <div class="form-group">
+          <label for="first_name">First Name</label>
+          <input type="text" class="form-control" id="first_name" name="first_name" value="{{user.first_name}}">
+        </div>
+        <div class="form-group">
+          <label for="last_name">Last Name</label>
+          <input type="text" class="form-control" id="last_name" name="last_name" value="{{user.last_name}}">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" name="email" value="{{user.email}}">
+        </div>
+        <div class="form-group">
+          <label for="portrait_link">Portait Link</label>
+          <input type="text" class="form-control" id="portrait_link" name="portrait_link" value="{{user.portrait_link}}">
+        </div>
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label for="address_1" class="col-md-2 control-label">Address</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" id="address_1" name="address_1" value="{{user.address_1}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="address_2" class="col-md-2 control-label">Address 2</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" id="address_2" name="address_2" value="{{user.address_2}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="city" class="col-md-2 control-label">City</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" id="city" name="city" value="{{user.city}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="state" class="col-md-2 control-label">State</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" id="state" name="state" value="{{user.state}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="zip_code" class="col-md-2 control-label">Zip Code</label>
+            <div class="col-md-10">
+              <input type="integer" class="form-control" id="zip_code" name="zip_code" value="{{user.zip_code}}">
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-default">Update Profile</button>
+      </form>
+    </div>
+  </div>
 </div>
 
 {{#each listings}}
