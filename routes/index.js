@@ -91,38 +91,68 @@ function getCoords(address) {
 
 router.post('/signupSubmit2', function(req, res, next) {
   var location;
+  var errorArray = [];
   var address = 'address=' + req.body.Address + ',' + req.body.Address_2 + req.body.City + ',' + req.body.State + req.body.Zip;
   getCoords(address).then(function(location) {
-    console.log("LOCATIONS");
-    console.log(location);
-    knex('users').where({
-      email: req.body.Email
-    }).first().then(function(user) {
-      if (!user) {
-        var hash = bcrypt.hashSync(req.body.Password, 10);
-        queries.createNewUser(
-          req.body.First,
-          req.body.Last,
-          req.body.Email,
-          hash,
-          req.body.Phone,
-          req.body.PortraitLink,
-          req.body.Address,
-          req.body.Address_2,
-          req.body.City,
-          req.body.State,
-          req.body.Zip,
-          location.lat,
-          location.lng
-        ).then(function(id) {
-          res.clearCookie('userID');
-          res.cookie('userID', id[0], { signed: true });
-          res.redirect('/');
-        });
-      } else {
-        res.redirect('/signup');
-      }
-    });
+      console.log("LOCATIONS");
+      console.log(location);
+      knex('users').where({
+        email: req.body.Email
+      }).first().then(function(user) {
+          if (!user) {
+            var hash = bcrypt.hashSync(req.body.Password, 10);
+            if (/^[^@]+@[^@]+\.[^@]+$/.test(req.body.Email) === false) {
+              errorArray.push('Email has to be in format: example@something.com');
+            }
+            if (/^[A-z ,.'-]+$/.test(req.body.First) === false) {
+              errorArray.push('First name has have at least 1 uppercase letter and no numbers/special characters');
+            }
+            if (/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(req.body.Phone) === false) {
+              errorArray.push('First name has have at least 1 uppercase letter and no numbers/special characters');
+            }
+            if (/^([0-9]+ )?[a-zA-Z ]+$/.test(req.body.Address) === false) {
+              errorArray.push('Address has to have at least a number and a letter');
+            }
+            if (/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/.test(req.body.City) === false) {
+              errorArray.push('City has to only include letters');
+            }
+            if (/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/.test(req.body.State) === false) {
+              errorArray.push('State has to only include letters');
+            }
+            if (/^\d{5}(?:[-\s]\d{4})?$/.test(req.body.Zip) === false) {
+              errorArray.push('Zip code should only include numbers');
+            }
+            if (errorArray.length > 0) {
+              res.render('signup', {
+                loginErrors: errorArray
+              })
+            } else {
+              queries.createNewUser(
+                req.body.First,
+                req.body.Last,
+                req.body.Email,
+                hash,
+                req.body.Phone,
+                req.body.PortraitLink,
+                req.body.Address,
+                req.body.Address_2,
+                req.body.City,
+                req.body.State,
+                req.body.Zip,
+                location.lat,
+                location.lng
+              ).then(function(id) {
+                res.clearCookie('userID');
+                res.cookie('userID', id[0], {
+                  signed: true
+                });
+                res.redirect('/');
+              })
+            }
+        } else {
+          res.redirect('/signup');
+        }
+      });
   });
 });
 
@@ -133,22 +163,23 @@ router.get('/logout', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
   var errorArray = [];
-
-  if (!req.body.email) {
-    errorArray.push('Please enter a username');
-  }
-  if (!req.body.password) {
-    errorArray.push('Please enter a password');
+  console.log('it got here');
+  if ((/^[^@]+@[^@]+\.[^@]+$/.test(req.body.email) === false)) {
+    errorArray.push('Email has to be in format: example@something.com');
   }
   if (errorArray.length > 0) {
     res.render('signup', {
       loginErrors: errorArray
     });
   } else {
-    knex('users').where({ email: req.body.email }).first().then(function(user) {
+    knex('users').where({
+      email: req.body.email
+    }).first().then(function(user) {
       if (user && bcrypt.compareSync(req.body.password, user.password)) {
         res.clearCookie('userID');
-        res.cookie('userID', user.id, { signed: true });
+        res.cookie('userID', user.id, {
+          signed: true
+        });
         res.redirect('/');
       } else {
         res.redirect('/signup');

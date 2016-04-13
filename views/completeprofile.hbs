@@ -18,7 +18,7 @@
           <input type="text" class="form-control" name="Address" pattern="^([0-9]+ )?[a-zA-Z ]+$" placeholder='Address' required/>
         </div><br>
         <div class="control-group">
-          <input type="text" class="form-control" name="Address_2" maxlength='5' pattern="^([0-9]+ )?[a-zA-Z ]+$" placeholder='Address 2'/>
+          <input type="text" class="form-control" name="Address_2" pattern="^([0-9]+ )?[a-zA-Z ]+$" placeholder='Address 2'/>
         </div><br>
         <div class="control-group">
           <input type="text" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" class="form-control" name="City" placeholder='City' required/>
@@ -27,7 +27,8 @@
           <input type="text" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" class="form-control" name="State" placeholder='State' required/>
         </div><br>
         <div class="control-group">
-          <input type="number" pattern='^\d{5}(?:[-\s]\d{4})?$' class="form-control" name="Zip" placeholder='Zip' required/>
+          <input type="number" class="form-control" name="Zip" placeholder='Zip' required/>
+          <!-- pattern='^\d{5}(?:[-\s]\d{4})?$'  -->
         </div><br>
         <div class="control-group">
           <input type="text" class="form-control" name="PortraitLink" placeholder='Link to Your Portrait' required/>

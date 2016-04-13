@@ -1,19 +1,20 @@
 <div class="row signup">
 
+  {{#if loginErrors}}
+  <h3 class='text-center'>{{loginErrors}}</h3>
+  {{/if}}
   <div class="col-md-6">
 
     <div class="row">
       <div class="col-md-11">
         <h3>Log In:</h3>
-          {{#if loginErrors}}
-            <h6>{{loginErrors}}</h6>
-          {{/if}}
         <form action="/login" method="post">
           <div class="control-group">
-            <input type="email" class="form-control" pattern="^[^@]+@[^@]+\.[^@]+$" name="email" placeholder='Email'>
+            <input type="email" class="form-control" name="email" placeholder='Email'>
           </div><br>
           <div class="control-group">
             <input type="password" class="form-control" name="password" minlength='8' data-validation-minlength-message='Needs to be at least 8 characters long!' placeholder='Password'>
+            <p class="help-block"></p>
           </div><br>
           <div class="row">
             <div class="col-md-6">
@@ -51,7 +52,7 @@
         <h3>Sign Up:</h3>
         <form action="/signupSubmit" method="post" class='signupForm'>
           <div class="control-group">
-            <input id='emailLogin' type="email" class="form-control" name="Email2" pattern="^[^@]+@[^@]+\.[^@]+$" placeholder='Email'>
+            <input id='emailLogin' type="text" class="form-control" name="Email2" placeholder='Email'>
           </div><br>
           <div class="control-group">
             <input type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,30}$" class="form-control" name="Password2" minlength='8' data-validation-minlength-message='Needs to be at least 8 characters long!' placeholder='Password'>
