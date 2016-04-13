@@ -8,6 +8,17 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+// function isAuthenticated(req, res, next) {
+//     if (req.user.authenticated)
+//         return next();
+//     // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
+//     res.redirect('/signup');
+// }
+
+router.post('/request', function(req, res, next){
+  res.redirect('/signup');
+});
+
 router.get('/posting', function(req, res, next) {
   res.render('newposting', {
     title: 'Milk Exchange - Add Posting'

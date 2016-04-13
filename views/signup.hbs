@@ -10,10 +10,10 @@
           <br><br>
           <form role="form">
             <div class="form-group">
-              <input type="email" class="form-control" placeholder='Username' />
+              <input type="email" class="form-control" name="Email" placeholder='Email' />
             </div>
             <div class="form-group">
-              <input type="password" class="form-control" placeholder='Password' />
+              <input type="password" class="form-control" name="Password" placeholder='Password' />
             </div>
             <br>
             <div class="checkbox">
@@ -38,21 +38,22 @@
               Signup
             </h3>
             <br><br>
-          <form role="form">
+          <form role="form" action="/signupSubmit" method="post">
             <div class="form-group">
-              <input type="email" class="form-control" placeholder='Username'/>
+              <input type="email" class="form-control" name="Email2" placeholder='Email'/>
             </div>
             <div class="form-group">
-              <input type="password" class="form-control" placeholder='Password'/>
+              <input type="password" class="form-control" name="Password2" placeholder='Password'/>
             </div>
             <div class="form-group">
-              <input type="password" class="form-control" placeholder='Confirm Password' />
+              <input type="password" class="form-control" name="Password2Confirm" placeholder='Confirm Password' />
             </div><br>
             <div class='signupButton'>
               <button type="submit" class="btn btn-default custom">
-                  Sign up
+                  Update
               </button>
             </div>
+          </form>
         </div>
       </div>
     </div>

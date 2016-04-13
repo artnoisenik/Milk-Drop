@@ -9,11 +9,22 @@
       </div>
     </form>
   </div>
-  <div class="col-md-offset-6 col-md-2 text-right">
-    <div class="form-group">
-      <a href="/users/posting">
-        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Posting</button>
-      </a>
+  <div class="col-md-offset-5 col-md-3 text-right">
+    <div class="row">
+      <div class="col-md-6">
+        <form action="/login" method="post">
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> FAKE Log In</button>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <a href="/users/posting">
+            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Posting</button>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -43,7 +54,7 @@
           <p>Amount: {{amount}}oz</p>
           <p>Cost: ${{cost_per_ounce}}</p>
           <p>Date: {{created_at}}</p>
-          <form action="/request" method="post">
+          <form action="/users/request" method="post">
             <div class="form-group">
               <button type="submit" class="btn btn-primary">Request {{requested}}</button>
             </div>
@@ -59,47 +70,47 @@
 
 <script>
   if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success);
+    navigator.geolocation.getCurrentPosition(success);
   } else {
-      console.log("Geolocation is not supported by this browser.");
+    console.log("Geolocation is not supported by this browser.");
   }
 
   function success(pos) {
-      var crd = pos.coords;
-      console.log(pos.coords);
-      console.log('Latitude : ' + crd.latitude);
-      console.log('Longitude: ' + crd.longitude);
-      console.log('More or less ' + crd.accuracy + ' meters.');
+    var crd = pos.coords;
+    console.log(pos.coords);
+    console.log('Latitude : ' + crd.latitude);
+    console.log('Longitude: ' + crd.longitude);
+    console.log('More or less ' + crd.accuracy + ' meters.');
 
-      L.mapbox.accessToken = 'pk.eyJ1IjoiY2hlaW5yaWNocyIsImEiOiJjaW13bGQ3dW0wMzcxdW5tNDY4enhjNXp0In0.Yp48WNc-1xlHBLX9PcA5oQ';
-      var map = L.mapbox.map('map', 'mapbox.light')
-        .setView([crd.latitude, crd.longitude], 10);
-      var myLayer = L.mapbox.featureLayer().addTo(map);
+    L.mapbox.accessToken = 'pk.eyJ1IjoiY2hlaW5yaWNocyIsImEiOiJjaW13bGQ3dW0wMzcxdW5tNDY4enhjNXp0In0.Yp48WNc-1xlHBLX9PcA5oQ';
+    var map = L.mapbox.map('map', 'mapbox.light')
+      .setView([crd.latitude, crd.longitude], 10);
+    var myLayer = L.mapbox.featureLayer().addTo(map);
 
 
-      var geojson = [];
-      for(var i = 0; i <= 10; i++){
-        var newlat = crd.latitude + Math.random();
-        var newlong = crd.longitude + Math.random();
-        var newJson = {
-          "type": "Feature",
-          "geometry": {
-            "type": "Point",
-            "coordinates": [newlong, newlat]
-          },
-          "properties": {
-            "title": "Galvanize",
-            "description": "Pearl Street, CO",
-            "marker-color": "#63b6e5",
-            "marker-size": "medium",
-            "marker-symbol": "water"
-          }
-        };
-        geojson.push(newJson);
-      }
+    var geojson = [];
+    for (var i = 0; i <= 10; i++) {
+      var newlat = crd.latitude + Math.random();
+      var newlong = crd.longitude + Math.random();
+      var newJson = {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [newlong, newlat]
+        },
+        "properties": {
+          "title": "Galvanize",
+          "description": "Pearl Street, CO",
+          "marker-color": "#63b6e5",
+          "marker-size": "medium",
+          "marker-symbol": "water"
+        }
+      };
+      geojson.push(newJson);
+    }
 
-      console.log(geojson);
+    console.log(geojson);
 
-      myLayer.setGeoJSON(geojson);
+    myLayer.setGeoJSON(geojson);
   }
 </script>
