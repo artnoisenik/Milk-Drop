@@ -126,5 +126,24 @@ router.post('/admin/listings/:id/delete', function(req, res, next){
   })
 })
 
+router.get('/admin/all', function(req, res, next){
+  knex('users')
+    .then(function(users) {
+      console.log(users);
+      res.render('adminusers', {
+        title: 'MilKonnect',
+        users: users
+      });
+    });
+})
+
+router.post('/admin/:id/delete', function(req, res, next){
+  knex('users')
+  .where('id', req.params.id)
+  .del()
+  .then(function(response){
+    res.redirect('/users/admin/all');
+  })
+})
 
 module.exports = router;
