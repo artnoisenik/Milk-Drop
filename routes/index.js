@@ -3,8 +3,15 @@ var router = express.Router();
 var knex = require('../lib/knex');
 var queries = require('../lib');
 var handlebars = require('handlebars');
+var bcrypt = require('bcryptjs');
+var request = require('request');
 
 router.get('/', function(req, res, next) {
+  knex('users').select('latitude').where({
+    id: 5
+  }).then(function(lat) {
+    console.log(lat);
+  });
   knex('listings')
     .select('rating', 'listings.id', 'created_at', 'title', 'amount', 'cost_per_ounce', 'description', 'requested', 'portrait_link', 'city', 'verified')
     .join('ratings', 'reciever_id', 'listings.user_id')
@@ -42,18 +49,81 @@ router.get('/signup', function(req, res, next) {
 });
 
 router.post('/signupSubmit', function(req, res, next) {
-  res.render('completeprofile', {
-    user: req.body
-  });
+  var errorArray = [];
+
+  if (!req.body.Email2) {
+    errorArray.push('Please enter a username');
+  }
+  if (!req.body.Password2) {
+    errorArray.push('Please enter a password');
+  }
+  if (errorArray.length > 0) {
+    res.render('signup', {
+      errors: errorArray
+    });
+  } else {
+    res.render('completeprofile', {
+      user: req.body
+    });
+  }
 });
 
-router.post('/signupSubmit2', function(req, res, next) {
-  queries.createNewUser(req.body.First, req.body.Last, req.body.Email, req.body.Password, req.body.Phone, req.body.PortraitLink, req.body.Address, req.body.Address_2, req.body.City, req.body.State, req.body.Zip)
-    .then(function(id) {
-      res.clearCookie('userID');
-      res.cookie('userID', Number(id), { signed: true });
-      res.redirect('/');
+function getCoords(address) {
+  return new Promise(function(resolve, reject) {
+    var string = '';
+    string += 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDoQkO239JbGI_7BHz7IHA6d-_dLDRsL0c&';
+    string += address;
+    string += '&sensor=false';
+    console.log(string);
+    request(string, function(error, response, body) {
+      if (error) {
+        console.log("Error!  Request failed - " + error);
+        reject("Error! Request failed - " + error);
+      } else if (!error && response.statusCode === 200) {
+        //console.log(body);
+        location = JSON.parse(body);
+        console.log(location.results[0].geometry.location);
+        resolve(location.results[0].geometry.location);
+      }
     });
+  });
+}
+
+router.post('/signupSubmit2', function(req, res, next) {
+  var location;
+  var address = 'address=' + req.body.Address + ',' + req.body.Address_2 + req.body.City + ',' + req.body.State + req.body.Zip;
+  getCoords(address).then(function(location) {
+    console.log("LOCATIONS");
+    console.log(location);
+    knex('users').where({
+      email: req.body.Email
+    }).first().then(function(user) {
+      if (!user) {
+        var hash = bcrypt.hashSync(req.body.Password, 10);
+        queries.createNewUser(
+          req.body.First,
+          req.body.Last,
+          req.body.Email,
+          hash,
+          req.body.Phone,
+          req.body.PortraitLink,
+          req.body.Address,
+          req.body.Address_2,
+          req.body.City,
+          req.body.State,
+          req.body.Zip,
+          location.lat,
+          location.lng
+        ).then(function(id) {
+          res.clearCookie('userID');
+          res.cookie('userID', id[0], { signed: true });
+          res.redirect('/');
+        });
+      } else {
+        res.redirect('/signup');
+      }
+    });
+  });
 });
 
 router.get('/logout', function(req, res, next) {
@@ -62,16 +132,29 @@ router.get('/logout', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
-  knex('users').where({ email: req.body.email }).first().then(function(user) {
-    if (user && (req.body.password === user.password)) {
-      res.clearCookie('userID');
-      res.cookie('userID', user.id, { signed: true } );
-      res.redirect('/');
-    } else {
-      res.redirect('/signup');
-    }
-  });
-});
+  var errorArray = [];
 
+  if (!req.body.email) {
+    errorArray.push('Please enter a username');
+  }
+  if (!req.body.password) {
+    errorArray.push('Please enter a password');
+  }
+  if (errorArray.length > 0) {
+    res.render('signup', {
+      loginErrors: errorArray
+    });
+  } else {
+    knex('users').where({ email: req.body.email }).first().then(function(user) {
+      if (user && bcrypt.compareSync(req.body.password, user.password)) {
+        res.clearCookie('userID');
+        res.cookie('userID', user.id, { signed: true });
+        res.redirect('/');
+      } else {
+        res.redirect('/signup');
+      }
+    });
+  }
+});
 
 module.exports = router;
