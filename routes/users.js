@@ -24,21 +24,18 @@ router.get('/posting', function(req, res, next) {
   });
 })
 
-router.post('/post', function(req, res, next) {
+router.post('/addposting', function(req, res, next) {
   knex('listings')
     .insert({
-      'user_id': req.signedCookies.id,
-      'title': req.body.title,
-      'post_end': req.body.post_end,
-      'amount': req.body.amount,
-      'cost_per_ounce': req.body.cost_per_ounce,
-      'description': req.body.description
+      user_id: req.signedCookies.userID,
+      title: req.body.title,
+      post_end: req.body.expiration_date,
+      amount: req.body.amount,
+      cost_per_ounce: req.body.cost_per_ounce,
+      description: req.body.description
     })
     .then(function() {
-      res.render('newposting', {
-        title: 'Milk Exchange',
-        success: 'Post added'
-      });
+      res.render('newposting', { title: 'Milk Exchange', success: 'Post added' });
     });
 })
 
@@ -113,15 +110,15 @@ router.post('/profile/:id', function(req, res, next) {
     });
 })
 
-router.get('/admin', function(req, res, next){
+router.get('/admin', function(req, res, next) {
   res.render('admin');
 })
 
-router.get('/admin/userlist', function(req, res, next){
+router.get('/admin/userlist', function(req, res, next) {
   res.render('adminusers')
 })
 
-router.get('/admin/listings', function(req, res, next){
+router.get('/admin/listings', function(req, res, next) {
   knex('users')
     .join('listings', 'listings.user_id', 'users.id')
     .then(function(listings) {
@@ -133,16 +130,16 @@ router.get('/admin/listings', function(req, res, next){
     });
 })
 
-router.post('/admin/listings/:id/delete', function(req, res, next){
+router.post('/admin/listings/:id/delete', function(req, res, next) {
   knex('listings')
-  .where('id', req.params.id)
-  .del()
-  .then(function(response){
-    res.redirect('/users/admin/listings');
-  })
+    .where('id', req.params.id)
+    .del()
+    .then(function(response) {
+      res.redirect('/users/admin/listings');
+    })
 })
 
-router.get('/admin/all', function(req, res, next){
+router.get('/admin/all', function(req, res, next) {
   knex('users')
     .then(function(users) {
       console.log(users);
@@ -153,13 +150,13 @@ router.get('/admin/all', function(req, res, next){
     });
 })
 
-router.post('/admin/:id/delete', function(req, res, next){
+router.post('/admin/:id/delete', function(req, res, next) {
   knex('users')
-  .where('id', req.params.id)
-  .del()
-  .then(function(response){
-    res.redirect('/users/admin/all');
-  })
+    .where('id', req.params.id)
+    .del()
+    .then(function(response) {
+      res.redirect('/users/admin/all');
+    })
 })
 
 module.exports = router;

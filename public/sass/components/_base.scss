@@ -16,9 +16,11 @@ body {
     border-left: 1px solid;
   }
 }
+
 .secondary_nav {
   padding-top: 15px;
 }
+
 .map {
   margin-bottom: 15px;
   #map {
@@ -27,6 +29,7 @@ body {
     height: 300px;
   }
 }
+
 .profile {
   margin-bottom: 15px;
   margin-top: 50px;
@@ -35,6 +38,7 @@ body {
     border-radius: 15px;
   }
 }
+
 .postingsnav {
   margin-top: 50px;
   margin-bottom: 15px;
@@ -42,6 +46,7 @@ body {
     font-size: 30px;
   }
 }
+
 .postings {
   margin-bottom: 15px;
   .col-md-10 {
@@ -74,6 +79,7 @@ body {
     }
   }
 }
+
 #footer {
   margin-top: 100px;
   padding: 50px;
@@ -83,6 +89,7 @@ body {
   height: 400px;
   margin-top: 100px;
 }
+
 .starRating:not(old) {
   display: inline-block;
   width: 7.5em;
@@ -90,10 +97,12 @@ body {
   overflow: hidden;
   vertical-align: bottom;
 }
+
 .starRating:not(old) > input {
   margin-right: -100%;
   opacity: 0;
 }
+
 .starRating:not(old) > label {
   display: block;
   float: right;
@@ -101,6 +110,7 @@ body {
   background: url('/pictures/star-off.svg');
   background-size: contain;
 }
+
 .starRating:not(old) > label:before {
   content: '';
   display: block;
@@ -111,11 +121,13 @@ body {
   opacity: 0;
   transition: opacity 0.2s linear;
 }
+
 .starRating:not(old) > label:hover:before,
 .starRating:not(old) > label:hover ~ label:before,
 .starRating:not(:hover) >:checked ~ label:before {
   opacity: 1;
 }
+
 .listings {
   .glyphicon {
     color: #41a1f4;

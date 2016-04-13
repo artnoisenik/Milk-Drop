@@ -4,6 +4,7 @@ var knex = require('../lib/knex');
 var queries = require('../lib');
 var handlebars = require('handlebars');
 var bcrypt = require('bcryptjs');
+var request = require('request');
 
 router.get('/', function(req, res, next) {
   knex('listings')
@@ -11,10 +12,16 @@ router.get('/', function(req, res, next) {
     .join('ratings', 'reciever_id', 'listings.user_id')
     .join('users', 'users.id', 'listings.user_id')
     .then(function(listings) {
-      res.render('index', {
-        title: 'Milk Exchange',
-        listings: listings,
-        user: req.user
+      knex('listings')
+      .leftJoin('users', 'listings.user_id', 'users.id')
+      .select('latitude', 'longitude', 'title', 'description')
+      .then(function(listingMapMarkers){
+        res.render('index', {
+          title: 'Milk Exchange',
+          listings: listings,
+          user: req.user,
+          listingMapMarkers: JSON.stringify(listingMapMarkers)
+        });
       });
     });
 });
@@ -45,30 +52,109 @@ router.get('/signup', function(req, res, next) {
 router.post('/signupSubmit', function(req, res, next) {
   var errorArray = [];
 
-  if(!req.body.Email2) {
+  if (!req.body.Email2) {
     errorArray.push('Please enter a username');
   }
-  if(!req.body.Password2) {
+  if (!req.body.Password2) {
     errorArray.push('Please enter a password');
   }
-  if(errorArray.length > 0) {
-    res.render('signup', {errors: errorArray});
-  }
-  else{
+  if (errorArray.length > 0) {
+    res.render('signup', {
+      errors: errorArray
+    });
+  } else {
     res.render('completeprofile', {
       user: req.body
     });
   }
 });
 
-router.post('/signupSubmit2', function(req, res, next) {
-  var hash = bcrypt.hashSync(req.body.Password, 8);
-  queries.createNewUser(req.body.First, req.body.Last, req.body.Email, hash, req.body.Phone, req.body.PortraitLink, req.body.Address, req.body.Address_2, req.body.City, req.body.State, req.body.Zip)
-    .then(function(id) {
-      res.clearCookie('userID');
-      res.cookie('userID', Number(id), { signed: true });
-      res.redirect('/');
+function getCoords(address) {
+  return new Promise(function(resolve, reject) {
+    var string = '';
+    string += 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDoQkO239JbGI_7BHz7IHA6d-_dLDRsL0c&';
+    string += address;
+    string += '&sensor=false';
+    console.log(string);
+    request(string, function(error, response, body) {
+      if (error) {
+        console.log("Error!  Request failed - " + error);
+        reject("Error! Request failed - " + error);
+      } else if (!error && response.statusCode === 200) {
+        //console.log(body);
+        location = JSON.parse(body);
+        console.log(location.results[0].geometry.location);
+        resolve(location.results[0].geometry.location);
+      }
     });
+  });
+}
+
+router.post('/signupSubmit2', function(req, res, next) {
+  var location;
+  var errorArray = [];
+  var address = 'address=' + req.body.Address + ',' + req.body.Address_2 + req.body.City + ',' + req.body.State + req.body.Zip;
+  getCoords(address).then(function(location) {
+      console.log("LOCATIONS");
+      console.log(location);
+      knex('users').where({
+        email: req.body.Email
+      }).first().then(function(user) {
+          if (!user) {
+            var hash = bcrypt.hashSync(req.body.Password, 10);
+            if (/^[^@]+@[^@]+\.[^@]+$/.test(req.body.Email) === false) {
+              errorArray.push('Email has to be in format: example@something.com');
+            }
+            if (/^[A-z ,.'-]+$/.test(req.body.First) === false) {
+              errorArray.push('First name has have at least 1 uppercase letter and no numbers/special characters');
+            }
+            if (/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(req.body.Phone) === false) {
+              errorArray.push('First name has have at least 1 uppercase letter and no numbers/special characters');
+            }
+            if (/^([0-9]+ )?[a-zA-Z ]+$/.test(req.body.Address) === false) {
+              errorArray.push('Address has to have at least a number and a letter');
+            }
+            if (/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/.test(req.body.City) === false) {
+              errorArray.push('City has to only include letters');
+            }
+            if (/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/.test(req.body.State) === false) {
+              errorArray.push('State has to only include letters');
+            }
+            if (/^\d{5}(?:[-\s]\d{4})?$/.test(req.body.Zip) === false) {
+              errorArray.push('Zip code should only include numbers');
+            }
+            if (errorArray.length > 0) {
+              res.render('signup', {
+                loginErrors: errorArray
+              })
+            } else {
+              queries.createNewUser(
+                req.body.First,
+                req.body.Last,
+                req.body.Email,
+                hash,
+                req.body.Phone,
+                req.body.PortraitLink,
+                req.body.Address,
+                req.body.Address_2,
+                req.body.City,
+                req.body.State,
+                req.body.Zip,
+                location.lat,
+                location.lng
+              ).then(function(id) {
+                res.clearCookie('userID');
+                res.cookie('userID', id[0], {
+                  signed: true
+                });
+                res.redirect('/');
+              })
+            }
+        } else {
+          res.redirect('/signup');
+        }
+      });
+  });
 });
 
 router.get('/logout', function(req, res, next) {
@@ -78,21 +164,23 @@ router.get('/logout', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
   var errorArray = [];
-
-  if(!req.body.email) {
-    errorArray.push('Please enter a username');
+  console.log('it got here');
+  if ((/^[^@]+@[^@]+\.[^@]+$/.test(req.body.email) === false)) {
+    errorArray.push('Email has to be in format: example@something.com');
   }
-  if(!req.body.password) {
-    errorArray.push('Please enter a password');
-  }
-  if(errorArray.length > 0) {
-    res.render('signup', {loginErrors: errorArray});
-  }
-  else{
-    knex('users').where({ email: req.body.email }).first().then(function(user) {
+  if (errorArray.length > 0) {
+    res.render('signup', {
+      loginErrors: errorArray
+    });
+  } else {
+    knex('users').where({
+      email: req.body.email
+    }).first().then(function(user) {
       if (user && bcrypt.compareSync(req.body.password, user.password)) {
         res.clearCookie('userID');
-        res.cookie('userID', user.id, { signed: true } );
+        res.cookie('userID', user.id, {
+          signed: true
+        });
         res.redirect('/');
       } else {
         res.redirect('/signup');

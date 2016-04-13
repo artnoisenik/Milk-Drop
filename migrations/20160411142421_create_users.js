@@ -12,8 +12,8 @@ exports.up = function(knex, Promise) {
     table.string('city');
     table.string('state');
     table.integer('zip_code');
-    table.integer('latitude');
-    table.integer('longitude');
+    table.decimal('latitude', 20, 10);
+    table.decimal('longitude', 20, 10);
     table.boolean('admin');
     table.boolean('verified');
   });

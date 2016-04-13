@@ -10,7 +10,6 @@ var passport = require('passport');
 var Strategy = require('passport-facebook').Strategy;
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
 var app = express();
 
 require('dotenv').load();

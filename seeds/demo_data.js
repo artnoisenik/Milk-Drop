@@ -1,3 +1,5 @@
+var bcrypt = require('bcryptjs');
+
 exports.seed = function(knex, Promise) {
   return Promise.join(
       knex('users').del(),
@@ -7,17 +9,19 @@ exports.seed = function(knex, Promise) {
     .then(function() {
       return Promise.join(
         knex('users').insert({
-          first_name: 'John',
-          last_name: 'Doe',
-          email: 'milks@milks.com',
-          password: 'password',
+          first_name: 'Brad',
+          last_name: 'Butterfield',
+          email: 'brad@admin.com',
+          password: bcrypt.hashSync('password', 10),
           phone: '(123)456-7890',
-          portrait_link: 'http://www.newhealthadvisor.com/images/1HT00604/Glass-of-milk-2009.png',
+          portrait_link: 'https://upload.wikimedia.org/wikipedia/en/d/d4/Mickey_Mouse.png',
           address_1: '1015 Pearl St',
           address_2: '',
           city: 'Boulder',
           state: 'CO',
           zip_code: '80302',
+          latitude: 40.1742733000,
+          longitude: -105.2444810000,
           admin: true,
           verified: true
         }),
@@ -25,7 +29,7 @@ exports.seed = function(knex, Promise) {
           first_name: 'Billy',
           last_name: 'Bob',
           email: 'happybaby@milks.com',
-          password: 'password',
+          password: bcrypt.hashSync('password', 10),
           phone: '(555)555-5555',
           portrait_link: 'http://i5.asn.im/baby-milk-jpg-_tz92.jpg',
           address_1: '1521 Pearl St',
@@ -33,14 +37,16 @@ exports.seed = function(knex, Promise) {
           city: 'Boulder',
           state: 'CO',
           zip_code: '80302',
-          admin: true,
-          verified: true
+          latitude: 40.1742753000,
+          longitude: -105.2444610000,
+          admin: false,
+          verified: false
         }),
         knex('users').insert({
           first_name: 'Sally',
           last_name: 'Sue',
           email: 'iWantMilk@aol.com',
-          password: 'password',
+          password: bcrypt.hashSync('password', 10),
           phone: '(800)123-1234',
           portrait_link: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/python_in_a_nutshell.jpg',
           address_1: '1035 Walnut St',
@@ -48,6 +54,8 @@ exports.seed = function(knex, Promise) {
           city: 'Boulder',
           state: 'CO',
           zip_code: '80302',
+          latitude: 32.1742433000,
+          longitude: -100.2445010000,
           admin: false,
           verified: false
         }),
@@ -55,7 +63,7 @@ exports.seed = function(knex, Promise) {
           first_name: 'Jeff',
           last_name: 'Dean',
           email: 'needMamaMilk@aol.com',
-          password: 'password',
+          password: bcrypt.hashSync('password', 10),
           phone: '(800)123-1234',
           portrait_link: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/python_in_a_nutshell.jpg',
           address_1: '1605 Folsom St',
@@ -63,6 +71,8 @@ exports.seed = function(knex, Promise) {
           city: 'Boulder',
           state: 'CO',
           zip_code: '80302',
+          latitude: 40.1741833000,
+          longitude: -82.2444810000,
           admin: false,
           verified: false
         })
@@ -96,11 +106,11 @@ exports.seed = function(knex, Promise) {
       return Promise.join(
         knex('listings').insert({
           user_id: 1,
-          post_end: '5/1/2016',
-          title: 'I have extra milk!',
-          amount: 1,
-          cost_per_ounce: 1,
-          description: 'Organic and vegan!',
+          post_end: '5/7/2016',
+          title: 'Organic breast milk!',
+          amount: 200,
+          cost_per_ounce: 3,
+          description: 'Great quality organic and vegan breast milk for sale.',
           requested: false
         }),
         knex('listings').insert({

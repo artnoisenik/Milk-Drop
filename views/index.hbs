@@ -64,6 +64,9 @@
     console.log("Geolocation is not supported by this browser.");
   }
 
+
+  var listingArray = {{{listingMapMarkers}}};
+  console.log(listingArray);
   function success(pos) {
     var crd = pos.coords;
     console.log(pos.coords);
@@ -76,11 +79,12 @@
       .setView([crd.latitude, crd.longitude], 10);
     var myLayer = L.mapbox.featureLayer().addTo(map);
 
-
     var geojson = [];
-    for (var i = 0; i <= 10; i++) {
-      var newlat = crd.latitude + Math.random();
-      var newlong = crd.longitude + Math.random();
+    for (var i = 0; i < listingArray.length; i++) {
+      var title = listingArray[i].title;
+      var description = listingArray[i].description;
+      var newlat = listingArray[i].latitude;
+      var newlong = listingArray[i].longitude;
       var newJson = {
         "type": "Feature",
         "geometry": {
@@ -88,8 +92,8 @@
           "coordinates": [newlong, newlat]
         },
         "properties": {
-          "title": "Galvanize",
-          "description": "Pearl Street, CO",
+          "title": title,
+          "description": description,
           "marker-color": "#63b6e5",
           "marker-size": "medium",
           "marker-symbol": "water"
@@ -97,7 +101,6 @@
       };
       geojson.push(newJson);
     }
-
     console.log(geojson);
 
     myLayer.setGeoJSON(geojson);
