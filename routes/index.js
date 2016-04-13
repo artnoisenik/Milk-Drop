@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
     .then(function(listings) {
       knex('listings')
       .leftJoin('users', 'listings.user_id', 'users.id')
-      .select('latitude', 'longitude')
+      .select('latitude', 'longitude', 'title', 'description')
       .then(function(listingMapMarkers){
         res.render('index', {
           title: 'Milk Exchange',

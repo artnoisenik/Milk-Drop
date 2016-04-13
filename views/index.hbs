@@ -66,7 +66,7 @@
 
 
   var listingArray = {{{listingMapMarkers}}};
-
+  console.log(listingArray);
   function success(pos) {
     var crd = pos.coords;
     console.log(pos.coords);
@@ -81,6 +81,8 @@
 
     var geojson = [];
     for (var i = 0; i < listingArray.length; i++) {
+      var title = listingArray[i].title;
+      var description = listingArray[i].description;
       var newlat = listingArray[i].latitude;
       var newlong = listingArray[i].longitude;
       var newJson = {
@@ -90,8 +92,8 @@
           "coordinates": [newlong, newlat]
         },
         "properties": {
-          "title": "Galvanize",
-          "description": "Pearl Street, CO",
+          "title": title,
+          "description": description,
           "marker-color": "#63b6e5",
           "marker-size": "medium",
           "marker-symbol": "water"
