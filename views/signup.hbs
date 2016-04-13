@@ -5,6 +5,9 @@
     <div class="row">
       <div class="col-md-11">
         <h3>Log In:</h3>
+          {{#if loginErrors}}
+            <h6>{{loginErrors}}</h6>
+          {{/if}}
         <form action="/login" method="post">
           <div class="form-group">
             <input type="email" class="form-control" name="email" placeholder='Email'>

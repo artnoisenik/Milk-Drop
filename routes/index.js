@@ -77,36 +77,28 @@ router.get('/logout', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
-  knex('users').where({ email: req.body.email }).first().then(function(user) {
-    if (user && bcrypt.compareSync(req.body.password, user.password)) {
-      res.clearCookie('userID');
-      res.cookie('userID', user.id, { signed: true } );
-      res.redirect('/');
-    } else {
-      res.redirect('/signup');
-    }
-  });
+  var errorArray = [];
+
+  if(!req.body.email) {
+    errorArray.push('Please enter a username');
+  }
+  if(!req.body.password) {
+    errorArray.push('Please enter a password');
+  }
+  if(errorArray.length > 0) {
+    res.render('signup', {loginErrors: errorArray});
+  }
+  else{
+    knex('users').where({ email: req.body.email }).first().then(function(user) {
+      if (user && bcrypt.compareSync(req.body.password, user.password)) {
+        res.clearCookie('userID');
+        res.cookie('userID', user.id, { signed: true } );
+        res.redirect('/');
+      } else {
+        res.redirect('/signup');
+      }
+    });
+  }
 });
-
-
-// router.post('/login', function(req,res,next){
-//   knex('users')
-//   .where('username', '=', req.body.username)
-//   .first()
-//   .then(function(response){
-//     if(response && bcrypt.compareSync(req.body.password, response.password)){
-//       req.session.user = response.username;
-//       res.redirect('/');
-//     } else {
-//       res.render('login', {error: 'Invalid username or password'});
-//     }
-//   });
-// });
-//
-// router.get('/logout', function(req,res,next){
-//   req.session.user = null;
-//   res.redirect('/');
-// });
-
 
 module.exports = router;
