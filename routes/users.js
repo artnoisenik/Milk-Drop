@@ -71,22 +71,26 @@ router.post('/post/edit/:id', function(req, res, next) {
 })
 
 router.get('/profile', function(req, res, next) {
-  knex('listings')
-    .where('user_id', req.signedCookies.id)
-    .select('created_at', 'portrait_link', 'title', 'amount', 'cost_per_ounce', 'description', 'requested', 'verified', 'user_id')
-    .join('users', 'users.id', 'listings.user_id')
-    .then(function(listings) {
-      knex('users')
-        .where('id', req.signedCookies.id)
-        .select('first_name', 'last_name', 'portrait_link', 'email', 'address_1', 'address_2', 'city', 'state', 'zip_code', 'id')
-        .then(function(user) {
-          res.render('profile', {
-            title: 'Milk Exchange',
-            listings: listings,
-            user: user[0]
-          });
-        })
-    });
+  if (req.signedCookies.userID) {
+    knex('listings')
+      .where('user_id', req.signedCookies.userID)
+      .select('created_at', 'portrait_link', 'title', 'amount', 'cost_per_ounce', 'description', 'requested', 'verified', 'user_id')
+      .join('users', 'users.id', 'listings.user_id')
+      .then(function(listings) {
+        knex('users')
+          .where('id', req.signedCookies.userID)
+          .select('first_name', 'last_name', 'portrait_link', 'email', 'address_1', 'address_2', 'city', 'state', 'zip_code', 'id')
+          .then(function(user) {
+            res.render('profile', {
+              title: 'Milk Exchange',
+              listings: listings,
+              user: user[0]
+            });
+          })
+      });
+  } else {
+    res.redirect('/signup');
+  }
 });
 
 router.post('/profile/:id', function(req, res, next) {
