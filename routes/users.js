@@ -106,8 +106,8 @@ router.get('/admin/userlist', function(req, res, next){
 })
 
 router.get('/admin/listings', function(req, res, next){
-  knex('listings')
-    .join('users', 'users.id', 'listings.user_id')
+  knex('users')
+    .join('listings', 'listings.user_id', 'users.id')
     .then(function(listings) {
       console.log(listings);
       res.render('adminlisting', {
