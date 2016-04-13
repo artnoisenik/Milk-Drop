@@ -14,5 +14,4 @@ $(function() {
   if ($('.ratings').hasClass('5')) {
     $('.5').html('<span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span>');
   }
-
 });

@@ -6,12 +6,12 @@
       <div class="col-md-11">
         <h3>Log In:</h3>
         <form action="/login" method="post">
-          <div class="form-group">
-            <input type="email" class="form-control" name="email" placeholder='Email'>
-          </div>
-          <div class="form-group">
-            <input type="password" class="form-control" name="password" placeholder='Password'>
-          </div>
+          <div class="control-group">
+            <input type="email" class="form-control" pattern="^[^@]+@[^@]+\.[^@]+$" name="email" placeholder='Email'>
+          </div><br>
+          <div class="control-group">
+            <input type="password" class="form-control" name="password" minlength='8' data-validation-minlength-message='Needs to be at least 8 characters long!' placeholder='Password'>
+          </div><br>
           <div class="row">
             <div class="col-md-6">
               <div class="checkbox">
@@ -46,19 +46,21 @@
     <div class="row leftborder">
       <div class="col-md-offset-1 col-md-11">
         <h3>Sign Up:</h3>
-        <form action="/signupSubmit" method="post">
-          <div class="form-group">
-            <input type="email" class="form-control" name="Email2" placeholder='Email'>
+        <form action="/signupSubmit" method="post" class='signupForm'>
+          <div class="control-group">
+            <input id='emailLogin' type="email" class="form-control" name="Email2" pattern="^[^@]+@[^@]+\.[^@]+$" placeholder='Email'>
+          </div><br>
+          <div class="control-group">
+            <input type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,30}$" class="form-control" name="Password2" minlength='8' data-validation-minlength-message='Needs to be at least 8 characters long!' placeholder='Password'>
+            <div class="help-block">Minimum of 8 characters with at least 1 number and uppercase letter</div>
           </div>
-          <div class="form-group">
-            <input type="password" class="form-control" name="Password2" placeholder='Password'>
-          </div>
-          <div class="form-group">
-            <input type="password" class="form-control" name="Password2Confirm" placeholder='Confirm Password'>
-          </div>
+          <div class="control-group">
+            <input type="password" class="form-control" name="Password2Confirm" placeholder='Confirm Password' data-validation-match-match='Password2'>
+            <p class="help-block"></p>
+          </div><br>
           <div class="row">
             <div class="col-md-offset-8 col-md-4">
-              <button type="submit" class="btn btn-default">Update</button>
+              <button type="submit" class="btn btn-default">Register</button>
             </div>
           </div>
         </form>
@@ -68,3 +70,6 @@
   </div>
 
 </div>
+<script>
+   $(function () { $("input,select,textarea").not("[type=submit]").jqBootstrapValidation(); } );
+</script>
