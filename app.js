@@ -39,14 +39,6 @@ passport.use(new Strategy({
     callbackURL: process.env.CALLBACK_URL + '/login/facebook/return'
   },
   function(accessToken, refreshToken, profile, cb) {
-  //   knex('users')
-  //   .where('facebook_id', profile.id)
-  //   .then(function(user){
-  //     res.clearCookie('userID');
-  //     res.cookie('userID', user[0].id, {
-  //     signed: true
-  //   });
-  // });
     return cb(null, profile);
   }));
 
@@ -64,6 +56,7 @@ app.get('/login/facebook',
 app.get('/login/facebook/return',
   passport.authenticate('facebook', { failureRedirect: '/signup' }),
   function(req, res) {
+    if(facebook_id){
     knex('users')
     .where('facebook_id', req.user.id)
     .then(function(user){
@@ -73,6 +66,11 @@ app.get('/login/facebook/return',
     });
     res.redirect('/');
   });
+} else {
+  knex('users')
+  .insert({facebook_id:req.user.id, email:req.user.email})
+
+}
 });
 
 app.get('/profile',
