@@ -18,6 +18,8 @@ exports.seed = function(knex, Promise) {
           city: 'Boulder',
           state: 'CO',
           zip_code: '80302',
+          latitude: 40.1742733000,
+          longitude: -105.2444810000,
           admin: true,
           verified: true
         }),
@@ -33,6 +35,8 @@ exports.seed = function(knex, Promise) {
           city: 'Boulder',
           state: 'CO',
           zip_code: '80302',
+          latitude: 40.1742753000,
+          longitude: -105.2444610000,
           admin: false,
           verified: false
         }),
@@ -48,6 +52,8 @@ exports.seed = function(knex, Promise) {
           city: 'Boulder',
           state: 'CO',
           zip_code: '80302',
+          latitude: 32.1742433000,
+          longitude: -100.2445010000,
           admin: false,
           verified: false
         }),
@@ -63,6 +69,8 @@ exports.seed = function(knex, Promise) {
           city: 'Boulder',
           state: 'CO',
           zip_code: '80302',
+          latitude: 40.1741833000,
+          longitude: -82.2444810000,
           admin: false,
           verified: false
         })

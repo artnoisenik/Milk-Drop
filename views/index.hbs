@@ -64,6 +64,9 @@
     console.log("Geolocation is not supported by this browser.");
   }
 
+
+  var listingArray = {{{listingMapMarkers}}};
+
   function success(pos) {
     var crd = pos.coords;
     console.log(pos.coords);
@@ -76,11 +79,10 @@
       .setView([crd.latitude, crd.longitude], 10);
     var myLayer = L.mapbox.featureLayer().addTo(map);
 
-
     var geojson = [];
-    for (var i = 0; i <= 10; i++) {
-      var newlat = crd.latitude + Math.random();
-      var newlong = crd.longitude + Math.random();
+    for (var i = 0; i < listingArray.length; i++) {
+      var newlat = listingArray[i].latitude;
+      var newlong = listingArray[i].longitude;
       var newJson = {
         "type": "Feature",
         "geometry": {
@@ -97,7 +99,6 @@
       };
       geojson.push(newJson);
     }
-
     console.log(geojson);
 
     myLayer.setGeoJSON(geojson);

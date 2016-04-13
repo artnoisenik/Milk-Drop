@@ -7,18 +7,21 @@ var bcrypt = require('bcryptjs');
 var request = require('request');
 
 router.get('/', function(req, res, next) {
-  knex('users').select('latitude').where({id:5}).then(function(lat){
-    console.log(lat);
-  });
   knex('listings')
     .select('rating', 'listings.id', 'created_at', 'title', 'amount', 'cost_per_ounce', 'description', 'requested', 'portrait_link', 'city', 'verified')
     .join('ratings', 'reciever_id', 'listings.user_id')
     .join('users', 'users.id', 'listings.user_id')
     .then(function(listings) {
-      res.render('index', {
-        title: 'Milk Exchange',
-        listings: listings,
-        user: req.user
+      knex('listings')
+      .leftJoin('users', 'listings.user_id', 'users.id')
+      .select('latitude', 'longitude')
+      .then(function(listingMapMarkers){
+        res.render('index', {
+          title: 'Milk Exchange',
+          listings: listings,
+          user: req.user,
+          listingMapMarkers: JSON.stringify(listingMapMarkers)
+        });
       });
     });
 });
