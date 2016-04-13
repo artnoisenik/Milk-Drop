@@ -7,12 +7,12 @@ exports.seed = function(knex, Promise) {
     .then(function() {
       return Promise.join(
         knex('users').insert({
-          first_name: 'John',
-          last_name: 'Doe',
-          email: 'milks@milks.com',
+          first_name: 'Brad',
+          last_name: 'Butterfield',
+          email: 'brad@admin.com',
           password: 'password',
           phone: '(123)456-7890',
-          portrait_link: 'http://www.newhealthadvisor.com/images/1HT00604/Glass-of-milk-2009.png',
+          portrait_link: 'https://upload.wikimedia.org/wikipedia/en/d/d4/Mickey_Mouse.png',
           address_1: '1015 Pearl St',
           address_2: '',
           city: 'Boulder',
@@ -33,8 +33,8 @@ exports.seed = function(knex, Promise) {
           city: 'Boulder',
           state: 'CO',
           zip_code: '80302',
-          admin: true,
-          verified: true
+          admin: false,
+          verified: false
         }),
         knex('users').insert({
           first_name: 'Sally',
@@ -96,11 +96,11 @@ exports.seed = function(knex, Promise) {
       return Promise.join(
         knex('listings').insert({
           user_id: 1,
-          post_end: '5/1/2016',
-          title: 'I have extra milk!',
-          amount: 1,
-          cost_per_ounce: 1,
-          description: 'Organic and vegan!',
+          post_end: '5/7/2016',
+          title: 'Organic breast milk!',
+          amount: 200,
+          cost_per_ounce: 3,
+          description: 'Great quality organic and vegan breast milk for sale.',
           requested: false
         }),
         knex('listings').insert({

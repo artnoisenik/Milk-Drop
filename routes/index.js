@@ -51,7 +51,7 @@ router.post('/signupSubmit2', function(req, res, next) {
   queries.createNewUser(req.body.First, req.body.Last, req.body.Email, req.body.Password, req.body.Phone, req.body.PortraitLink, req.body.Address, req.body.Address_2, req.body.City, req.body.State, req.body.Zip)
     .then(function(id) {
       res.clearCookie('userID');
-      res.cookie('userID', Number(id), { signed: true });
+      res.cookie('userID', id[0], { signed: true });
       res.redirect('/');
     });
 });

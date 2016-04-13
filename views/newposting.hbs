@@ -2,7 +2,7 @@
 
 <div class="row posting">
   <div class="col-md-12">
-    <form action="/users/post" method="post">
+    <form action="/users/addposting" method="post">
       <div class="form-group">
         <p>
           {{#if success}}
@@ -13,7 +13,7 @@
         <input type="text" class="form-control" id="title" name="title" placeholder="Title">
       </div>
       <div class="form-group">
-        <label for="expiration_date">Expiration Date</label>
+        <label for="expiration_date">Posting Expiration Date</label>
         <input type="date" class="form-control" id="expiration_date" name="expiration_date" placeholder="Expiration Date">
       </div>
       <div class="form-group">
