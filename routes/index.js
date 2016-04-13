@@ -78,7 +78,7 @@ router.get('/logout', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
   knex('users').where({ email: req.body.email }).first().then(function(user) {
-    if (response && bcrypt.compareSync(req.body.password, response.password)) {
+    if (user && bcrypt.compareSync(req.body.password, user.password)) {
       res.clearCookie('userID');
       res.cookie('userID', user.id, { signed: true } );
       res.redirect('/');
