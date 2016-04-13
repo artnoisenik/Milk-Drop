@@ -3,6 +3,7 @@ var router = express.Router();
 var knex = require('../lib/knex');
 var queries = require('../lib');
 var handlebars = require('handlebars');
+var bcrypt = require('bcryptjs');
 
 router.get('/', function(req, res, next) {
   knex('listings')
@@ -44,10 +45,10 @@ router.get('/signup', function(req, res, next) {
 router.post('/signupSubmit', function(req, res, next) {
   var errorArray = [];
 
-  if(!req.body.username) {
+  if(!req.body.Email2) {
     errorArray.push('Please enter a username');
   }
-  if(!req.body.password) {
+  if(!req.body.Password2) {
     errorArray.push('Please enter a password');
   }
   if(errorArray.length > 0) {
@@ -61,7 +62,8 @@ router.post('/signupSubmit', function(req, res, next) {
 });
 
 router.post('/signupSubmit2', function(req, res, next) {
-  queries.createNewUser(req.body.First, req.body.Last, req.body.Email, req.body.Password, req.body.Phone, req.body.PortraitLink, req.body.Address, req.body.Address_2, req.body.City, req.body.State, req.body.Zip)
+  var hash = bcrypt.hashSync(req.body.Password, 8);
+  queries.createNewUser(req.body.First, req.body.Last, req.body.Email, hash, req.body.Phone, req.body.PortraitLink, req.body.Address, req.body.Address_2, req.body.City, req.body.State, req.body.Zip)
     .then(function(id) {
       res.clearCookie('userID');
       res.cookie('userID', Number(id), { signed: true });
@@ -76,7 +78,7 @@ router.get('/logout', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
   knex('users').where({ email: req.body.email }).first().then(function(user) {
-    if (user && (req.body.password === user.password)) {
+    if (response && bcrypt.compareSync(req.body.password, response.password)) {
       res.clearCookie('userID');
       res.cookie('userID', user.id, { signed: true } );
       res.redirect('/');
@@ -86,48 +88,25 @@ router.post('/login', function(req, res, next) {
   });
 });
 
-router.post('/signup', function(req,res,next){
-  // validate that the form was filled out
-   var errorArray = [];
 
-   if(!req.body.username) {
-     errorArray.push('Please enter a username');
-   }
-   if(!req.body.password) {
-     errorArray.push('Please enter a password');
-   }
-   if(errorArray.length > 0) {
-     res.render('signUp', {errors: errorArray});
-   }
-   else{
-  var hash = bcrypt.hashSync(req.body.password, 8);
-  knex('users')
-  .insert({'username': req.body.username, 'password': hash})
-  .then(function(response){
-    res.redirect('/');
-  })
-}
-
-});
-
-router.post('/login', function(req,res,next){
-  knex('users')
-  .where('username', '=', req.body.username)
-  .first()
-  .then(function(response){
-    if(response && bcrypt.compareSync(req.body.password, response.password)){
-      req.session.user = response.username;
-      res.redirect('/');
-    } else {
-      res.render('login', {error: 'Invalid username or password'});
-    }
-  });
-});
-
-router.get('/logout', function(req,res,next){
-  req.session.user = null;
-  res.redirect('/');
-});
+// router.post('/login', function(req,res,next){
+//   knex('users')
+//   .where('username', '=', req.body.username)
+//   .first()
+//   .then(function(response){
+//     if(response && bcrypt.compareSync(req.body.password, response.password)){
+//       req.session.user = response.username;
+//       res.redirect('/');
+//     } else {
+//       res.render('login', {error: 'Invalid username or password'});
+//     }
+//   });
+// });
+//
+// router.get('/logout', function(req,res,next){
+//   req.session.user = null;
+//   res.redirect('/');
+// });
 
 
 module.exports = router;
