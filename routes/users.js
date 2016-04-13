@@ -109,7 +109,7 @@ router.get('/admin/listings', function(req, res, next){
   knex('listings')
     .join('users', 'users.id', 'listings.user_id')
     .then(function(listings) {
-              console.log(listings);
+      console.log(listings);
       res.render('adminlisting', {
         title: 'MilKonnect',
         listings: listings
@@ -117,7 +117,14 @@ router.get('/admin/listings', function(req, res, next){
     });
 })
 
-router.post('/admin/listings/:id/delete', function)
+router.post('/admin/listings/:id/delete', function(req, res, next){
+  knex('listings')
+  .where('id', req.params.id)
+  .del()
+  .then(function(response){
+    res.redirect('/users/admin/listings');
+  })
+})
 
 
 module.exports = router;
