@@ -1,3 +1,5 @@
+var bcrypt = require('bcryptjs');
+
 exports.seed = function(knex, Promise) {
   return Promise.join(
       knex('users').del(),
@@ -10,7 +12,7 @@ exports.seed = function(knex, Promise) {
           first_name: 'Brad',
           last_name: 'Butterfield',
           email: 'brad@admin.com',
-          password: 'password',
+          password: bcrypt.hashSync('password', 10),
           phone: '(123)456-7890',
           portrait_link: 'https://upload.wikimedia.org/wikipedia/en/d/d4/Mickey_Mouse.png',
           address_1: '1015 Pearl St',
@@ -25,7 +27,7 @@ exports.seed = function(knex, Promise) {
           first_name: 'Billy',
           last_name: 'Bob',
           email: 'happybaby@milks.com',
-          password: 'password',
+          password: bcrypt.hashSync('password', 10),
           phone: '(555)555-5555',
           portrait_link: 'http://i5.asn.im/baby-milk-jpg-_tz92.jpg',
           address_1: '1521 Pearl St',
@@ -40,7 +42,7 @@ exports.seed = function(knex, Promise) {
           first_name: 'Sally',
           last_name: 'Sue',
           email: 'iWantMilk@aol.com',
-          password: 'password',
+          password: bcrypt.hashSync('password', 10),
           phone: '(800)123-1234',
           portrait_link: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/python_in_a_nutshell.jpg',
           address_1: '1035 Walnut St',
@@ -55,7 +57,7 @@ exports.seed = function(knex, Promise) {
           first_name: 'Jeff',
           last_name: 'Dean',
           email: 'needMamaMilk@aol.com',
-          password: 'password',
+          password: bcrypt.hashSync('password', 10),
           phone: '(800)123-1234',
           portrait_link: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/python_in_a_nutshell.jpg',
           address_1: '1605 Folsom St',
