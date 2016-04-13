@@ -16,6 +16,7 @@ exports.up = function(knex, Promise) {
     table.decimal('longitude', 20, 10);
     table.boolean('admin');
     table.boolean('verified');
+    table.string('facebook_id');
   });
 };
 

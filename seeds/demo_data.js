@@ -43,6 +43,24 @@ exports.seed = function(knex, Promise) {
           verified: false
         }),
         knex('users').insert({
+          first_name: 'Phil',
+          last_name: 'Skaggs',
+          email: '',
+          password: '',
+          phone: '(800)123-1234',
+          portrait_link: 'http://rack.1.mshcdn.com/media/ZgkyMDE0LzA0LzI1L2MyLzE5NjMuYTgwNGYuanBnCnAJdGh1bWIJODUweDg1MD4KZQlqcGc/e7c501d3/4b5/1963.jpg',
+          address_1: '13 Elm St',
+          address_2: 'Apt 45',
+          city: 'Boulder',
+          state: 'CO',
+          zip_code: '80302',
+          latitude: 32.1742433000,
+          longitude: -100.2445010000,
+          admin: true,
+          verified: false,
+          facebook_id: '224488141247570'
+        }),
+        knex('users').insert({
           first_name: 'Sally',
           last_name: 'Sue',
           email: 'iWantMilk@aol.com',
