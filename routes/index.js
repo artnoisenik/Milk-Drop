@@ -3,6 +3,7 @@ var router = express.Router();
 var knex = require('../lib/knex');
 var queries = require('../lib');
 var handlebars = require('handlebars');
+var bcrypt = require('bcryptjs');
 
 router.get('/', function(req, res, next) {
   knex('listings')
@@ -42,13 +43,27 @@ router.get('/signup', function(req, res, next) {
 });
 
 router.post('/signupSubmit', function(req, res, next) {
-  res.render('completeprofile', {
-    user: req.body
-  });
+  var errorArray = [];
+
+  if(!req.body.Email2) {
+    errorArray.push('Please enter a username');
+  }
+  if(!req.body.Password2) {
+    errorArray.push('Please enter a password');
+  }
+  if(errorArray.length > 0) {
+    res.render('signup', {errors: errorArray});
+  }
+  else{
+    res.render('completeprofile', {
+      user: req.body
+    });
+  }
 });
 
 router.post('/signupSubmit2', function(req, res, next) {
-  queries.createNewUser(req.body.First, req.body.Last, req.body.Email, req.body.Password, req.body.Phone, req.body.PortraitLink, req.body.Address, req.body.Address_2, req.body.City, req.body.State, req.body.Zip)
+  var hash = bcrypt.hashSync(req.body.Password, 8);
+  queries.createNewUser(req.body.First, req.body.Last, req.body.Email, hash, req.body.Phone, req.body.PortraitLink, req.body.Address, req.body.Address_2, req.body.City, req.body.State, req.body.Zip)
     .then(function(id) {
       res.clearCookie('userID');
       res.cookie('userID', Number(id), { signed: true });
@@ -62,16 +77,28 @@ router.get('/logout', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
-  knex('users').where({ email: req.body.email }).first().then(function(user) {
-    if (user && (req.body.password === user.password)) {
-      res.clearCookie('userID');
-      res.cookie('userID', user.id, { signed: true } );
-      res.redirect('/');
-    } else {
-      res.redirect('/signup');
-    }
-  });
-});
+  var errorArray = [];
 
+  if(!req.body.email) {
+    errorArray.push('Please enter a username');
+  }
+  if(!req.body.password) {
+    errorArray.push('Please enter a password');
+  }
+  if(errorArray.length > 0) {
+    res.render('signup', {loginErrors: errorArray});
+  }
+  else{
+    knex('users').where({ email: req.body.email }).first().then(function(user) {
+      if (user && bcrypt.compareSync(req.body.password, user.password)) {
+        res.clearCookie('userID');
+        res.cookie('userID', user.id, { signed: true } );
+        res.redirect('/');
+      } else {
+        res.redirect('/signup');
+      }
+    });
+  }
+});
 
 module.exports = router;
