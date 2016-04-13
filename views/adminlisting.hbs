@@ -1,0 +1,56 @@
+<div class="row secondary_nav">
+  <div class="col-md-offset-1 col-md-2">
+    <form action="/location" method="post">
+      <div class="form-group">
+        <input type="text" class="form-control" name="" placeholder="Enter a location...">
+      </div>
+    </form>
+  </div>
+  <div class="col-md-offset-6 col-md-2 text-right">
+    <div class="form-group">
+      <a href="/users/post">
+        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a Listing</button>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="row map">
+  <div class="col-md-12">
+    <img src="http://placehold.it/1x1" alt="placeholder" />
+  </div>
+</div>
+
+{{#each listings}}
+  <div class="row listing">
+    <div class="col-md-offset-1 col-md-10">
+      <div class="row">
+        <div class="col-md-2 text-center">
+          <img src="{{portrait_link}}" alt="{{title}}" />
+          <p>
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+          </p>
+        </div>
+        <div class="col-md-7">
+          <span class="glyphicon glyphicon-star verified {{verified}}" aria-hidden="true"></span>
+          <p>{{description}}</p>
+        </div>
+        <div class="col-md-3">
+          <p>City: {{city}}</p>
+          <p>Amount: {{amount}}oz</p>
+          <p>Cost: ${{cost_per_ounce}}</p>
+          <p>Date: {{created_at}}</p>
+          <form action="/users/admin/listings/{{id}}/delete" method="post">
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Delete</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/each}}
