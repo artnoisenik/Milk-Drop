@@ -1,31 +1,5 @@
-<div class="row secondary_nav">
-  <div class="col-md-offset-1 col-md-2">
-    <form action="/location" method="post">
-      <div class="form-group">
-        <input type="text" class="form-control" name="" placeholder="Enter a location...">
-      </div>
-    </form>
-  </div>
-  <div class="col-md-offset-6 col-md-2 text-right">
-    <div class="form-group">
-      <a href="/users/post">
-        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a Listing</button>
-      </a>
-    </div>
-  </div>
-</div>
-
-<div class="row map">
-  <div class="col-md-12">
-    <img src="http://placehold.it/1x1" alt="placeholder" />
-    {{#if success}}
-      {{success}}
-    {{/if}}
-  </div>
-</div>
-
 {{#each listings}}
-  <div class="row listing">
+  <div class="row postings">
     <div class="col-md-offset-1 col-md-10">
       <div class="row">
         <div class="col-md-2 text-center">

@@ -114,9 +114,9 @@ router.get('/admin', function(req, res, next) {
   res.render('admin');
 })
 
-router.get('/admin/userlist', function(req, res, next) {
-  res.render('adminusers')
-})
+// router.get('/admin/userlist', function(req, res, next) {
+//   res.render('adminusers')
+// })
 
 router.get('/admin/listings', function(req, res, next) {
   knex('users')
