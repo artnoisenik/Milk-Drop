@@ -34,7 +34,12 @@ router.get('/posting/:id', function(req,res,next){
       })
     })
 })
-
+router.get('/pasteurize', function(req, res, next) {
+  res.render('pasteurize');
+});
+router.get('/massage', function(req, res, next) {
+  res.render('massage');
+});
 router.get('/signup', function(req, res, next) {
   res.render('signup', { title: 'MilConnect' });
 });
