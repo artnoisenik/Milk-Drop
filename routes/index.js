@@ -3,9 +3,17 @@ var router = express.Router();
 var knex = require('../lib/knex');
 var queries = require('../lib');
 var handlebars = require('handlebars');
+<<<<<<< HEAD
 var bcrypt = require('bcryptjs');
+=======
+var request = require('request');
+
+>>>>>>> geoCoding
 
 router.get('/', function(req, res, next) {
+  knex('users').select('latitude').where({id:5}).then(function(lat){
+    console.log(lat);
+  });
   knex('listings')
     .select('rating', 'listings.id', 'created_at', 'title', 'amount', 'cost_per_ounce', 'description', 'requested', 'portrait_link', 'city', 'verified')
     .join('ratings', 'reciever_id', 'listings.user_id')
@@ -61,14 +69,54 @@ router.post('/signupSubmit', function(req, res, next) {
   }
 });
 
+function getCoords(address){
+  return new Promise(function(resolve, reject){
+    var string = '';
+    string += 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDoQkO239JbGI_7BHz7IHA6d-_dLDRsL0c&';
+    string += address;
+    string += '&sensor=false';
+    console.log(string);
+    request(string, function (error, response, body) {
+      if (error) {
+        console.log("Error!  Request failed - " + error);
+        reject("Error! Request failed - " + error);
+      } else if (!error && response.statusCode === 200) {
+        //console.log(body);
+        location = JSON.parse(body);
+        console.log(location.results[0].geometry.location);
+        resolve(location.results[0].geometry.location);
+      }
+    });
+  });
+}
+
 router.post('/signupSubmit2', function(req, res, next) {
   var hash = bcrypt.hashSync(req.body.Password, 8);
-  queries.createNewUser(req.body.First, req.body.Last, req.body.Email, hash, req.body.Phone, req.body.PortraitLink, req.body.Address, req.body.Address_2, req.body.City, req.body.State, req.body.Zip)
-    .then(function(id) {
-      res.clearCookie('userID');
-      res.cookie('userID', id[0], { signed: true });
-      res.redirect('/');
-    });
+  var location;
+  var address = 'address=' + req.body.Address + ',' + req.body.Address_2 + req.body.City + ',' + req.body.State + req.body.Zip;
+  getCoords(address).then(function(location){
+    console.log("LOCATIONS");
+    console.log(location);
+    queries.createNewUser(
+      req.body.First,
+      req.body.Last,
+      req.body.Email,
+      req.body.Password,
+      req.body.Phone,
+      req.body.PortraitLink,
+      req.body.Address,
+      req.body.Address_2,
+      req.body.City,
+      req.body.State,
+      req.body.Zip,
+      location.lat,
+      location.lng
+    ).then(function(id) {
+        res.clearCookie('userID');
+        res.cookie('userID', id[0], { signed: true });
+        res.redirect('/');
+      });
+  });
 });
 
 router.get('/logout', function(req, res, next) {

@@ -22,6 +22,7 @@
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.0",
     "pg": "^4.5.3",
+    "request": "^2.71.0",
     "serve-favicon": "~2.3.0"
   }
 }
