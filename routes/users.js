@@ -113,4 +113,53 @@ router.post('/profile/:id', function(req, res, next) {
     });
 })
 
+router.get('/admin', function(req, res, next){
+  res.render('admin');
+})
+
+router.get('/admin/userlist', function(req, res, next){
+  res.render('adminusers')
+})
+
+router.get('/admin/listings', function(req, res, next){
+  knex('users')
+    .join('listings', 'listings.user_id', 'users.id')
+    .then(function(listings) {
+      console.log(listings);
+      res.render('adminlisting', {
+        title: 'MilKonnect',
+        listings: listings
+      });
+    });
+})
+
+router.post('/admin/listings/:id/delete', function(req, res, next){
+  knex('listings')
+  .where('id', req.params.id)
+  .del()
+  .then(function(response){
+    res.redirect('/users/admin/listings');
+  })
+})
+
+router.get('/admin/all', function(req, res, next){
+  knex('users')
+    .then(function(users) {
+      console.log(users);
+      res.render('adminusers', {
+        title: 'MilKonnect',
+        users: users
+      });
+    });
+})
+
+router.post('/admin/:id/delete', function(req, res, next){
+  knex('users')
+  .where('id', req.params.id)
+  .del()
+  .then(function(response){
+    res.redirect('/users/admin/all');
+  })
+})
+
 module.exports = router;

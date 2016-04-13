@@ -24,7 +24,7 @@
   </div>
 </div>
 
-{{#each users}}
+{{#each listings}}
   <div class="row listing">
     <div class="col-md-offset-1 col-md-10">
       <div class="row">
@@ -39,14 +39,15 @@
           </p>
         </div>
         <div class="col-md-7">
-          <h4>Email: {{email}}</h4>
+          <span class="glyphicon glyphicon-star verified {{verified}}" aria-hidden="true"></span>
+          <p>{{description}}</p>
         </div>
         <div class="col-md-3">
-          <p>Street address: {{address_1}} {{address_2}}</p>
           <p>City: {{city}}</p>
-          <p>State: {{state}}</p>
-          <p>Zip code: {{zip_code}}</p>
-          <form action="/users/admin/{{id}}/delete" method="post">
+          <p>Amount: {{amount}}oz</p>
+          <p>Cost: ${{cost_per_ounce}}</p>
+          <p>Date: {{created_at}}</p>
+          <form action="/users/admin/listings/{{id}}/delete" method="post">
             <div class="form-group">
               <button type="submit" class="btn btn-primary">Delete</button>
             </div>
