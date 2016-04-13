@@ -3,12 +3,8 @@ var router = express.Router();
 var knex = require('../lib/knex');
 var queries = require('../lib');
 var handlebars = require('handlebars');
-<<<<<<< HEAD
 var bcrypt = require('bcryptjs');
-=======
 var request = require('request');
-
->>>>>>> geoCoding
 
 router.get('/', function(req, res, next) {
   knex('users').select('latitude').where({id:5}).then(function(lat){
