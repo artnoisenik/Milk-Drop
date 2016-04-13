@@ -3,7 +3,6 @@ var router = express.Router();
 var knex = require('../lib/knex');
 var queries = require('../lib');
 
-/* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
@@ -15,7 +14,7 @@ router.get('/', function(req, res, next) {
 //     res.redirect('/signup');
 // }
 
-router.post('/request', function(req, res, next){
+router.post('/request', function(req, res, next) {
   res.redirect('/signup');
 });
 
@@ -37,7 +36,7 @@ router.post('/post', function(req, res, next) {
     })
     .then(function() {
       res.render('newposting', {
-        title: 'Lact2Go',
+        title: 'Milk Exchange',
         success: 'Post added'
       });
     });
@@ -49,7 +48,7 @@ router.get('/post/edit/:id', function(req, res, next) {
     .then(function(post) {
       console.log(post);
       res.render('editposting', {
-        title: 'Lact2Go',
+        title: 'Milk Exchange',
         post: post
       })
     })
@@ -71,7 +70,7 @@ router.post('/post/edit/:id', function(req, res, next) {
     });
 })
 
-router.get('/profile/', function(req, res, next) {
+router.get('/profile', function(req, res, next) {
   knex('listings')
     .where('user_id', req.signedCookies.id)
     .select('created_at', 'portrait_link', 'title', 'amount', 'cost_per_ounce', 'description', 'requested', 'verified', 'user_id')
@@ -82,7 +81,7 @@ router.get('/profile/', function(req, res, next) {
         .select('first_name', 'last_name', 'portrait_link', 'email', 'address_1', 'address_2', 'city', 'state', 'zip_code', 'id')
         .then(function(user) {
           res.render('profile', {
-            title: 'MilConnect',
+            title: 'Milk Exchange',
             listings: listings,
             user: user[0]
           });
@@ -109,7 +108,5 @@ router.post('/profile/:id', function(req, res, next) {
       res.redirect('/users/profile/');
     });
 })
-
-
 
 module.exports = router;

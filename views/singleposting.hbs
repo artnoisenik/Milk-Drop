@@ -1,16 +1,23 @@
-<br><br><br><br><br><br>
+<div class="row postingsnav">
+  <div class="col-md-offset-1 col-md-10 text-right">
+    <a href="../"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span></a>
+  </div>
+</div>
+
 {{#each listings}}
-  <div class="row listing">
+  <div class="row postings">
     <div class="col-md-offset-1 col-md-10">
+
       <div class="row">
+
         <div class="col-md-2 text-center">
           <img src="{{portrait_link}}" alt="{{title}}" />
-
+          <div class="ratings {{rating}}"></div>
         </div>
 
         <div class="col-md-7">
           <span class="glyphicon glyphicon-star verified {{verified}}" aria-hidden="true"></span>
-          <a href='/singlePosting/{{id}}'><h3>{{title}}</h3></a>
+          <h3>{{title}}</h3>
           <p>{{description}}</p>
         </div>
 
@@ -25,7 +32,9 @@
             </div>
           </form>
         </div>
+
       </div>
+
     </div>
   </div>
 {{/each}}
