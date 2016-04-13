@@ -56,10 +56,9 @@ router.post('/signupSubmit2', function(req, res, next) {
     });
 });
 
-router.post('/fakelogin', function(req, res, next) {
-  res.clearCookie('id');
-  res.cookie('id', Math.floor(Math.random() * (4)) + 1, { signed: true });
-  res.redirect('/');
+router.get('/logout', function(req, res, next) {
+  res.clearCookie('userID');
+  res.redirect('/signup');
 });
 
 router.post('/login', function(req, res, next) {
