@@ -35,7 +35,8 @@ router.post('/addposting', function(req, res, next) {
       description: req.body.description
     })
     .then(function() {
-      res.render('newposting', { title: 'Milk Exchange', success: 'Post added' });
+      // res.render('newposting', { title: 'Milk Exchange', success: 'Post added' });
+      res.redirect('/');
     });
 })
 

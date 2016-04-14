@@ -81,7 +81,6 @@ function getCoords(address) {
         console.log("Error!  Request failed - " + error);
         reject("Error! Request failed - " + error);
       } else if (!error && response.statusCode === 200) {
-        //console.log(body);
         location = JSON.parse(body);
         console.log(location.results[0].geometry.location);
         resolve(location.results[0].geometry.location);
@@ -111,9 +110,9 @@ router.post('/signupSubmit2', function(req, res, next) {
             if (/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(req.body.Phone) === false) {
               errorArray.push('First name has have at least 1 uppercase letter and no numbers/special characters');
             }
-            if (/^([0-9]+ )?[a-zA-Z ]+$/.test(req.body.Address) === false) {
-              errorArray.push('Address has to have at least a number and a letter');
-            }
+            // if (/^\d+\w*\s*(?:(?:[\-\/]?\s*)?\d*(?:\s*\d+\/\s*)?\d+)?\s+/.test(req.body.Address) === false) {
+            //   errorArray.push('Address has to have at least a number and a letter');
+            // }
             if (/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/.test(req.body.City) === false) {
               errorArray.push('City has to only include letters');
             }

@@ -13,18 +13,18 @@
             <input type="email" class="form-control" name="email" placeholder='Email'>
           </div><br>
           <div class="control-group">
-            <input type="password" class="form-control" name="password" minlength='8' data-validation-minlength-message='Needs to be at least 8 characters long!' placeholder='Password'>
+            <input type="password" class="form-control" name="password" placeholder='Password'>
             <p class="help-block"></p>
           </div><br>
           <div class="row">
             <div class="col-md-6">
-              <div class="checkbox">
+              <!-- <div class="checkbox">
                 <label class="rememberMe">
                   <input type="checkbox"> Remember me
                 </label>
-              </div>
+              </div> -->
             </div>
-            <div class="col-md-offset-2 col-md-4 text-right">
+            <div class="col-md-offset-2 col-md-8">
               <button type="submit" class="btn btn-default">Log In</button>
             </div>
           </div>
@@ -55,8 +55,8 @@
             <input id='emailLogin' type="text" class="form-control" name="Email2" placeholder='Email'>
           </div><br>
           <div class="control-group">
-            <input type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,30}$" class="form-control" name="Password2" minlength='8' placeholder='Password'>
-            <div class="help-block">Minimum of 8 characters with at least 1 number and uppercase letter</div>
+            <input type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,30}$" class="form-control" name="Password2" minlength='8' placeholder='Password - Must include at least 1 uppercase letter and one number'>
+            <p class="help-block"></p>
           </div>
           <div class="control-group">
             <input type="password" class="form-control" name="Password2Confirm" placeholder='Confirm Password' data-validation-match-match='Password2' data-validation-match-message='Needs to match password from above'>
