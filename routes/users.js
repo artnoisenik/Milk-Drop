@@ -20,7 +20,7 @@ router.post('/request', function(req, res, next) {
 
 router.get('/posting', function(req, res, next) {
   res.render('newposting', {
-    title: 'Milk Exchange - Add Posting'
+    title: 'Milk Drop - Add Posting'
   });
 })
 
@@ -35,7 +35,10 @@ router.post('/addposting', function(req, res, next) {
       description: req.body.description
     })
     .then(function() {
-      res.render('newposting', { title: 'Milk Exchange', success: 'Post added' });
+      res.render('newposting', {
+        title: 'Milk Drop',
+        success: 'Post added'
+      });
     });
 })
 
@@ -45,7 +48,7 @@ router.get('/post/edit/:id', function(req, res, next) {
     .then(function(post) {
       console.log(post);
       res.render('editposting', {
-        title: 'Milk Exchange',
+        title: 'Milk Drop',
         post: post
       })
     })
@@ -114,48 +117,41 @@ router.get('/admin', function(req, res, next) {
   res.render('admin');
 })
 
-// router.get('/admin/userlist', function(req, res, next) {
-//   res.render('adminusers')
-// })
-
-router.get('/admin/listings', function(req, res, next) {
-  knex('users')
-    .join('listings', 'listings.user_id', 'users.id')
+router.get('/admin/alllistings', function(req, res, next) {
+  knex('listings')
+    .join('ratings', 'reciever_id', 'listings.user_id')
+    .join('users', 'users.id', 'listings.user_id')
     .then(function(listings) {
       console.log(listings);
       res.render('adminlisting', {
-        title: 'MilKonnect',
+        title: 'Milk Drop',
         listings: listings
       });
     });
 })
 
 router.post('/admin/listings/:id/delete', function(req, res, next) {
-  knex('listings')
-    .where('id', req.params.id)
-    .del()
+  knex('listings').where('id', req.params.id).del()
     .then(function(response) {
-      res.redirect('/users/admin/listings');
+      res.redirect('/users/admin/alllistings');
     })
 })
 
-router.get('/admin/all', function(req, res, next) {
-  knex('users')
+router.get('/admin/allusers', function(req, res, next) {
+  knex('ratings')
+    .join('users', 'users.id', 'reciever_id')
     .then(function(users) {
-      console.log(users);
       res.render('adminusers', {
-        title: 'MilKonnect',
+        title: 'Milk Drop - All Users',
         users: users
       });
     });
 })
 
 router.post('/admin/:id/delete', function(req, res, next) {
-  knex('users')
-    .where('id', req.params.id)
-    .del()
-    .then(function(response) {
-      res.redirect('/users/admin/all');
+  knex('users').where('users.id', req.params.id).del()
+    .then(function() {
+      res.redirect('/users/admin/allusers');
     })
 })
 

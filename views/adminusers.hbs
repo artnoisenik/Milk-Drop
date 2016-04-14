@@ -1,32 +1,22 @@
 {{#each users}}
-  <div class="row postings">
-    <div class="col-md-offset-1 col-md-10">
-      <div class="row">
-        <div class="col-md-2 text-center">
-          <img src="{{portrait_link}}" alt="{{title}}" />
-          <p>
-            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-          </p>
+  <div class="row dashboard page-header">
+    <div class="col-md-offset-1 col-md-3 text-center">
+      <img src="{{portrait_link}}" alt="{{first_name}} {{last_name}}" />
+      <div class="ratings {{rating}}"></div>
+    </div>
+    <div class="col-md-offset-1 col-md-7">
+      <h2>{{first_name}} {{last_name}}</h2>
+      <span class="glyphicon glyphicon-star verified {{verified}}" aria-hidden="true"></span>
+      <h4>{{address_1}}</h4>
+      {{#if address_2}}<h4>{{address_2}}</h4>{{/if}}
+      <h4>{{city}} {{state}}, {{zip_code}}</h4>
+      <h3>Email: {{email}}</h3>
+      <h3>Phone: {{phone}}</h3>
+      <form action="/users/admin/{{id}}/delete" method="post">
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Delete User</button>
         </div>
-        <div class="col-md-7">
-          <h4>Email: {{email}}</h4>
-        </div>
-        <div class="col-md-3">
-          <p>Street address: {{address_1}} {{address_2}}</p>
-          <p>City: {{city}}</p>
-          <p>State: {{state}}</p>
-          <p>Zip code: {{zip_code}}</p>
-          <form action="/users/admin/{{id}}/delete" method="post">
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary">Delete</button>
-            </div>
-          </form>
-        </div>
-      </div>
+      </form>
     </div>
   </div>
 {{/each}}

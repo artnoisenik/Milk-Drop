@@ -82,22 +82,22 @@ exports.seed = function(knex, Promise) {
       return Promise.join(
         knex('ratings').insert({
           reciever_id: 1,
-          giver_id: 2,
+          giver_id: 4,
           rating: 5
         }),
         knex('ratings').insert({
           reciever_id: 2,
-          giver_id: 4,
+          giver_id: 3,
           rating: 3
         }),
         knex('ratings').insert({
           reciever_id: 3,
-          giver_id: 1,
+          giver_id: 2,
           rating: 4
         }),
         knex('ratings').insert({
           reciever_id: 4,
-          giver_id: 3,
+          giver_id: 1,
           rating: 2
         })
       );
