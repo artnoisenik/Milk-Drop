@@ -13,14 +13,7 @@ function authorizedUser(req, res, next) {
 }
 
 router.post('/request/:id', authorizedUser, function(req, res, next) {
-  knex('listings').where({
-    id: req.params.id
-  })
-  .returning('user_id', 'cost_per_ounce', 'amount', 'description', 'title')
-  .update({
-    requested: true
-  })
-  .then(function(listing) {
+  knex('listings').where({ id: req.params.id }).then(function(listing) {
     console.log(listing);
     console.log(req.signedCookies.userID);
     knex('transactions').insert({
@@ -29,19 +22,21 @@ router.post('/request/:id', authorizedUser, function(req, res, next) {
       requester_id: req.signedCookies.userID,
       accepted: false
     }).then(function() {
-      if (listing) {
-        if (listing[0].cost_per_ounce == '0') {
-          listing[0].cost_per_ounce = 'Free';
-          // listing[0].total = 0;
-          listing[0].total = 'Free';
-        } else {
-          listing[0].total = (listing[0].cost_per_ounce * listing[0].amount);
+      knex('listings').where('id', req.params.id).update({ requested: true }).then(function() {
+        if (listing) {
+          if (listing[0].cost_per_ounce == '0') {
+            listing[0].cost_per_ounce = 'Free';
+            // listing[0].total = 0;
+            listing[0].total = 'Free';
+          } else {
+            listing[0].total = (listing[0].cost_per_ounce * listing[0].amount);
+          }
         }
-      }
-      res.render('request', {
-        listing: listing[0],
-        name: req.signedCookies.name,
-        layout: 'loggedinlayout'
+        res.render('request', {
+          listing: listing[0],
+          name: req.signedCookies.name,
+          layout: 'loggedinlayout'
+        });
       });
     });
   });
