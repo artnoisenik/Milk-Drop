@@ -12,6 +12,7 @@ function authorizedUser(req, res, next) {
   }
 }
 
+<<<<<<< HEAD
 router.post('/request/:id', function(req, res, next) {
   if(req.signedCookies.userID){
     knex('listings').where({ id: req.params.id }).then(function(listing){
@@ -34,19 +35,49 @@ router.post('/request/:id', function(req, res, next) {
           }
         }
           res.render('request', { listing: listing[0] });
+=======
+router.post('/request/:id', authorizedUser, function(req, res, next) {
+  knex('listings').where({
+    id: req.params.id
+  }).then(function(listing) {
+    console.log(listing);
+    console.log(req.signedCookies.userID);
+    knex('transactions').insert({
+      listing_id: req.params.id,
+      supplier_id: listing[0].user_id,
+      requester_id: req.signedCookies.userID,
+      closed: true,
+      accepted: false
+    }).then(function() {
+      res.render('request', {
+        listing: listing[0],
+        name: req.signedCookies.name,
+        layout: 'loggedinlayout'
+>>>>>>> d902e56c36b6a26cd788df7e53e0387361ff2c68
       });
     });
-  } else {
-    res.redirect('/signup');
-  }
+  });
+});
+
+router.get('/accept/:id', authorizedUser, function(req, res, next) {
+  knex('transactions').where('listing_id', req.params.id).update({
+    accepted: true
+  }).then(function() {
+    knex('listings').where('id', req.params.id).update({
+      closed: true
+    }).then(function() {
+      res.redirect('/');
+    });
+  });
 });
 
 router.get('/posting', authorizedUser, function(req, res, next) {
   res.render('newposting', {
     title: 'Milk Drop - Add Posting',
+    name: req.signedCookies.name,
     layout: 'loggedinlayout'
   });
-})
+});
 
 router.post('/addposting', function(req, res, next) {
   knex('listings')
@@ -93,29 +124,33 @@ router.post('/post/edit/:id', function(req, res, next) {
 })
 
 router.get('/profile', authorizedUser, function(req, res, next) {
-    knex('listings')
-      .where('user_id', req.signedCookies.userID)
-      .join('users', 'users.id', 'listings.user_id')
-      .then(function(listings) {
-        knex('users')
-          .where('users.id', req.signedCookies.userID)
-          .join('ratings', 'reciever_id', 'users.id')
-          .then(function(user) {
-            knex('transactions').where({ supplier_id: req.signedCookies.userID })
+  knex('listings')
+    .where('user_id', req.signedCookies.userID)
+    .join('users', 'users.id', 'listings.user_id')
+    .then(function(listings) {
+      knex('users')
+        .where('users.id', req.signedCookies.userID)
+        .join('ratings', 'reciever_id', 'users.id')
+        .then(function(user) {
+          knex('transactions').where({
+              supplier_id: req.signedCookies.userID,
+              accepted: false
+            })
             .innerJoin('listings', 'transactions.listing_id', 'listings.id')
             .innerJoin('users', 'transactions.requester_id', 'users.id')
-            .then(function(transactions){
+            .then(function(transactions) {
               console.log(transactions);
               res.render('profile', {
                 title: 'Milk Drop',
+                name: req.signedCookies.name,
                 layout: 'loggedinlayout',
                 listings: listings,
                 user: user[0],
                 transactions: transactions
               });
             });
-          });
-      });
+        });
+    });
 });
 
 router.post('/profile/:id', function(req, res, next) {
@@ -141,6 +176,7 @@ router.post('/profile/:id', function(req, res, next) {
 
 router.get('/admin', authorizedUser, function(req, res, next) {
   res.render('admin', {
+    name: req.signedCookies.name,
     layout: 'loggedinlayout'
   });
 })
@@ -153,6 +189,7 @@ router.get('/admin/alllistings', authorizedUser, function(req, res, next) {
       console.log(listings);
       res.render('adminlisting', {
         title: 'Milk Drop',
+        name: req.signedCookies.name,
         layout: 'loggedinlayout',
         listings: listings
       });
@@ -173,6 +210,7 @@ router.get('/admin/allusers', authorizedUser, function(req, res, next) {
     .then(function(users) {
       res.render('adminusers', {
         title: 'Milk Drop - All Users',
+        name: req.signedCookies.name,
         layout: 'loggedinlayout',
         users: users
       });
