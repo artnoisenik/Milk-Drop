@@ -59,6 +59,9 @@ router.get('/pasteurize', function(req, res, next) {
 router.get('/massage', function(req, res, next) {
   res.render('massage');
 });
+router.get('/faq', function(req, res, next) {
+  res.render('faq');
+});
 router.get('/signup', function(req, res, next) {
   res.render('signup', {
     title: 'Milk Exchange'
