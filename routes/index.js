@@ -158,7 +158,7 @@ router.post('/signupSubmit2', function(req, res, next) {
                 req.body.Zip,
                 location.lat,
                 location.lng
-              ).then(function(id) {
+              ).then(function(user) {
                 res.clearCookie('userID');
                 res.clearCookie('admin');
                 res.clearCookie('name');
@@ -228,7 +228,7 @@ router.post('/signupSubmitFacebook', function(req, res, next) {
                 location.lat,
                 location.lng,
                 req.body.facebook_id
-              ).then(function(id) {
+              ).then(function(user) {
                 res.clearCookie('userID');
                 res.clearCookie('admin');
                 res.clearCookie('name');
@@ -271,7 +271,6 @@ router.post('/login', function(req, res, next) {
     knex('users').where({
       email: req.body.email
     }).first().then(function(user) {
-      console.log(user);
       if ( user && bcrypt.compareSync(req.body.password, user.password) && (user.admin === true) ) {
         res.clearCookie('userID');
         res.clearCookie('admin');
@@ -288,7 +287,11 @@ router.post('/login', function(req, res, next) {
         res.redirect('/');
       } else if (user && bcrypt.compareSync(req.body.password, user.password)) {
         res.clearCookie('userID');
+        res.clearCookie('name');
         res.cookie('userID', user.id, {
+          signed: true
+        });
+        res.cookie('name', user.first_name, {
           signed: true
         });
         res.redirect('/');
