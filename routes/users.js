@@ -15,14 +15,18 @@ function authorizedUser(req, res, next) {
 router.post('/request/:id', authorizedUser, function(req, res, next) {
   knex('listings').where({
     id: req.params.id
-  }).then(function(listing) {
+  })
+  .returning('user_id', 'cost_per_ounce', 'amount', 'description', 'title')
+  .update({
+    requested: true
+  })
+  .then(function(listing) {
     console.log(listing);
     console.log(req.signedCookies.userID);
     knex('transactions').insert({
       listing_id: req.params.id,
-      supplier_id: listing[0].user_id,
+      supplier_id: listing[0],
       requester_id: req.signedCookies.userID,
-      requested: true,
       accepted: false
     }).then(function() {
       if (listing) {
