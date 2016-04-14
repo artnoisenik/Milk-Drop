@@ -2,8 +2,8 @@
   Pending Milk Drops:
   {{#each transactions}}
     <div class="alert alert-success" role="alert">{{this.first_name}} {{this.last_name}} has requested your post {{this.title}}. Call him at {{this.phone}}
-        <a href="/accept/{{this.id}}"><button type="button" class="btn btn-success" name="button">Accept</button></a>
-        <a href="/reject/{{this.id}}"><button type="button" class="btn btn-danger" name="button">Reject</button></a>
+        <a href="/users/accept/{{this.id}}"><button type="button" class="btn btn-success" name="button">Accept</button></a>
+        <a href="/users/reject/{{this.id}}"><button type="button" class="btn btn-danger" name="button">Reject</button></a>
     </div>
   {{/each}}
 {{/if}}

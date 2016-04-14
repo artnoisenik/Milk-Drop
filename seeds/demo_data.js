@@ -129,7 +129,8 @@ exports.seed = function(knex, Promise) {
           amount: 200,
           cost_per_ounce: 3,
           description: 'Great quality organic and vegan breast milk for sale.',
-          requested: false
+          requested: false,
+          closed: false
         }),
         knex('listings').insert({
           user_id: 2,
@@ -138,7 +139,8 @@ exports.seed = function(knex, Promise) {
           amount: 5,
           cost_per_ounce: 0,
           description: 'Great milk!',
-          requested: true
+          requested: true,
+          closed: false
         }),
         knex('listings').insert({
           user_id: 3,
@@ -147,7 +149,8 @@ exports.seed = function(knex, Promise) {
           amount: 7,
           cost_per_ounce: 3,
           description: 'Lots of milk!',
-          requested: true
+          requested: true,
+          closed: false
         }),
         knex('listings').insert({
           user_id: 4,
@@ -156,7 +159,8 @@ exports.seed = function(knex, Promise) {
           amount: 7,
           cost_per_ounce: 3,
           description: 'Very high quality milk!',
-          requested: true
+          requested: true,
+          closed: false
         })
       );
     });

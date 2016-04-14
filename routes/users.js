@@ -12,8 +12,7 @@ function authorizedUser(req, res, next) {
   }
 }
 
-router.post('/request/:id', function(req, res, next) {
-  if(req.signedCookies.userID){
+router.post('/request/:id', authorizedUser, function(req, res, next) {
     knex('listings').where({ id: req.params.id }).then(function(listing){
       console.log(listing);
       console.log(req.signedCookies.userID);
@@ -27,9 +26,15 @@ router.post('/request/:id', function(req, res, next) {
           res.render('request', { listing: listing[0] });
       });
     });
-  } else {
-    res.redirect('/signup');
-  }
+
+});
+
+router.get('/accept/:id', authorizedUser, function(req, res, next){
+  knex('transactions').where( 'listing_id', req.params.id ).update({ accepted: true }).then(function(){
+    knex('listings').where( 'id', req.params.id ).update({ closed: true }).then(function(){
+      res.redirect('/');
+    });
+  });
 });
 
 router.get('/posting', authorizedUser, function(req, res, next) {
@@ -37,7 +42,7 @@ router.get('/posting', authorizedUser, function(req, res, next) {
     title: 'Milk Drop - Add Posting',
     layout: 'loggedinlayout'
   });
-})
+});
 
 router.post('/addposting', function(req, res, next) {
   knex('listings')
