@@ -25,6 +25,15 @@ router.post('/request/:id', authorizedUser, function(req, res, next) {
       requested: true,
       accepted: false
     }).then(function() {
+      if (listing) {
+        if (listing[0].cost_per_ounce == '0') {
+          listing[0].cost_per_ounce = 'Free';
+          // listing[0].total = 0;
+          listing[0].total = 'Free';
+        } else {
+          listing[0].total = (listing[0].cost_per_ounce * listing[0].amount);
+        }
+      }
       res.render('request', {
         listing: listing[0],
         name: req.signedCookies.name,
@@ -108,7 +117,8 @@ router.get('/profile', authorizedUser, function(req, res, next) {
         .join('ratings', 'reciever_id', 'users.id')
         .then(function(user) {
           knex('transactions').where({
-              supplier_id: req.signedCookies.userID
+              supplier_id: req.signedCookies.userID,
+              accepted: false
             })
             .innerJoin('listings', 'transactions.listing_id', 'listings.id')
             .innerJoin('users', 'transactions.requester_id', 'users.id')
