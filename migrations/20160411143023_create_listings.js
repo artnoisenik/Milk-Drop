@@ -10,6 +10,7 @@ exports.up = function(knex, Promise) {
     table.integer('cost_per_ounce');
     table.text('description');
     table.boolean('requested');
+    table.boolean('closed');
   });
 };
 

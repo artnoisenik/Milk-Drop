@@ -21,6 +21,7 @@ function authorizedUser(req, res, next) {
 
 router.get('/', authorizedUser, function(req, res, next) {
   knex('listings')
+    .where('closed', false)
     .select('rating', 'listings.id', 'created_at', 'title', 'amount', 'cost_per_ounce', 'description', 'requested', 'portrait_link', 'city', 'verified')
     .join('ratings', 'reciever_id', 'listings.user_id')
     .join('users', 'users.id', 'listings.user_id')
@@ -31,7 +32,7 @@ router.get('/', authorizedUser, function(req, res, next) {
       .then(function(listingMapMarkers){
         res.render('index', {
           title: 'Milk Exchange',
-          name: '',
+          name: req.signedCookies.name,
           layout: layout,
           listings: listings,
           user: req.user,
@@ -237,12 +238,13 @@ router.post('/signupSubmitFacebook', function(req, res, next) {
 
 router.get('/logout', function(req, res, next) {
   res.clearCookie('userID');
+  res.clearCookie('admin');
+  res.clearCookie('name');
   res.redirect('/signup');
 });
 
 router.post('/login', function(req, res, next) {
   var errorArray = [];
-  console.log('it got here');
   if ((/^[^@]+@[^@]+\.[^@]+$/.test(req.body.email) === false)) {
     errorArray.push('Email has to be in format: example@something.com');
   }
@@ -254,7 +256,22 @@ router.post('/login', function(req, res, next) {
     knex('users').where({
       email: req.body.email
     }).first().then(function(user) {
-      if (user && bcrypt.compareSync(req.body.password, user.password)) {
+      console.log(user);
+      if ( user && bcrypt.compareSync(req.body.password, user.password) && (user.admin === true) ) {
+        res.clearCookie('userID');
+        res.clearCookie('admin');
+        res.clearCookie('name');
+        res.cookie('userID', user.id, {
+          signed: true
+        });
+        res.cookie('admin', user.admin, {
+          signed: true
+        });
+        res.cookie('name', user.first_name, {
+          signed: true
+        });
+        res.redirect('/');
+      } else if (user && bcrypt.compareSync(req.body.password, user.password)) {
         res.clearCookie('userID');
         res.cookie('userID', user.id, {
           signed: true
