@@ -3,10 +3,9 @@
 
 <div class="row secondary_nav">
   <div class="col-md-offset-1 col-md-2">
-    <form onsubmit="geocodeThis()">
+    <form id="enterALocation" onsubmit="geocodeThis()">
       <div class="form-group">
         <input type="text" id='search' class="form-control" placeholder="Enter a location...">
-        <!-- <input type='text' oninput='geocodeThis()' id='search' placeholder='geocode here...'> -->
       </div>
     </form>
   </div>
@@ -68,6 +67,10 @@
 
   var locations = L.mapbox.featureLayer().addTo(map);
 
+  $('#enterALocation').on('submit', function(e){
+    e.preventDefault();
+  });
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(success);
   } else {
@@ -107,14 +110,14 @@
   }//end success
 
   function showMap(err, data) {
-      if (!map) {
-          map = L.mapbox.map('map', 'mapbox.bright');
-      }
-      if (data.lbounds) {
-          map.fitBounds(data.lbounds);
-      } else if (data.latlng) {
-          map.setView([data.latlng[0], data.latlng[1]], 25);
-      }
+      // if (!map) {
+      //     map = L.mapbox.map('map', 'mapbox.bright');
+      // }
+      // if (data.lbounds) {
+      //     map.fitBounds(data.lbounds);
+      // } else if (data.latlng) {
+          map.setView([data.latlng[0], data.latlng[1]], 15);
+      // }
   }
 
   function geocodeThis() {
