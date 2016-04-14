@@ -12,7 +12,6 @@ function authorizedUser(req, res, next) {
   }
 }
 
-<<<<<<< HEAD
 router.post('/request/:id', function(req, res, next) {
   if(req.signedCookies.userID){
     knex('listings').where({ id: req.params.id }).then(function(listing){
@@ -35,28 +34,9 @@ router.post('/request/:id', function(req, res, next) {
           }
         }
           res.render('request', { listing: listing[0] });
-=======
-router.post('/request/:id', authorizedUser, function(req, res, next) {
-  knex('listings').where({
-    id: req.params.id
-  }).then(function(listing) {
-    console.log(listing);
-    console.log(req.signedCookies.userID);
-    knex('transactions').insert({
-      listing_id: req.params.id,
-      supplier_id: listing[0].user_id,
-      requester_id: req.signedCookies.userID,
-      closed: true,
-      accepted: false
-    }).then(function() {
-      res.render('request', {
-        listing: listing[0],
-        name: req.signedCookies.name,
-        layout: 'loggedinlayout'
->>>>>>> d902e56c36b6a26cd788df7e53e0387361ff2c68
       });
     });
-  });
+  };
 });
 
 router.get('/accept/:id', authorizedUser, function(req, res, next) {
