@@ -127,13 +127,14 @@ body {
   }
 }
 #footer {
-  margin-top: 100px;
-  padding: 50px;
+  margin-top: 50px;
+  padding: 30px;
   text-align: center;
   color: white;
   background-color: rgb(45, 45, 45);
-  height: 400px;
-  margin-top: 100px;
+  height: 100px;
+  bottom: 0;
+  width: 100%;
 }
 .starRating:not(old) {
   display: inline-block;
@@ -171,5 +172,34 @@ body {
 .listings {
   .glyphicon {
     color: #41a1f4;
+  }
+}
+.listingBox {
+  margin-bottom: 50px;
+  h2 {
+    display: inline-block;
+  }
+  .orderInfo{
+    border: 1px solid black;
+    border-radius: 15px;
+    h4 {
+      padding-left: 20px;
+    }
+  }
+  .requestSubmitButton {
+    h3 {
+      padding: 9px;
+      color: black;
+      display: inline-block;
+    }
+    border: 1px solid grey;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    background-color: lightgrey;
+  }
+  #requestHomepageButton{
+    margin: 25px;
+    float: right;
+    margin-right: 60px;
   }
 }

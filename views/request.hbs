@@ -1,11 +1,30 @@
-You requested <br>
-{{listing.title}} <br>
-{{listing.description}} <br>
-{{listing.amount}} <br>
-{{listing.cost_per_ounce}} <br>
-
-
-The supplier will contact you by phone at their next convenience!
-
-
-<a href="/"><button type="button" name="button">Return to Homepage</button></a>
+<div class="row listingBox">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <h2>Your request has been submitted!</h2>
+      <img src="http://cliparts.co/cliparts/pio/dBR/piodBRjiE.png" width="3%"/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h4 class='text-center'>The supplier will be notified and will<br> contact you at their next convenience. <br>Thank you for using Milk Drop!</h4>
+      <br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 orderInfo">
+      <h3 class='text-center'>Listing Summary</h3><br>
+      <h4>Listing Title:  <strong>{{listing.title}}</strong></h4><br>
+      <h4>Listing Description: <strong>{{listing.description}}</strong></h4><br>
+      <h4>Listing Amount: <strong>{{listing.amount}}</strong> Oz.<h4><br>
+      <h4>Listing Cost/Oz.: $ <strong>{{listing.cost_per_ounce}}</strong></h4><br>
+      <h4>Listing Total: $ <strong>{{listing.total}}</strong></h4><br>
+      <div class="col-md-12 requestSubmitButton">
+        <h3>You're all set! Click Go! to return to the home page.</h3>
+        <a href="/">
+          <button type="button" class="btn btn-info" id='requestHomepageButton' name="button">Go!</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

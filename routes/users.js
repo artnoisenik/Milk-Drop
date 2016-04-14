@@ -12,6 +12,30 @@ function authorizedUser(req, res, next) {
   }
 }
 
+<<<<<<< HEAD
+router.post('/request/:id', function(req, res, next) {
+  if(req.signedCookies.userID){
+    knex('listings').where({ id: req.params.id }).then(function(listing){
+      console.log(listing);
+      console.log(req.signedCookies.userID);
+      knex('transactions').insert({
+        listing_id: req.params.id,
+        supplier_id: listing[0].user_id,
+        requester_id: req.signedCookies.userID,
+        requested: true,
+        accepted: false
+      }).then(function(){
+        if(listing){
+          if(listing[0].cost_per_ounce == '0'){
+            listing[0].cost_per_ounce = 'Free';
+            // listing[0].total = 0;
+            listing[0].total = 'Free';
+          } else {
+            listing[0].total = (listing[0].cost_per_ounce * listing[0].amount);
+          }
+        }
+          res.render('request', { listing: listing[0] });
+=======
 router.post('/request/:id', authorizedUser, function(req, res, next) {
   knex('listings').where({
     id: req.params.id
@@ -29,6 +53,7 @@ router.post('/request/:id', authorizedUser, function(req, res, next) {
         listing: listing[0],
         name: req.signedCookies.name,
         layout: 'loggedinlayout'
+>>>>>>> d902e56c36b6a26cd788df7e53e0387361ff2c68
       });
     });
   });
