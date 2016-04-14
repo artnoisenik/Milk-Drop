@@ -24,6 +24,15 @@ router.post('/request/:id', function(req, res, next) {
         requested: true,
         accepted: false
       }).then(function(){
+        if(listing){
+          if(listing[0].cost_per_ounce == '0'){
+            listing[0].cost_per_ounce = 'Free';
+            // listing[0].total = 0;
+            listing[0].total = 'Free';
+          } else {
+            listing[0].total = (listing[0].cost_per_ounce * listing[0].amount);
+          }
+        }
           res.render('request', { listing: listing[0] });
       });
     });
