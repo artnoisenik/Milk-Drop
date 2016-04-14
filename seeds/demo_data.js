@@ -14,7 +14,7 @@ exports.seed = function(knex, Promise) {
           email: 'brad@admin.com',
           password: bcrypt.hashSync('password', 10),
           phone: '(123)456-7890',
-          portrait_link: 'https://upload.wikimedia.org/wikipedia/en/d/d4/Mickey_Mouse.png',
+          portrait_link: 'http://bcira.com/wp-content/uploads/2014/11/temporary-profile-placeholder.jpg',
           address_1: '1015 Pearl St',
           address_2: '',
           city: 'Boulder',
@@ -31,7 +31,7 @@ exports.seed = function(knex, Promise) {
           email: 'happybaby@milks.com',
           password: bcrypt.hashSync('password', 10),
           phone: '(555)555-5555',
-          portrait_link: 'http://i5.asn.im/baby-milk-jpg-_tz92.jpg',
+          portrait_link: 'http://bcira.com/wp-content/uploads/2014/11/temporary-profile-placeholder.jpg',
           address_1: '1521 Pearl St',
           address_2: '',
           city: 'Boulder',
@@ -66,7 +66,7 @@ exports.seed = function(knex, Promise) {
           email: 'iWantMilk@aol.com',
           password: bcrypt.hashSync('password', 10),
           phone: '(800)123-1234',
-          portrait_link: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/python_in_a_nutshell.jpg',
+          portrait_link: 'http://bcira.com/wp-content/uploads/2014/11/temporary-profile-placeholder.jpg',
           address_1: '1035 Walnut St',
           address_2: 'Apt 123',
           city: 'Boulder',
@@ -83,7 +83,7 @@ exports.seed = function(knex, Promise) {
           email: 'needMamaMilk@aol.com',
           password: bcrypt.hashSync('password', 10),
           phone: '(800)123-1234',
-          portrait_link: 'https://s3-us-west-2.amazonaws.com/assessment-images/galvanize_reads/photos/python_in_a_nutshell.jpg',
+          portrait_link: 'http://bcira.com/wp-content/uploads/2014/11/temporary-profile-placeholder.jpg',
           address_1: '1605 Folsom St',
           address_2: 'Lower',
           city: 'Boulder',
@@ -100,22 +100,22 @@ exports.seed = function(knex, Promise) {
       return Promise.join(
         knex('ratings').insert({
           reciever_id: 1,
-          giver_id: 2,
+          giver_id: 4,
           rating: 5
         }),
         knex('ratings').insert({
           reciever_id: 2,
-          giver_id: 4,
+          giver_id: 3,
           rating: 3
         }),
         knex('ratings').insert({
           reciever_id: 3,
-          giver_id: 1,
+          giver_id: 2,
           rating: 4
         }),
         knex('ratings').insert({
           reciever_id: 4,
-          giver_id: 3,
+          giver_id: 1,
           rating: 2
         })
       );

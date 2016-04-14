@@ -81,7 +81,6 @@ function getCoords(address) {
         console.log("Error!  Request failed - " + error);
         reject("Error! Request failed - " + error);
       } else if (!error && response.statusCode === 200) {
-        //console.log(body);
         location = JSON.parse(body);
         console.log(location.results[0].geometry.location);
         resolve(location.results[0].geometry.location);

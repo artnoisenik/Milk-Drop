@@ -1,3 +1,25 @@
+.allusers img {
+  border-radius: 15px;
+  max-width: 100%;
+  max-height: 350px; }
+
+.allusers .ratings .glyphicon {
+  font-size: 22px; }
+
+.allusers .ratings .glyphicon-star {
+  color: #41a1f4; }
+
+.profile img {
+  border-radius: 15px;
+  max-width: 100%;
+  max-height: 350px; }
+
+.profile .ratings .glyphicon {
+  font-size: 22px; }
+
+.profile .ratings .glyphicon-star {
+  color: #41a1f4; }
+
 body {
   padding-top: 50px; }
 
@@ -22,18 +44,32 @@ body {
     background-size: 150px;
     height: 300px; }
 
-.profile {
-  margin-bottom: 15px;
-  margin-top: 50px; }
-  .profile img {
-    max-width: 100%;
-    border-radius: 15px; }
-
 .postingsnav {
   margin-top: 50px;
   margin-bottom: 15px; }
   .postingsnav span {
     font-size: 30px; }
+
+.b {
+  border: 1px solid; }
+
+.dashboard {
+  margin-top: 50px; }
+  .dashboard img {
+    border-radius: 15px;
+    max-width: 100%;
+    max-height: 400px; }
+  .dashboard .ratings .glyphicon {
+    font-size: 22px; }
+  .dashboard .ratings .glyphicon-star {
+    color: #41a1f4; }
+  .dashboard .verified {
+    font-size: 30px; }
+  .dashboard .true {
+    color: yellow; }
+  .dashboard h2 {
+    display: inline-block;
+    margin-right: 15px; }
 
 .postings {
   margin-bottom: 15px; }

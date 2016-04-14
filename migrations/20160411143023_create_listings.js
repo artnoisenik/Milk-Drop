@@ -1,7 +1,7 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('listings', function(table) {
     table.increments('id');
-    table.integer('user_id').unsigned().references('id').inTable('users').onDelete('cascade').onUpdate('cascade');
+    table.integer('user_id').unsigned();
     table.timestamp('created_at').defaultTo(knex.raw('now()')).notNullable();
     table.timestamp('updated_at').defaultTo(knex.raw('now()')).notNullable();
     table.string('post_end');
