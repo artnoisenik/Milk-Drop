@@ -68,7 +68,7 @@ app.get('/login/facebook/return',
         } else {
           console.log('22222222222',req.user._json);
           res.clearCookie('userID');
-          res.cookie('userID', user[0].id, {
+          res.cookie('userID', user.id, {
           signed: true
         });
           res.redirect('/')
