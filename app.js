@@ -36,7 +36,9 @@ app.use(passport.session());
 passport.use(new Strategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: process.env.CALLBACK_URL + '/login/facebook/return'
+    callbackURL: process.env.CALLBACK_URL + '/login/facebook/return',
+    passRecToCallback: true,
+    profileFields: ['id', 'emails', 'name']
   },
   function(accessToken, refreshToken, profile, cb) {
     return cb(null, profile);
@@ -56,21 +58,17 @@ app.get('/login/facebook',
 app.get('/login/facebook/return',
   passport.authenticate('facebook', { failureRedirect: '/signup' }),
   function(req, res) {
-    if(facebook_id){
-    knex('users')
-    .where('facebook_id', req.user.id)
-    .then(function(user){
-      res.clearCookie('userID');
-      res.cookie('userID', user[0].id, {
-      signed: true
-    });
-    res.redirect('/');
-  });
-} else {
-  knex('users')
-  .insert({facebook_id:req.user.id, email:req.user.email})
+      knex('users')
+      .where('facebook_id', req.user.id)
+      .then(function(user){
 
-}
+        res.clearCookie('userID');
+        res.cookie('userID', user[0].id, {
+        signed: true
+      });
+      console.log(user[0]);
+      res.render('oauthRegister', {user: user[0]});
+    });
 });
 
 app.get('/profile',
