@@ -110,14 +110,11 @@
   }//end success
 
   function showMap(err, data) {
-      // if (!map) {
-      //     map = L.mapbox.map('map', 'mapbox.bright');
-      // }
-      // if (data.lbounds) {
-      //     map.fitBounds(data.lbounds);
-      // } else if (data.latlng) {
+      if (data.lbounds) {
+          map.fitBounds(data.lbounds);
+      } else if (data.latlng) {
           map.setView([data.latlng[0], data.latlng[1]], 15);
-      // }
+      }
   }
 
   function geocodeThis() {
