@@ -20,7 +20,7 @@ router.post('/request/:id', authorizedUser, function(req, res, next) {
     console.log(req.signedCookies.userID);
     knex('transactions').insert({
       listing_id: req.params.id,
-      supplier_id: listing[0].user_id,
+      supplier_id: listing[0],
       requester_id: req.signedCookies.userID,
       accepted: false
     }).then(function() {
