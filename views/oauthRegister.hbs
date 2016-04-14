@@ -1,5 +1,47 @@
-<h1>Test</h1>
+<div class="space"></div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Please complete your profile!</h1>
 
-{{user}}
-
-<img src="{{user.portait_link}}" alt="" />
+      <form role="form" action="/signupSubmit2" method="post">
+        <div class="control-group">
+          <input type="text" class="form-control" name="First" placeholder='First Name' maxlength="30" pattern="^[A-z ,.'-]+$" data-error="That first name was invalid" value="{{user.first_name}}" required/>
+        </div><br>
+        <div class="control-group">
+          <input type="text" class="form-control" name="Last" maxlength="30" pattern="^[A-z ,.'-]+$" placeholder='Last Name' value="{{user.last_name}}" required/>
+        </div><br>
+        <div class="control-group">
+          <input type="text" class="form-control" name="Phone" pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$" placeholder='123-123-1234' required/>
+        </div><br>
+        <div class="control-group">
+          <input type="text" class="form-control" name="Address" pattern="^\d+\w*\s*(?:(?:[\-\/]?\s*)?\d*(?:\s*\d+\/\s*)?\d+)?\s+" placeholder='Address' required/>
+        </div><br>
+        <div class="control-group">
+          <input type="text" class="form-control" name="Address_2" pattern="^\d+\w*\s*(?:(?:[\-\/]?\s*)?\d*(?:\s*\d+\/\s*)?\d+)?\s+" placeholder='Address 2'/>
+        </div><br>
+        <div class="control-group">
+          <input type="text" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" class="form-control" name="City" placeholder='City' required/>
+        </div><br>
+        <div class="control-group">
+          <input type="text" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" class="form-control" name="State" placeholder='State' required/>
+        </div><br>
+        <div class="control-group">
+          <input type="number" class="form-control" name="Zip" placeholder='Zip' required/>
+          <!-- pattern='^\d{5}(?:[-\s]\d{4})?$'  -->
+        </div><br>
+        <div class="control-group">
+          <input type="text" class="form-control" name="PortraitLink" placeholder='Link to Your Portrait' value="{{user.picture.data.url}}" required/>
+        </div>
+        <br>
+        <div class="control-group">
+          <button type="submit" class="btn btn-default custom">
+              Sign up
+          </button>
+        </div>
+        <input type="hidden" name="Email" value="{{user.Email2}}">
+        <input type="hidden" name="Password" value="{{user.Password2}}">
+      </form>
+    </div>
+  </div>
+</div>
