@@ -77,7 +77,8 @@ router.get('/profile', function(req, res, next) {
       .join('users', 'users.id', 'listings.user_id')
       .then(function(listings) {
         knex('users')
-          .where('id', req.signedCookies.userID)
+          .where('users.id', req.signedCookies.userID)
+          .join('ratings', 'reciever_id', 'users.id')
           .then(function(user) {
             res.render('profile', {
               title: 'Milk Exchange',

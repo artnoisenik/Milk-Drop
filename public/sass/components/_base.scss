@@ -1,4 +1,20 @@
+
 .allusers {
+  img {
+    border-radius: 15px;
+    max-width: 100%;
+    max-height: 350px;
+  }
+  .ratings {
+    .glyphicon {
+      font-size: 22px;
+    }
+    .glyphicon-star {
+      color: #41a1f4;
+    }
+  }
+}
+.profile {
   img {
     border-radius: 15px;
     max-width: 100%;
@@ -40,14 +56,6 @@ body {
     background: transparent url("http://downgraf.com/wp-content/uploads/2014/09/01-progress.gif") no-repeat center center;
     background-size: 150px;
     height: 300px;
-  }
-}
-.profile {
-  margin-bottom: 15px;
-  margin-top: 50px;
-  img {
-    max-width: 100%;
-    border-radius: 15px;
   }
 }
 .postingsnav {
