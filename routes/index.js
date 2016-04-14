@@ -6,7 +6,20 @@ var handlebars = require('handlebars');
 var bcrypt = require('bcryptjs');
 var request = require('request');
 
-router.get('/', function(req, res, next) {
+var layout;
+
+function authorizedUser(req, res, next) {
+  var user_id = req.signedCookies.userID;
+  if (user_id) {
+    layout = 'loggedinlayout';
+    next();
+  } else {
+    layout = 'layout';
+    next();
+  }
+}
+
+router.get('/', authorizedUser, function(req, res, next) {
   knex('listings')
     .select('rating', 'listings.id', 'created_at', 'title', 'amount', 'cost_per_ounce', 'description', 'requested', 'portrait_link', 'city', 'verified')
     .join('ratings', 'reciever_id', 'listings.user_id')
@@ -18,6 +31,8 @@ router.get('/', function(req, res, next) {
       .then(function(listingMapMarkers){
         res.render('index', {
           title: 'Milk Exchange',
+          name: '',
+          layout: layout,
           listings: listings,
           user: req.user,
           listingMapMarkers: JSON.stringify(listingMapMarkers)
@@ -33,6 +48,7 @@ router.get('/posting/:id', function(req, res, next) {
     .then(function(listings) {
       res.render('singleposting', {
         title: 'Milk Exchange',
+        layout: layout,
         listings: listings
       })
     })

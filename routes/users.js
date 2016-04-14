@@ -3,24 +3,23 @@ var router = express.Router();
 var knex = require('../lib/knex');
 var queries = require('../lib');
 
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
-
-// function isAuthenticated(req, res, next) {
-//     if (req.user.authenticated)
-//         return next();
-//     // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
-//     res.redirect('/signup');
-// }
+function authorizedUser(req, res, next) {
+  var user_id = req.signedCookies.userID;
+  if (user_id) {
+    next();
+  } else {
+    res.redirect('/signup');
+  }
+}
 
 router.post('/request', function(req, res, next) {
   res.redirect('/signup');
 });
 
-router.get('/posting', function(req, res, next) {
+router.get('/posting', authorizedUser, function(req, res, next) {
   res.render('newposting', {
-    title: 'Milk Drop - Add Posting'
+    title: 'Milk Drop - Add Posting',
+    layout: 'loggedinlayout'
   });
 })
 
@@ -70,8 +69,7 @@ router.post('/post/edit/:id', function(req, res, next) {
     });
 })
 
-router.get('/profile', function(req, res, next) {
-  if (req.signedCookies.userID) {
+router.get('/profile', authorizedUser, function(req, res, next) {
     knex('listings')
       .where('user_id', req.signedCookies.userID)
       .join('users', 'users.id', 'listings.user_id')
@@ -81,15 +79,13 @@ router.get('/profile', function(req, res, next) {
           .join('ratings', 'reciever_id', 'users.id')
           .then(function(user) {
             res.render('profile', {
-              title: 'Milk Exchange',
+              title: 'Milk Drop',
+              layout: 'loggedinlayout',
               listings: listings,
               user: user[0]
             });
           })
       });
-  } else {
-    res.redirect('/signup');
-  }
 });
 
 router.post('/profile/:id', function(req, res, next) {
@@ -113,11 +109,13 @@ router.post('/profile/:id', function(req, res, next) {
     });
 })
 
-router.get('/admin', function(req, res, next) {
-  res.render('admin');
+router.get('/admin', authorizedUser, function(req, res, next) {
+  res.render('admin', {
+    layout: 'loggedinlayout'
+  });
 })
 
-router.get('/admin/alllistings', function(req, res, next) {
+router.get('/admin/alllistings', authorizedUser, function(req, res, next) {
   knex('listings')
     .join('ratings', 'reciever_id', 'listings.user_id')
     .join('users', 'users.id', 'listings.user_id')
@@ -125,6 +123,7 @@ router.get('/admin/alllistings', function(req, res, next) {
       console.log(listings);
       res.render('adminlisting', {
         title: 'Milk Drop',
+        layout: 'loggedinlayout',
         listings: listings
       });
     });
@@ -137,13 +136,14 @@ router.post('/admin/listings/:id/delete', function(req, res, next) {
     })
 })
 
-router.get('/admin/allusers', function(req, res, next) {
+router.get('/admin/allusers', authorizedUser, function(req, res, next) {
   knex('ratings')
     .join('users', 'users.id', 'reciever_id')
     .orderBy('users.id')
     .then(function(users) {
       res.render('adminusers', {
         title: 'Milk Drop - All Users',
+        layout: 'loggedinlayout',
         users: users
       });
     });
