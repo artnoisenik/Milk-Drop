@@ -22,7 +22,7 @@ router.post('/request/:id', authorizedUser, function(req, res, next) {
       listing_id: req.params.id,
       supplier_id: listing[0].user_id,
       requester_id: req.signedCookies.userID,
-      requested: true,
+      closed: true,
       accepted: false
     }).then(function() {
       res.render('request', {
@@ -108,7 +108,8 @@ router.get('/profile', authorizedUser, function(req, res, next) {
         .join('ratings', 'reciever_id', 'users.id')
         .then(function(user) {
           knex('transactions').where({
-              supplier_id: req.signedCookies.userID
+              supplier_id: req.signedCookies.userID,
+              accepted: false
             })
             .innerJoin('listings', 'transactions.listing_id', 'listings.id')
             .innerJoin('users', 'transactions.requester_id', 'users.id')
