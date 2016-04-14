@@ -157,7 +157,15 @@ router.post('/signupSubmit2', function(req, res, next) {
                 location.lng
               ).then(function(id) {
                 res.clearCookie('userID');
-                res.cookie('userID', id[0], {
+                res.clearCookie('admin');
+                res.clearCookie('name');
+                res.cookie('userID', user.id, {
+                  signed: true
+                });
+                res.cookie('admin', user.admin, {
+                  signed: true
+                });
+                res.cookie('name', user.first_name, {
                   signed: true
                 });
                 res.redirect('/');
@@ -220,7 +228,15 @@ router.post('/signupSubmitFacebook', function(req, res, next) {
                 req.body.facebook_id
               ).then(function(id) {
                 res.clearCookie('userID');
-                res.cookie('userID', id[0], {
+                res.clearCookie('admin');
+                res.clearCookie('name');
+                res.cookie('userID', user.id, {
+                  signed: true
+                });
+                res.cookie('admin', user.admin, {
+                  signed: true
+                });
+                res.cookie('name', user.first_name, {
                   signed: true
                 });
                 res.redirect('/');
