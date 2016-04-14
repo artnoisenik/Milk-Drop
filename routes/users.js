@@ -14,8 +14,24 @@ router.get('/', function(req, res, next) {
 //     res.redirect('/signup');
 // }
 
-router.post('/request', function(req, res, next) {
-  res.redirect('/signup');
+router.post('/request/:id', function(req, res, next) {
+  if(req.signedCookies.userID){
+    knex('listings').where({ id: req.params.id }).then(function(listing){
+      console.log(listing);
+      console.log(req.signedCookies.userID);
+      knex('transactions').insert({
+        listing_id: req.params.id,
+        supplier_id: listing[0].user_id,
+        requester_id: req.signedCookies.userID,
+        requested: true,
+        accepted: false
+      }).then(function(){
+          res.render('request', { listing: listing[0] });
+      });
+    });
+  } else {
+    res.redirect('/signup');
+  }
 });
 
 router.get('/posting', function(req, res, next) {
@@ -80,12 +96,19 @@ router.get('/profile', function(req, res, next) {
           .where('users.id', req.signedCookies.userID)
           .join('ratings', 'reciever_id', 'users.id')
           .then(function(user) {
-            res.render('profile', {
-              title: 'Milk Exchange',
-              listings: listings,
-              user: user[0]
+            knex('transactions').where({ supplier_id: req.signedCookies.userID })
+            .innerJoin('listings', 'transactions.listing_id', 'listings.id')
+            .innerJoin('users', 'transactions.requester_id', 'users.id')
+            .then(function(transactions){
+              console.log(transactions);
+              res.render('profile', {
+                title: 'Milk Exchange',
+                listings: listings,
+                user: user[0],
+                transactions: transactions
+              });
             });
-          })
+          });
       });
   } else {
     res.redirect('/signup');
