@@ -4,7 +4,7 @@
     <div class="col-md-6">
       <h1>Please complete your profile!</h1>
 
-      <form role="form" action="/signupSubmit2" method="post">
+      <form role="form" action="/signupSubmitFacebook" method="post">
         <div class="control-group">
           <input type="text" class="form-control" name="First" placeholder='First Name' maxlength="30" pattern="^[A-z ,.'-]+$" data-error="That first name was invalid" value="{{user.first_name}}" required/>
         </div><br>
@@ -15,10 +15,10 @@
           <input type="text" class="form-control" name="Phone" pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$" placeholder='123-123-1234' required/>
         </div><br>
         <div class="control-group">
-          <input type="text" class="form-control" name="Address" pattern="^\d+\w*\s*(?:(?:[\-\/]?\s*)?\d*(?:\s*\d+\/\s*)?\d+)?\s+" placeholder='Address' required/>
+          <input type="text" class="form-control" name="Address" placeholder='Address' required/>
         </div><br>
         <div class="control-group">
-          <input type="text" class="form-control" name="Address_2" pattern="^\d+\w*\s*(?:(?:[\-\/]?\s*)?\d*(?:\s*\d+\/\s*)?\d+)?\s+" placeholder='Address 2'/>
+          <input type="text" class="form-control" name="Address_2" placeholder='Address 2'/>
         </div><br>
         <div class="control-group">
           <input type="text" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" class="form-control" name="City" placeholder='City' required/>
@@ -39,8 +39,7 @@
               Sign up
           </button>
         </div>
-        <input type="hidden" name="Email" value="{{user.Email2}}">
-        <input type="hidden" name="Password" value="{{user.Password2}}">
+        <input type="hidden" name="facebook_id" value="{{user.id}}">
       </form>
     </div>
   </div>
