@@ -21,7 +21,7 @@ function authorizedUser(req, res, next) {
 
 router.get('/', authorizedUser, function(req, res, next) {
   knex('listings')
-    //.where('closed', false)
+    // .where('closed', false)
     .select('rating', 'listings.id', 'created_at', 'title', 'amount', 'cost_per_ounce', 'description', 'requested', 'portrait_link', 'city', 'verified')
     .join('ratings', 'reciever_id', 'listings.user_id')
     .join('users', 'users.id', 'listings.user_id')
