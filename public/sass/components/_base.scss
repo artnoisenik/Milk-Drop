@@ -1,3 +1,18 @@
+.allusers {
+  img {
+    border-radius: 15px;
+    max-width: 100%;
+    max-height: 350px;
+  }
+  .ratings {
+    .glyphicon {
+      font-size: 22px;
+    }
+    .glyphicon-star {
+      color: #41a1f4;
+    }
+  }
+}
 body {
   padding-top: 50px;
 }
@@ -42,16 +57,19 @@ body {
     font-size: 30px;
   }
 }
+.b {
+  border: 1px solid;
+}
 .dashboard {
   margin-top: 50px;
   img {
     border-radius: 15px;
     max-width: 100%;
+    max-height: 400px;
   }
   .ratings {
     .glyphicon {
       font-size: 22px;
-      margin-top: 15px;
     }
     .glyphicon-star {
       color: #41a1f4;
