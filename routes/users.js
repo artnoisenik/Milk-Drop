@@ -38,10 +38,17 @@ router.get('/accept/:id', authorizedUser, function(req, res, next) {
   knex('transactions').where('listing_id', req.params.id).update({
     accepted: true
   }).then(function() {
-    knex('listings').where('id', req.params.id).update({
-      closed: true
-    }).then(function() {
-      res.redirect('/');
+    knex('transactions').where('listing_id', req.params.id).then(function(transaction){
+      console.log('transaction');
+      console.log(transaction);
+      knex('notifications').insert({ user_id: transaction[0].requester_id, listing_id: transaction[0].id, message: "Your request has been accepted!"})
+      .then(function(){
+        knex('listings').where('id', req.params.id).update({
+          closed: true
+        }).then(function() {
+          res.redirect('/');
+        });
+      })
     });
   });
 });
@@ -62,7 +69,8 @@ router.post('/addposting', function(req, res, next) {
       post_end: req.body.expiration_date,
       amount: req.body.amount,
       cost_per_ounce: req.body.cost_per_ounce,
-      description: req.body.description
+      description: req.body.description,
+      closed: false
     })
     .then(function() {
       // res.render('newposting', { title: 'Milk Exchange', success: 'Post added' });
@@ -114,14 +122,17 @@ router.get('/profile', authorizedUser, function(req, res, next) {
             .innerJoin('listings', 'transactions.listing_id', 'listings.id')
             .innerJoin('users', 'transactions.requester_id', 'users.id')
             .then(function(transactions) {
-              console.log(transactions);
-              res.render('profile', {
-                title: 'Milk Drop',
-                name: req.signedCookies.name,
-                layout: 'loggedinlayout',
-                listings: listings,
-                user: user[0],
-                transactions: transactions
+              knex('notifications').where({ id: req.signedCookies.userID }).then(function(notifications){
+                console.log(notifications);
+                res.render('profile', {
+                  title: 'Milk Drop',
+                  name: req.signedCookies.name,
+                  layout: 'loggedinlayout',
+                  listings: listings,
+                  user: user[0],
+                  transactions: transactions,
+                  notifications: notifications
+                });
               });
             });
         });
