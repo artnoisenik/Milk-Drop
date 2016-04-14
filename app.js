@@ -11,6 +11,7 @@ var Strategy = require('passport-facebook').Strategy;
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var app = express();
+var knex = require('./lib/knex');
 
 require('dotenv').load();
 
@@ -35,39 +36,51 @@ app.use(passport.session());
 passport.use(new Strategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: process.env.CALLBACK_URL + '/login/facebook/return'
+    callbackURL: process.env.CALLBACK_URL + '/login/facebook/return',
+    passRecToCallback: true,
+    profileFields: ['id', 'emails', 'name', 'picture.type(large)']
   },
   function(accessToken, refreshToken, profile, cb) {
-    // In this example, the user's Facebook profile is supplied as the user
-    // record.  In a production-quality application, the Facebook profile should
-    // be associated with a user record in the application's database, which
-    // allows for account linking and authentication with other identity
-    // providers.
     return cb(null, profile);
   }));
 
-  passport.serializeUser(function(user, cb) {
-    cb(null, user);
-  });
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
 
-  passport.deserializeUser(function(obj, cb) {
-    cb(null, obj);
-  });
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
 
-  app.get('/login/facebook',
-    passport.authenticate('facebook'));
+app.get('/login/facebook',
+  passport.authenticate('facebook'));
 
-  app.get('/login/facebook/return',
-    passport.authenticate('facebook', { failureRedirect: '/signup' }),
-    function(req, res) {
-      res.redirect('/');
+app.get('/login/facebook/return',
+  passport.authenticate('facebook', { failureRedirect: '/signup' }),
+  function(req, res) {
+      knex('users')
+      .where('facebook_id', req.user.id).first()
+      .then(function(user){
+        console.log('USER!!!!!!!!!!',user);
+        if(user === undefined){
+          console.log('11111111111',req.user._json);
+          res.render('oauthRegister', {user:req.user._json});
+        } else {
+          console.log('22222222222',req.user._json);
+          res.clearCookie('userID');
+          res.cookie('userID', user[0].id, {
+          signed: true
+        });
+          res.redirect('/')
+        }
     });
+});
 
-  app.get('/profile',
-    require('connect-ensure-login').ensureLoggedIn(),
-    function(req, res){
-      res.render('profile', { user: req.user });
-    });
+app.get('/profile',
+  require('connect-ensure-login').ensureLoggedIn(),
+  function(req, res){
+    res.render('profile', { user: req.user });
+  });
 
 
 app.use('/', routes);
