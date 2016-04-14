@@ -20,7 +20,7 @@ router.post('/request', function(req, res, next) {
 
 router.get('/posting', function(req, res, next) {
   res.render('newposting', {
-    title: 'Milk Exchange - Add Posting'
+    title: 'Milk Drop - Add Posting'
   });
 })
 
@@ -46,7 +46,7 @@ router.get('/post/edit/:id', function(req, res, next) {
     .then(function(post) {
       console.log(post);
       res.render('editposting', {
-        title: 'Milk Exchange',
+        title: 'Milk Drop',
         post: post
       })
     })
@@ -72,12 +72,11 @@ router.get('/profile', function(req, res, next) {
   if (req.signedCookies.userID) {
     knex('listings')
       .where('user_id', req.signedCookies.userID)
-      .select('created_at', 'portrait_link', 'title', 'amount', 'cost_per_ounce', 'description', 'requested', 'verified', 'user_id')
       .join('users', 'users.id', 'listings.user_id')
       .then(function(listings) {
         knex('users')
-          .where('id', req.signedCookies.userID)
-          .select('first_name', 'last_name', 'portrait_link', 'email', 'address_1', 'address_2', 'city', 'state', 'zip_code', 'id')
+          .where('users.id', req.signedCookies.userID)
+          .join('ratings', 'reciever_id', 'users.id')
           .then(function(user) {
             res.render('profile', {
               title: 'Milk Exchange',
@@ -99,6 +98,7 @@ router.post('/profile/:id', function(req, res, next) {
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       email: req.body.email,
+      phone: req.body.phone,
       portrait_link: req.body.portrait_link,
       address_1: req.body.address_1,
       address_2: req.body.address_2,
@@ -115,48 +115,70 @@ router.get('/admin', function(req, res, next) {
   res.render('admin');
 })
 
-router.get('/admin/userlist', function(req, res, next) {
-  res.render('adminusers')
-})
-
-router.get('/admin/listings', function(req, res, next) {
-  knex('users')
-    .join('listings', 'listings.user_id', 'users.id')
+router.get('/admin/alllistings', function(req, res, next) {
+  knex('listings')
+    .join('ratings', 'reciever_id', 'listings.user_id')
+    .join('users', 'users.id', 'listings.user_id')
     .then(function(listings) {
       console.log(listings);
       res.render('adminlisting', {
-        title: 'MilKonnect',
+        title: 'Milk Drop',
         listings: listings
       });
     });
 })
 
 router.post('/admin/listings/:id/delete', function(req, res, next) {
-  knex('listings')
-    .where('id', req.params.id)
-    .del()
+  knex('listings').where('id', req.params.id).del()
     .then(function(response) {
-      res.redirect('/users/admin/listings');
+      res.redirect('/users/admin/alllistings');
     })
 })
 
-router.get('/admin/all', function(req, res, next) {
-  knex('users')
+router.get('/admin/allusers', function(req, res, next) {
+  knex('ratings')
+    .join('users', 'users.id', 'reciever_id')
+    .orderBy('users.id')
     .then(function(users) {
-      console.log(users);
       res.render('adminusers', {
-        title: 'MilKonnect',
+        title: 'Milk Drop - All Users',
         users: users
       });
     });
 })
 
-router.post('/admin/:id/delete', function(req, res, next) {
+router.post('/adminusers/:id/update', function(req, res, next) {
   knex('users')
-    .where('id', req.params.id)
-    .del()
-    .then(function(response) {
-      res.redirect('/users/admin/all');
+    .where('id', req.params.id).first()
+    .returning('id')
+    .update({
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email: req.body.email,
+      phone: req.body.phone,
+      portrait_link: req.body.portrait_link,
+      address_1: req.body.address_1,
+      address_2: req.body.address_2,
+      city: req.body.city,
+      state: req.body.state,
+      zip_code: req.body.zip_code,
+      admin: req.body.admin
+    })
+    .then(function(userID) {
+      knex('ratings')
+        .where('reciever_id', userID[0]).first()
+        .update({
+          rating: req.body.rating
+        }).then(function() {
+          res.redirect('/users/admin/allusers');
+        })
+    });
+})
+
+router.get('/adminusers/:id/delete', function(req, res, next) {
+  knex('users').where('users.id', req.params.id).del()
+    .then(function() {
+      res.redirect('/users/admin/allusers');
     })
 })
 

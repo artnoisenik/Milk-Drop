@@ -1,58 +1,134 @@
-<div class="row secondary_nav">
-  <div class="col-md-offset-1 col-md-2">
-    <form action="/location" method="post">
-      <div class="form-group">
-        <input type="text" class="form-control" name="" placeholder="Enter a location...">
+<div class="row allusers">
+  {{#each users}}
+    <form action="/users/adminusers/{{id}}/update" method="post">
+      <div class="row page-header">
+
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-offset-2 col-md-8 text-center">
+              <div class="form-group">
+                <img src="{{portrait_link}}" alt="{{first_name}} {{last_name}}" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-offset-2 col-md-8 text-center">
+              <div class="form-group">
+                <label for="portrait_link">Portait Link</label>
+                <input type="text" class="form-control" id="portrait_link" name="portrait_link" value="{{portrait_link}}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <div class="ratings {{rating}}"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" value="{{first_name}}">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" value="{{last_name}}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{email}}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" class="form-control" id="phone" name="phone" value="{{phone}}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="address_1">Address 1</label>
+                <input type="text" class="form-control" id="address_1" name="address_1" value="{{address_1}}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="address_2">Address 2</label>
+                <input type="text" class="form-control" id="address_2" name="address_2" value="{{address_2}}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" class="form-control" id="city" name="city" value="{{city}}">
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label for="state">State</label>
+                <input type="text" class="form-control" id="state" name="state" value="{{state}}">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="zip_code">Zip Code</label>
+                <input type="text" class="form-control" id="zip_code" name="zip_code" value="{{zip_code}}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                <label for="rating" class="col-md-offset-2 col-md-3 control-label">Admin</label>
+                <div class="col-md-7">
+                  <label class="radio-inline">
+                    <input type="radio" name="admin" value="true"> Yes
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="admin" value="false"> No
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-horizontal">
+                <div class="form-group">
+                  <label for="rating" class="col-md-offset-3 col-md-3 control-label">Rating</label>
+                  <div class="col-md-4">
+                    <input type="number" class="form-control" id="rating" name="rating" min="0" max="5" value="{{rating}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <a href="/users/adminusers/{{id}}/delete">
+                <span class="btn btn-danger">Delete User</span>
+              </a>
+              <button type="submit" class="btn btn-primary">Update User</button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </form>
-  </div>
-  <div class="col-md-offset-6 col-md-2 text-right">
-    <div class="form-group">
-      <a href="/users/post">
-        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a Listing</button>
-      </a>
-    </div>
-  </div>
+  {{/each}}
 </div>
-
-<div class="row map">
-  <div class="col-md-12">
-    <img src="http://placehold.it/1x1" alt="placeholder" />
-    {{#if success}}
-      {{success}}
-    {{/if}}
-  </div>
-</div>
-
-{{#each users}}
-  <div class="row listing">
-    <div class="col-md-offset-1 col-md-10">
-      <div class="row">
-        <div class="col-md-2 text-center">
-          <img src="{{portrait_link}}" alt="{{title}}" />
-          <p>
-            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-          </p>
-        </div>
-        <div class="col-md-7">
-          <h4>Email: {{email}}</h4>
-        </div>
-        <div class="col-md-3">
-          <p>Street address: {{address_1}} {{address_2}}</p>
-          <p>City: {{city}}</p>
-          <p>State: {{state}}</p>
-          <p>Zip code: {{zip_code}}</p>
-          <form action="/users/admin/{{id}}/delete" method="post">
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary">Delete</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-{{/each}}
