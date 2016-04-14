@@ -22,22 +22,23 @@ router.post('/request/:id', authorizedUser, function(req, res, next) {
       listing_id: req.params.id,
       supplier_id: listing[0].user_id,
       requester_id: req.signedCookies.userID,
-      // requested: true,
       accepted: false
     }).then(function() {
-      if (listing) {
-        if (listing[0].cost_per_ounce == '0') {
-          listing[0].cost_per_ounce = 'Free';
-          // listing[0].total = 0;
-          listing[0].total = 'Free';
-        } else {
-          listing[0].total = (listing[0].cost_per_ounce * listing[0].amount);
+      knex('listings').where('id', req.params.id).update({ requested: true }).then(function() {
+        if (listing) {
+          if (listing[0].cost_per_ounce == '0') {
+            listing[0].cost_per_ounce = 'Free';
+            // listing[0].total = 0;
+            listing[0].total = 'Free';
+          } else {
+            listing[0].total = (listing[0].cost_per_ounce * listing[0].amount);
+          }
         }
-      }
-      res.render('request', {
-        listing: listing[0],
-        name: req.signedCookies.name,
-        layout: 'loggedinlayout'
+        res.render('request', {
+          listing: listing[0],
+          name: req.signedCookies.name,
+          layout: 'loggedinlayout'
+        });
       });
     });
   });
