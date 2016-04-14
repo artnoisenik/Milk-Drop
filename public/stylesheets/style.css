@@ -35,6 +35,24 @@ body {
   .postingsnav span {
     font-size: 30px; }
 
+.dashboard {
+  margin-top: 50px; }
+  .dashboard img {
+    border-radius: 15px;
+    max-width: 100%; }
+  .dashboard .ratings .glyphicon {
+    font-size: 22px;
+    margin-top: 15px; }
+  .dashboard .ratings .glyphicon-star {
+    color: #41a1f4; }
+  .dashboard .verified {
+    font-size: 30px; }
+  .dashboard .true {
+    color: yellow; }
+  .dashboard h2 {
+    display: inline-block;
+    margin-right: 15px; }
+
 .postings {
   margin-bottom: 15px; }
   .postings .col-md-10 {
