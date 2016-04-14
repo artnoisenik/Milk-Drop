@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
     table.integer('supplier_id').unsigned().notNullable().references('id').inTable('users');
     table.integer('requester_id').unsigned().notNullable().references('id').inTable('users');
     table.integer('listing_id').unsigned().notNullable().references('id').inTable('listings');
-    table.boolean('requested');
+    table.boolean('closed');
     table.boolean('accepted');
   });
 };

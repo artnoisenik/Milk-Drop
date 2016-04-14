@@ -20,7 +20,7 @@ router.post('/request/:id', authorizedUser, function(req, res, next) {
         listing_id: req.params.id,
         supplier_id: listing[0].user_id,
         requester_id: req.signedCookies.userID,
-        requested: true,
+        closed: false,
         accepted: false
       }).then(function(){
           res.render('request', { listing: listing[0] });
