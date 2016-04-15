@@ -1,79 +1,90 @@
-<div class="row signup">
+<div class="container">
+  <div class="row signup">
 
-  {{#if loginErrors}}
-  <h3 class='text-center'>{{loginErrors}}</h3>
-  {{/if}}
-  <div class="col-md-6">
+    {{#if loginErrors}}
+      <h3 class='text-center'>{{loginErrors}}</h3>
+    {{/if}}
+    <div class="col-md-6">
 
-    <div class="row">
-      <div class="col-md-11">
-        <h3>Log In:</h3>
-        <form action="/login" method="post">
-          <div class="control-group">
-            <input type="email" class="form-control" name="email" placeholder='Email'>
-          </div><br>
-          <div class="control-group">
-            <input type="password" class="form-control" name="password" placeholder='Password'>
-            <p class="help-block"></p>
-          </div><br>
-          <div class="row">
-            <div class="col-md-6">
-              <!-- <div class="checkbox">
+      <div class="row">
+        <div class="col-md-11">
+          <h3>Log In:</h3>
+          <form action="/login" method="post">
+            <div class="control-group">
+              <input type="email" class="form-control" name="email" placeholder='Email'>
+            </div>
+            <br>
+            <div class="control-group">
+              <input type="password" class="form-control" name="password" placeholder='Password'>
+              <p class="help-block"></p>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-6">
+                <!-- <div class="checkbox">
                 <label class="rememberMe">
                   <input type="checkbox"> Remember me
                 </label>
               </div> -->
+              </div>
+              <div class="col-md-offset-2 col-md-8">
+                <button type="submit" class="btn btn-default">Log In</button>
+              </div>
             </div>
-            <div class="col-md-offset-2 col-md-8">
-              <button type="submit" class="btn btn-default">Log In</button>
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
 
-    <div class="row">
-      <div class="col-md-11">
-        <h4 class="text-center">or</h4>
-        <div class="row">
-          <div class="col-md-offset-2 col-md-8">
-            <a href='/login/facebook'><button type="submit" class="btn btn-primary">Log in with Facebook</button></a>
+      <div class="row">
+        <div class="col-md-11">
+          <h4 class="text-center">or</h4>
+          <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+              <a href='/login/facebook'>
+                <button type="submit" class="btn btn-primary">Log in with Facebook</button>
+              </a>
+            </div>
           </div>
         </div>
       </div>
+
     </div>
 
-  </div>
+    <div class="col-md-6">
 
-  <div class="col-md-6">
-
-    <div class="row leftborder">
-      <div class="col-md-offset-1 col-md-11">
-        <h3>Sign Up:</h3>
-        <form action="/signupSubmit" method="post" class='signupForm'>
-          <div class="control-group">
-            <input id='emailLogin' type="text" class="form-control" name="Email2" placeholder='Email'>
-          </div><br>
-          <div class="control-group">
-            <input type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,30}$" class="form-control" name="Password2" minlength='8' placeholder='Password - Must include at least 1 uppercase letter and one number'>
-            <p class="help-block"></p>
-          </div>
-          <div class="control-group">
-            <input type="password" class="form-control" name="Password2Confirm" placeholder='Confirm Password' data-validation-match-match='Password2' data-validation-match-message='Needs to match password from above'>
-            <p class="help-block"></p>
-          </div><br>
-          <div class="row">
-            <div class="col-md-offset-8 col-md-4">
-              <button type="submit" class="btn btn-default">Register</button>
+      <div class="row leftborder">
+        <div class="col-md-offset-1 col-md-11">
+          <h3>Sign Up:</h3>
+          <form action="/signupSubmit" method="post" class='signupForm'>
+            <div class="control-group">
+              <input id='emailLogin' type="text" class="form-control" name="Email2" placeholder='Email'>
             </div>
-          </div>
-        </form>
+            <br>
+            <div class="control-group">
+              <input type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,30}$" class="form-control" name="Password2" minlength='8' placeholder='Password - Must include at least 1 uppercase letter and one number'>
+              <p class="help-block"></p>
+            </div>
+            <div class="control-group">
+              <input type="password" class="form-control" name="Password2Confirm" placeholder='Confirm Password' data-validation-match-match='Password2' data-validation-match-message='Needs to match password from above'>
+              <p class="help-block"></p>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-offset-8 col-md-4">
+                <button type="submit" class="btn btn-default">Register</button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
+
     </div>
 
   </div>
-
 </div>
+
 <script>
-   $(function () { $("input,select,textarea").not("[type=submit]").jqBootstrapValidation(); } );
+  $(function() {
+    $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
+  });
 </script>

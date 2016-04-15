@@ -69,8 +69,8 @@ body {
 .map {
   margin-bottom: 15px; }
   .map #map {
-    background: transparent url("http://downgraf.com/wp-content/uploads/2014/09/01-progress.gif") no-repeat center center;
-    background-size: 150px;
+    background: transparent url("https://files.slack.com/files-pri/T027GBYPB-F10SADXDZ/loading.gif") no-repeat center center;
+    background-size: 350px;
     height: 400px; }
 
 .profile img {

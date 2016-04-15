@@ -27,22 +27,22 @@ router.get('/', authorizedUser, function(req, res, next) {
     .join('users', 'users.id', 'listings.user_id')
     .then(function(listings) {
       knex('listings')
-      .leftJoin('users', 'listings.user_id', 'users.id')
-      .select('listings.id', 'latitude', 'longitude', 'title', 'description')
-      .then(function(listingMapMarkers){
-        listingMapMarkers.forEach(function(data) {
-          var foo = '/posting/' + data.id;
-          return data.link = foo;
-        })
-        res.render('index', {
-          title: 'Milk Drop',
-          name: req.signedCookies.name,
-          layout: layout,
-          listings: listings,
-          user: req.user,
-          listingMapMarkers: JSON.stringify(listingMapMarkers)
+        .leftJoin('users', 'listings.user_id', 'users.id')
+        .select('listings.id', 'latitude', 'longitude', 'title', 'description')
+        .then(function(listingMapMarkers) {
+          listingMapMarkers.forEach(function(data) {
+            var foo = '/posting/' + data.id;
+            return data.link = foo;
+          })
+          res.render('index', {
+            title: 'Milk Drop',
+            name: req.signedCookies.name,
+            layout: layout,
+            listings: listings,
+            user: req.user,
+            listingMapMarkers: JSON.stringify(listingMapMarkers)
+          });
         });
-      });
     });
 });
 
@@ -59,17 +59,28 @@ router.get('/posting/:id', function(req, res, next) {
     })
 })
 router.get('/pasteurize', function(req, res, next) {
-  res.render('pasteurize');
+  res.render('pasteurize', {
+    layout: layout,
+    name: req.signedCookies.name
+  });
 });
 router.get('/massage', function(req, res, next) {
-  res.render('massage');
+  res.render('massage', {
+    layout: layout,
+    name: req.signedCookies.name
+  });
 });
 router.get('/faq', function(req, res, next) {
-  res.render('faq');
+  res.render('faq', {
+    layout: layout,
+    name: req.signedCookies.name
+  });
 });
 router.get('/signup', function(req, res, next) {
   res.render('signup', {
-    title: 'Milk Drop'
+    title: 'Milk Drop',
+    layout: layout,
+    name: req.signedCookies.name
   });
 });
 
@@ -118,70 +129,70 @@ router.post('/signupSubmit2', function(req, res, next) {
   var errorArray = [];
   var address = 'address=' + req.body.Address + ',' + req.body.Address_2 + req.body.City + ',' + req.body.State + req.body.Zip;
   getCoords(address).then(function(location) {
-      console.log("LOCATIONS");
-      console.log(location);
-      knex('users').where({
-        email: req.body.Email
-      }).first().then(function(user) {
-          if (!user) {
-            var hash = bcrypt.hashSync(req.body.Password, 10);
-            if (/^[^@]+@[^@]+\.[^@]+$/.test(req.body.Email) === false) {
-              errorArray.push('Email has to be in format: example@something.com');
-            }
-            if (/^[A-z ,.'-]+$/.test(req.body.First) === false) {
-              errorArray.push('First name has have at least 1 uppercase letter and no numbers/special characters');
-            }
-            if (/^(\+\d{1,2}\s)?\(?\d{3}\)?\d{3}\d{4}$/.test(req.body.Phone) === false) {
-              errorArray.push('First name has have at least 1 uppercase letter and no numbers/special characters');
-            }
-            if (/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/.test(req.body.City) === false) {
-              errorArray.push('City has to only include letters');
-            }
-            if (/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/.test(req.body.State) === false) {
-              errorArray.push('State has to only include letters');
-            }
-            if (/^\d{5}(?:[-\s]\d{4})?$/.test(req.body.Zip) === false) {
-              errorArray.push('Zip code should only include numbers');
-            }
-            if (errorArray.length > 0) {
-              res.render('signup', {
-                loginErrors: errorArray
-              })
-            } else {
-              queries.createNewUser(
-                req.body.First,
-                req.body.Last,
-                req.body.Email,
-                hash,
-                req.body.Phone,
-                req.body.PortraitLink,
-                req.body.Address,
-                req.body.Address_2,
-                req.body.City,
-                req.body.State,
-                req.body.Zip,
-                location.lat,
-                location.lng
-              ).then(function(user) {
-                res.clearCookie('userID');
-                res.clearCookie('admin');
-                res.clearCookie('name');
-                res.cookie('userID', user.id, {
-                  signed: true
-                });
-                res.cookie('admin', user.admin, {
-                  signed: true
-                });
-                res.cookie('name', user.first_name, {
-                  signed: true
-                });
-                res.redirect('/');
-              })
-            }
-        } else {
-          res.redirect('/signup');
+    console.log("LOCATIONS");
+    console.log(location);
+    knex('users').where({
+      email: req.body.Email
+    }).first().then(function(user) {
+      if (!user) {
+        var hash = bcrypt.hashSync(req.body.Password, 10);
+        if (/^[^@]+@[^@]+\.[^@]+$/.test(req.body.Email) === false) {
+          errorArray.push('Email has to be in format: example@something.com');
         }
-      });
+        if (/^[A-z ,.'-]+$/.test(req.body.First) === false) {
+          errorArray.push('First name has have at least 1 uppercase letter and no numbers/special characters');
+        }
+        if (/^(\+\d{1,2}\s)?\(?\d{3}\)?\d{3}\d{4}$/.test(req.body.Phone) === false) {
+          errorArray.push('First name has have at least 1 uppercase letter and no numbers/special characters');
+        }
+        if (/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/.test(req.body.City) === false) {
+          errorArray.push('City has to only include letters');
+        }
+        if (/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/.test(req.body.State) === false) {
+          errorArray.push('State has to only include letters');
+        }
+        if (/^\d{5}(?:[-\s]\d{4})?$/.test(req.body.Zip) === false) {
+          errorArray.push('Zip code should only include numbers');
+        }
+        if (errorArray.length > 0) {
+          res.render('signup', {
+            loginErrors: errorArray
+          })
+        } else {
+          queries.createNewUser(
+            req.body.First,
+            req.body.Last,
+            req.body.Email,
+            hash,
+            req.body.Phone,
+            req.body.PortraitLink,
+            req.body.Address,
+            req.body.Address_2,
+            req.body.City,
+            req.body.State,
+            req.body.Zip,
+            location.lat,
+            location.lng
+          ).then(function(user) {
+            res.clearCookie('userID');
+            res.clearCookie('admin');
+            res.clearCookie('name');
+            res.cookie('userID', user.id, {
+              signed: true
+            });
+            res.cookie('admin', user.admin, {
+              signed: true
+            });
+            res.cookie('name', user.first_name, {
+              signed: true
+            });
+            res.redirect('/');
+          })
+        }
+      } else {
+        res.redirect('/signup');
+      }
+    });
   });
 });
 
@@ -190,68 +201,68 @@ router.post('/signupSubmitFacebook', function(req, res, next) {
   var errorArray = [];
   var address = 'address=' + req.body.Address + ',' + req.body.Address_2 + req.body.City + ',' + req.body.State + req.body.Zip;
   getCoords(address).then(function(location) {
-      console.log("LOCATIONS");
-      console.log(location);
-      knex('users').where({
-        email: req.body.Email
-      }).first().then(function(user) {
-          if (!user) {
-            var hash
-            if (/^[A-z ,.'-]+$/.test(req.body.First) === false) {
-              errorArray.push('First name has have at least 1 uppercase letter and no numbers/special characters');
-            }
-            if (/^(\+\d{1,2}\s)?\(?\d{3}\)?\d{3}\d{4}$/.test(req.body.Phone) === false) {
-              errorArray.push('First name has have at least 1 uppercase letter and no numbers/special characters');
-            }
-            if (/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/.test(req.body.City) === false) {
-              errorArray.push('City has to only include letters');
-            }
-            if (/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/.test(req.body.State) === false) {
-              errorArray.push('State has to only include letters');
-            }
-            if (/^\d{5}(?:[-\s]\d{4})?$/.test(req.body.Zip) === false) {
-              errorArray.push('Zip code should only include numbers');
-            }
-            if (errorArray.length > 0) {
-              res.render('signup', {
-                loginErrors: errorArray
-              })
-            } else {
-              queries.createNewUser(
-                req.body.First,
-                req.body.Last,
-                req.body.Email,
-                hash,
-                req.body.Phone,
-                req.body.PortraitLink,
-                req.body.Address,
-                req.body.Address_2,
-                req.body.City,
-                req.body.State,
-                req.body.Zip,
-                location.lat,
-                location.lng,
-                req.body.facebook_id
-              ).then(function(user) {
-                res.clearCookie('userID');
-                res.clearCookie('admin');
-                res.clearCookie('name');
-                res.cookie('userID', user.id, {
-                  signed: true
-                });
-                res.cookie('admin', user.admin, {
-                  signed: true
-                });
-                res.cookie('name', user.first_name, {
-                  signed: true
-                });
-                res.redirect('/');
-              })
-            }
-        } else {
-          res.redirect('/signup');
+    console.log("LOCATIONS");
+    console.log(location);
+    knex('users').where({
+      email: req.body.Email
+    }).first().then(function(user) {
+      if (!user) {
+        var hash
+        if (/^[A-z ,.'-]+$/.test(req.body.First) === false) {
+          errorArray.push('First name has have at least 1 uppercase letter and no numbers/special characters');
         }
-      });
+        if (/^(\+\d{1,2}\s)?\(?\d{3}\)?\d{3}\d{4}$/.test(req.body.Phone) === false) {
+          errorArray.push('First name has have at least 1 uppercase letter and no numbers/special characters');
+        }
+        if (/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/.test(req.body.City) === false) {
+          errorArray.push('City has to only include letters');
+        }
+        if (/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/.test(req.body.State) === false) {
+          errorArray.push('State has to only include letters');
+        }
+        if (/^\d{5}(?:[-\s]\d{4})?$/.test(req.body.Zip) === false) {
+          errorArray.push('Zip code should only include numbers');
+        }
+        if (errorArray.length > 0) {
+          res.render('signup', {
+            loginErrors: errorArray
+          })
+        } else {
+          queries.createNewUser(
+            req.body.First,
+            req.body.Last,
+            req.body.Email,
+            hash,
+            req.body.Phone,
+            req.body.PortraitLink,
+            req.body.Address,
+            req.body.Address_2,
+            req.body.City,
+            req.body.State,
+            req.body.Zip,
+            location.lat,
+            location.lng,
+            req.body.facebook_id
+          ).then(function(user) {
+            res.clearCookie('userID');
+            res.clearCookie('admin');
+            res.clearCookie('name');
+            res.cookie('userID', user.id, {
+              signed: true
+            });
+            res.cookie('admin', user.admin, {
+              signed: true
+            });
+            res.cookie('name', user.first_name, {
+              signed: true
+            });
+            res.redirect('/');
+          })
+        }
+      } else {
+        res.redirect('/signup');
+      }
+    });
   });
 });
 
@@ -275,7 +286,7 @@ router.post('/login', function(req, res, next) {
     knex('users').where({
       email: req.body.email
     }).first().then(function(user) {
-      if ( user && bcrypt.compareSync(req.body.password, user.password) && (user.admin === true) ) {
+      if (user && bcrypt.compareSync(req.body.password, user.password) && (user.admin === true)) {
         res.clearCookie('userID');
         res.clearCookie('admin');
         res.clearCookie('name');
