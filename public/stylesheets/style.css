@@ -135,7 +135,8 @@ body {
 .postings {
   margin-bottom: 15px; }
   .postings .col-md-10 {
-    border: 1px solid;
+    background-color: rgb(248, 244, 219);;
+    border: 2px solid rgb(234, 229, 199);
     border-radius: 15px;
     padding-top: 15px;
     padding-bottom: 15px; }
@@ -143,10 +144,11 @@ body {
       border-radius: 15px;
       max-width: 100%; }
     .postings .col-md-10 .ratings .glyphicon {
+      color: rgb(176, 218, 242);;
       font-size: 22px;
       margin-top: 15px; }
     .postings .col-md-10 .ratings .glyphicon-star {
-      color: #41a1f4; }
+      color: rgb(93, 180, 230); }
     .postings .col-md-10 .verified {
       font-size: 30px; }
     .postings .col-md-10 h3 {
@@ -154,6 +156,10 @@ body {
       display: inline-block; }
     .postings .col-md-10 .true {
       color: yellow; }
+    .postings .btn {
+      background-color: rgb(166, 169, 60);
+      color: white;
+    }
 
 .listings .glyphicon {
   color: #41a1f4; }
@@ -180,3 +186,8 @@ body {
     margin: 25px;
     float: right;
     margin-right: 60px; }
+
+.addbtn .btn{
+  background-color: rgb(166, 169, 60);
+  color: white;
+}
