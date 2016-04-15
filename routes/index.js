@@ -127,7 +127,7 @@ router.post('/signupSubmit2', function(req, res, next) {
             if (/^[A-z ,.'-]+$/.test(req.body.First) === false) {
               errorArray.push('First name has have at least 1 uppercase letter and no numbers/special characters');
             }
-            if (/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(req.body.Phone) === false) {
+            if (/^(\+\d{1,2}\s)?\(?\d{3}\)?\d{3}\d{4}$/.test(req.body.Phone) === false) {
               errorArray.push('First name has have at least 1 uppercase letter and no numbers/special characters');
             }
             if (/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/.test(req.body.City) === false) {
@@ -196,7 +196,7 @@ router.post('/signupSubmitFacebook', function(req, res, next) {
             if (/^[A-z ,.'-]+$/.test(req.body.First) === false) {
               errorArray.push('First name has have at least 1 uppercase letter and no numbers/special characters');
             }
-            if (/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(req.body.Phone) === false) {
+            if (/^(\+\d{1,2}\s)?\(?\d{3}\)?\d{3}\d{4}$/.test(req.body.Phone) === false) {
               errorArray.push('First name has have at least 1 uppercase letter and no numbers/special characters');
             }
             if (/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/.test(req.body.City) === false) {
