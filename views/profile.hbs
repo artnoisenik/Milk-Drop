@@ -139,20 +139,7 @@
         <div class="row">
           <div class="col-md-2 text-center">
             <img src="{{portrait_link}}" alt="{{title}}" />
-            <!-- <br><br><p>Rate this person</p> -->
-            <br>
-            <br>
-            <span class="starRating">
-            <input id="rating5" type="radio" name="rating" value="5">
-            <label for="rating5">5</label>
-            <input id="rating4" type="radio" name="rating" value="4">
-            <label for="rating4">4</label>
-            <input id="rating3" type="radio" name="rating" value="3">
-            <label for="rating3">3</label>
-            <input id="rating2" type="radio" name="rating" value="2">
-            <label for="rating2">2</label>
-            <input id="rating1" type="radio" name="rating" value="1" checked>
-            <label for="rating1">1</label>
+            <div class="ratings {{rating}}"></div>
           </span>
 
           </div>
@@ -166,9 +153,9 @@
             <p>Amount: {{amount}}oz</p>
             <p>Cost: ${{cost_per_ounce}}</p>
             <p>Date: {{created_at}}</p>
-            <form action="/request" method="post">
+            <form action="/users/deletePost/{{this.id}}" method="post">
               <div class="form-group">
-                <button type="submit" class="btn btn-primary">Request {{requested}}</button>
+                <button type="submit" class="btn btn-danger">Delete Post</button>
               </div>
             </form>
           </div>

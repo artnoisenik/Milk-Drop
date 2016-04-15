@@ -109,6 +109,12 @@ router.post('/addposting', function(req, res, next) {
     });
 })
 
+router.post('/deletePost/:id', function(req, res, next){
+  queries.deletePost(req.params.id).then(function(){
+    res.redirect('/users/profile/');
+  });
+})
+
 router.get('/post/edit/:id', function(req, res, next) {
   knex('listings')
     .where('id', req.params.id).first()
@@ -139,7 +145,7 @@ router.post('/post/edit/:id', function(req, res, next) {
 
 router.get('/profile', authorizedUser, function(req, res, next) {
   knex('listings')
-    .where('user_id', req.signedCookies.userID)
+    .where({user_id: req.signedCookies.userID, closed: false})
     .join('users', 'users.id', 'listings.user_id')
     .then(function(listings) {
       knex('users')
@@ -263,11 +269,23 @@ router.post('/adminusers/:id/update', function(req, res, next) {
     });
 })
 
+router.get('/profile/:id/delete', authorizedUser, function(req, res, next){
+  if(req.signedCookies.userID === req.params.id){
+    queries.deleteProfile(req.params.id).then(function(){
+      res.clearCookie('userID');
+      res.clearCookie('admin');
+      res.clearCookie('name');
+      res.redirect('/signup');
+    })
+  }
+});
+
+
 router.get('/adminusers/:id/delete', function(req, res, next) {
   knex('users').where('users.id', req.params.id).del()
     .then(function() {
       res.redirect('/users/admin/allusers');
-    })
-})
+    });
+});
 
 module.exports = router;
