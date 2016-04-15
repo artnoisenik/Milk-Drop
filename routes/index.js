@@ -10,8 +10,12 @@ var layout;
 
 function authorizedUser(req, res, next) {
   var user_id = req.signedCookies.userID;
-  if (user_id) {
+  var admin = req.signedCookies.admin;
+  if (user_id && !admin) {
     layout = 'loggedinlayout';
+    next();
+  } else if (user_id && admin) {
+    layout = 'adminloggedin';
     next();
   } else {
     layout = 'layout';
@@ -46,7 +50,7 @@ router.get('/', authorizedUser, function(req, res, next) {
     });
 });
 
-router.get('/posting/:id', function(req, res, next) {
+router.get('/posting/:id', authorizedUser, function(req, res, next) {
   knex('listings').where('listings.id', req.params.id)
     .join('ratings', 'reciever_id', 'listings.user_id')
     .join('users', 'users.id', 'listings.user_id')
@@ -58,29 +62,28 @@ router.get('/posting/:id', function(req, res, next) {
       })
     })
 })
-router.get('/pasteurize', function(req, res, next) {
+router.get('/pasteurize', authorizedUser, function(req, res, next) {
   res.render('pasteurize', {
     layout: layout,
     name: req.signedCookies.name
   });
 });
-router.get('/massage', function(req, res, next) {
+router.get('/massage', authorizedUser, function(req, res, next) {
   res.render('massage', {
     layout: layout,
     name: req.signedCookies.name
   });
 });
-router.get('/faq', function(req, res, next) {
+router.get('/faq', authorizedUser, function(req, res, next) {
   res.render('faq', {
     layout: layout,
     name: req.signedCookies.name
   });
 });
-router.get('/signup', function(req, res, next) {
+router.get('/signup', authorizedUser, function(req, res, next) {
   res.render('signup', {
     title: 'Milk Drop',
-    layout: layout,
-    name: req.signedCookies.name
+    layout: layout
   });
 });
 

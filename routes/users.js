@@ -5,7 +5,12 @@ var queries = require('../lib');
 
 function authorizedUser(req, res, next) {
   var user_id = req.signedCookies.userID;
-  if (user_id) {
+  var admin = req.signedCookies.admin;
+  if (user_id && !admin) {
+    layout = 'loggedinlayout';
+    next();
+  } else if (user_id && admin) {
+    layout = 'adminloggedin';
     next();
   } else {
     res.redirect('/signup');
@@ -36,7 +41,7 @@ router.post('/request/:id', authorizedUser, function(req, res, next) {
         res.render('request', {
           listing: listing[0],
           name: req.signedCookies.name,
-          layout: 'loggedinlayout'
+          layout: layout
         });
       });
     });
@@ -83,7 +88,7 @@ router.get('/posting', authorizedUser, function(req, res, next) {
   res.render('newposting', {
     title: 'Milk Drop - Add Posting',
     name: req.signedCookies.name,
-    layout: 'loggedinlayout'
+    layout: layout
   });
 });
 
@@ -158,7 +163,7 @@ router.get('/profile', authorizedUser, function(req, res, next) {
                 res.render('profile', {
                   title: 'Milk Drop',
                   name: req.signedCookies.name,
-                  layout: 'loggedinlayout',
+                  layout: layout,
                   listings: listings,
                   user: user[0],
                   transactions: transactions,
@@ -194,7 +199,7 @@ router.post('/profile/:id', function(req, res, next) {
 router.get('/admin', authorizedUser, function(req, res, next) {
   res.render('admin', {
     name: req.signedCookies.name,
-    layout: 'loggedinlayout'
+    layout: layout
   });
 })
 
@@ -207,7 +212,7 @@ router.get('/admin/alllistings', authorizedUser, function(req, res, next) {
       res.render('adminlisting', {
         title: 'Milk Drop',
         name: req.signedCookies.name,
-        layout: 'loggedinlayout',
+        layout: layout,
         listings: listings
       });
     });
@@ -228,7 +233,7 @@ router.get('/admin/allusers', authorizedUser, function(req, res, next) {
       res.render('adminusers', {
         title: 'Milk Drop - All Users',
         name: req.signedCookies.name,
-        layout: 'loggedinlayout',
+        layout: layout,
         users: users
       });
     });
