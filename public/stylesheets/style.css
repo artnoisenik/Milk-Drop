@@ -201,6 +201,10 @@ body {
     display: inline-block;
     margin-right: 15px; }
 
+.addbtn .btn {
+  background-color: #a6a93c;
+  color: #f8f4db; }
+
 .postings {
   margin-bottom: 15px; }
   .postings .col-md-10 {

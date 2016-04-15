@@ -6,24 +6,25 @@
     <div id="map" class=""></div>
   </div>
 </div>
-<div class="row">
-  <div class="col-md-offset-1 col-md-2">
-    <form id="enterALocation" onsubmit="geocodeThis()">
-      <div class="form-group">
-        <input type="text" id='search' class="form-control" placeholder="Enter a location...">
-      </div>
-    </form>
-  </div>
-  <div class="col-md-offset-6 col-md-2 text-right addbtn">
-    <div class="form-group">
-      <a href="/users/posting">
-        <button type="submit" class="btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Posting</button>
-      </a>
-    </div>
-  </div>
-</div>
 
 <div class="container">
+
+  <div class="row">
+    <div class="col-md-offset-1 col-md-3">
+      <form id="enterALocation" onsubmit="geocodeThis()">
+        <div class="form-group">
+          <input type="text" id='search' class="form-control" placeholder="Enter a location...">
+        </div>
+      </form>
+    </div>
+    <div class="col-md-offset-4 col-md-3 text-right addbtn">
+      <div class="form-group">
+        <a href="/users/posting">
+          <button type="submit" class="btn form-control"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Posting</button>
+        </a>
+      </div>
+    </div>
+  </div>
 
   {{#each listings}}
     <div class="row postings">
@@ -41,7 +42,7 @@
             <a href='/posting/{{id}}'><h3>{{title}}</h3></a>
             <p>{{description}}</p>
             {{#if verified}}
-            <img src="/images/ribbon.png" alt="" class="ribbon verified {{verified}}" />
+              <img src="/images/ribbon.png" alt="" class="ribbon verified {{verified}}" />
             {{/if}}
           </div>
           <div class="col-md-3">
@@ -51,7 +52,7 @@
             <p>Date: {{created_at}}</p>
             <form action="/users/request/{{id}}" method="post">
               <div class="form-group">
-                <button type="submit" class="btn">Request {{requested}}</button>
+                <button type="submit" class="btn">Request</button>
               </div>
             </form>
           </div>
