@@ -13,10 +13,10 @@
       </div>
     </form>
   </div>
-  <div class="col-md-offset-6 col-md-2 text-right">
+  <div class="col-md-offset-6 col-md-2 text-right addbtn">
     <div class="form-group">
       <a href="/users/posting">
-        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Posting</button>
+        <button type="submit" class="btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Posting</button>
       </a>
     </div>
   </div>
@@ -44,7 +44,7 @@
             <p>Date: {{created_at}}</p>
             <form action="/users/request/{{id}}" method="post">
               <div class="form-group">
-                <button type="submit" class="btn btn-primary">Request {{requested}}</button>
+                <button type="submit" class="btn">Request {{requested}}</button>
               </div>
             </form>
           </div>
