@@ -28,9 +28,12 @@ router.get('/', authorizedUser, function(req, res, next) {
     .then(function(listings) {
       knex('listings')
       .leftJoin('users', 'listings.user_id', 'users.id')
-      .select('latitude', 'longitude', 'title', 'description')
+      .select('listings.id', 'latitude', 'longitude', 'title', 'description')
       .then(function(listingMapMarkers){
-        console.log(listings);
+        listingMapMarkers.forEach(function(data) {
+          var foo = '/posting/' + data.id;
+          return data.link = foo;
+        })
         res.render('index', {
           title: 'Milk Drop',
           name: req.signedCookies.name,

@@ -26,6 +26,7 @@ function success(pos) {
   for (var i = 0; i < listingArray.length; i++) {
     var title = listingArray[i].title;
     var description = listingArray[i].description;
+    var link = listingArray[i].link;
     var newlat = listingArray[i].latitude;
     var newlong = listingArray[i].longitude;
     var newJson = {
@@ -37,6 +38,7 @@ function success(pos) {
       "properties": {
         "title": title,
         "description": description,
+        "url": link,
         "marker-color": "#63b6e5",
         "marker-size": "medium",
         "marker-symbol": "water"
@@ -44,7 +46,18 @@ function success(pos) {
     };
     geojson.push(newJson);
   }
-  console.log(geojson);
+
+  locations.on('layeradd', function(e) {
+    var marker = e.layer,
+        feature = marker.feature;
+
+    var popupContent =  '<a class="popup" href="' + feature.properties.url + '"><h3>' + feature.properties.title + '</h3></a>' + '<p>' + feature.properties.description + '</p>';
+
+    marker.bindPopup(popupContent,{
+        closeButton: true,
+        minWidth: 150
+    });
+});
 
   locations.setGeoJSON(geojson);
 }//end success
