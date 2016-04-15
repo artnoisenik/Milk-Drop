@@ -13,6 +13,7 @@ body {
   background-color: #f8f4db;
   border-color: #3a3a3c; }
   .navbar-inverse .navbar-nav {
+    padding-left: 9px;
     float: none;
     width: 665px;
     margin: 50px auto 0 auto; }
@@ -67,11 +68,27 @@ body {
   color: #41a1f4; }
 
 .map {
-  margin-bottom: 15px; }
+  margin-bottom: 15px;
+  margin-left: -14px;
+  margin-top: -12px; }
   .map #map {
-    background: transparent url("https://files.slack.com/files-pri/T027GBYPB-F10SADXDZ/loading.gif") no-repeat center center;
-    background-size: 350px;
-    height: 400px; }
+    width: 100vw;
+    height: 100%;
+    position: absolute; }
+
+.gif {
+  background: transparent url("https://files.slack.com/files-pri/T027GBYPB-F10SADXDZ/loading.gif") center;
+  width: 100vw;
+  height: 100%;
+  position: absolute;
+  z-index: 10;
+  margin-left: -15px; }
+
+.test {
+  position: relative;
+  height: 400px;
+  margin-bottom: 10px;
+  background-size: 350px; }
 
 .footer {
   position: absolute;

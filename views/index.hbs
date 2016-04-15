@@ -1,11 +1,11 @@
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.16.0/mapbox-gl.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.16.0/mapbox-gl.css' rel='stylesheet' />
-
-<div class="gif"></div>
-<div class="row map">
-  <div id="map" class=""></div>
+<div class="test">
+  <div class="gif"></div>
+  <div class="map">
+    <div id="map" class=""></div>
+  </div>
 </div>
-
 <div class="row">
   <div class="col-md-offset-1 col-md-2">
     <form id="enterALocation" onsubmit="geocodeThis()">
@@ -62,6 +62,12 @@
 <script src='https://api.tiles.mapbox.com/mapbox.js/v2.2.4/mapbox.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox.js/v2.2.4/mapbox.css' rel='stylesheet' />
 <script type="text/javascript">
-  var listingArray = {{{listingMapMarkers}}};
+  var listingArray = {
+    {
+      {
+        listingMapMarkers
+      }
+    }
+  };
 </script>
 <script type="text/javascript" src="/javascripts/maps.js"></script>

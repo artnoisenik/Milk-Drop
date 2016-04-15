@@ -33,7 +33,7 @@ $(function() {
     //          window.location=$(this).find("a").attr("href");
     //          return false;
     //     });
-    // setTimeout(function(){ $('.gif').fadeOut() }, 4000);
-    $(".gif").delay(4000).fadeOut();
+    setTimeout(function(){ $('.gif').fadeOut() }, 3600);
+    // $(".gif").delay(4000).fadeOut();
 
 });
