@@ -35,16 +35,16 @@ router.post('/request/:id', authorizedUser, function(req, res, next) {
 });
 
 router.get('/accept/:id/:requester_id', authorizedUser, function(req, res, next) {
-  knex('transactions').where('listing_id', req.params.id).update({
-    accepted: true
-  }).then(function() {
-    knex('transactions').where('listing_id', req.params.id).then(function(transaction){
+  knex('transactions').where('listing_id', req.params.id).update({ accepted: true })
+  .then(function() {
+    knex('transactions').where('listing_id', req.params.id)
+    .then(function(transaction){
       knex('notifications').insert({ user_id: transaction[0].requester_id, listing_id: transaction[0].id, message: "Your request has been accepted!", displayed: false})
       .then(function(){
         knex('listings').where('id', req.params.id).update({
           closed: true
         }).then(function() {
-          res.redirect('/');
+          res.redirect('/users/profile');
         });
       })
     });
