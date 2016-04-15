@@ -67,17 +67,22 @@ body {
   color: #41a1f4; }
 
 .map {
-  margin-bottom: 15px;}
+  margin-bottom: 15px; }
   .map #map {
-    /*position: absolute;*/
+    background: transparent url("https://files.slack.com/files-pri/T027GBYPB-F10SADXDZ/loading.gif") no-repeat center center;
     background-size: 350px;
     height: 400px; }
-.gif {
-  background: transparent url("https://files.slack.com/files-pri/T027GBYPB-F10SADXDZ/loading.gif") no-repeat center center;
-  background-size: 350px;
-  height: 400px;
-  position: absolute;;
-  z-index: 1;}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  color: #a6a93c;
+  background-color: #f8f4db;
+  padding: 30px;
+  text-align: center; }
+
 .profile img {
   border-radius: 15px;
   max-width: 100%;
@@ -149,16 +154,6 @@ body {
       display: inline-block; }
     .postings .col-md-10 .true {
       color: yellow; }
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 100px;
-  color: white;
-  background-color: #a6a93c;
-  padding: 30px;
-  text-align: center; }
 
 .listings .glyphicon {
   color: #41a1f4; }

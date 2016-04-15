@@ -5,7 +5,12 @@ var queries = require('../lib');
 
 function authorizedUser(req, res, next) {
   var user_id = req.signedCookies.userID;
-  if (user_id) {
+  var admin = req.signedCookies.admin;
+  if (user_id && !admin) {
+    layout = 'loggedinlayout';
+    next();
+  } else if (user_id && admin) {
+    layout = 'adminloggedin';
     next();
   } else {
     res.redirect('/signup');
@@ -36,7 +41,7 @@ router.post('/request/:id', authorizedUser, function(req, res, next) {
         res.render('request', {
           listing: listing[0],
           name: req.signedCookies.name,
-          layout: 'loggedinlayout'
+          layout: layout
         });
       });
     });
@@ -74,7 +79,7 @@ router.get('/reject/:id/:requester_id', authorizedUser, function(req, res, next)
 });
 
 router.get('/clearNotification/:id', authorizedUser, function(req, res, next){
-  knex('notifications').where({user_id: req.signedCookies.id, id: req.params.id}).update({displayed: true}).then(function(){
+  knex('notifications').where({user_id: req.signedCookies.userID, id: req.params.id}).update({displayed: true}).then(function(){
     res.redirect('/users/profile');
   });
 });
@@ -83,7 +88,7 @@ router.get('/posting', authorizedUser, function(req, res, next) {
   res.render('newposting', {
     title: 'Milk Drop - Add Posting',
     name: req.signedCookies.name,
-    layout: 'loggedinlayout'
+    layout: layout
   });
 });
 
@@ -149,16 +154,12 @@ router.get('/profile', authorizedUser, function(req, res, next) {
             .innerJoin('listings', 'transactions.listing_id', 'listings.id')
             .innerJoin('users', 'transactions.requester_id', 'users.id')
             .then(function(transactions) {
-              console.log("transactions");
-              console.log(transactions);
               knex('notifications').where({ user_id: req.signedCookies.userID, displayed: false })
               .then(function(notifications){
-                // console.log("notifications");
-                // console.log(notifications);
                 res.render('profile', {
                   title: 'Milk Drop',
                   name: req.signedCookies.name,
-                  layout: 'loggedinlayout',
+                  layout: layout,
                   listings: listings,
                   user: user[0],
                   transactions: transactions,
@@ -194,7 +195,7 @@ router.post('/profile/:id', function(req, res, next) {
 router.get('/admin', authorizedUser, function(req, res, next) {
   res.render('admin', {
     name: req.signedCookies.name,
-    layout: 'loggedinlayout'
+    layout: layout
   });
 })
 
@@ -207,7 +208,7 @@ router.get('/admin/alllistings', authorizedUser, function(req, res, next) {
       res.render('adminlisting', {
         title: 'Milk Drop',
         name: req.signedCookies.name,
-        layout: 'loggedinlayout',
+        layout: layout,
         listings: listings
       });
     });
@@ -228,7 +229,7 @@ router.get('/admin/allusers', authorizedUser, function(req, res, next) {
       res.render('adminusers', {
         title: 'Milk Drop - All Users',
         name: req.signedCookies.name,
-        layout: 'loggedinlayout',
+        layout: layout,
         users: users
       });
     });
@@ -262,11 +263,23 @@ router.post('/adminusers/:id/update', function(req, res, next) {
     });
 })
 
+router.get('/profile/:id/delete', authorizedUser, function(req, res, next){
+  if(req.signedCookies.userID === req.params.id){
+    queries.deleteProfile(req.params.id).then(function(){
+      res.clearCookie('userID');
+      res.clearCookie('admin');
+      res.clearCookie('name');
+      res.redirect('/signup');
+    })
+  }
+});
+
+
 router.get('/adminusers/:id/delete', function(req, res, next) {
   knex('users').where('users.id', req.params.id).del()
     .then(function() {
       res.redirect('/users/admin/allusers');
-    })
-})
+    });
+});
 
 module.exports = router;
