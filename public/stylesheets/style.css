@@ -1,3 +1,60 @@
+html {
+  min-height: 100%;
+  position: relative; }
+
+body {
+  padding-top: 150px;
+  margin-bottom: 200px; }
+  @media (max-width: 768px) {
+    body {
+      padding-top: 50px; } }
+
+.navbar-inverse {
+  background-color: #f8f4db;
+  border-color: #3a3a3c; }
+  .navbar-inverse .navbar-nav {
+    float: none;
+    width: 665px;
+    margin: 50px auto 0 auto; }
+  .navbar-inverse img {
+    margin-top: -50px;
+    height: 100%;
+    width: 100px; }
+  .navbar-inverse .navbar-nav > li > a {
+    color: #a6a93c; }
+  .navbar-inverse .navbar-nav > li > a:hover {
+    color: #3a3a3c; }
+  .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:focus, .navbar-inverse .navbar-nav > .open > a:hover {
+    background-color: #3a3a3c; }
+  .navbar-inverse .navbar-nav > li > a:focus {
+    color: #3a3a3c; }
+  @media (max-width: 768px) {
+    .navbar-inverse .poof {
+      display: none; }
+    .navbar-inverse .navbar-nav {
+      margin: 0;
+      width: auto; }
+    .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+      color: #a6a93c; }
+    .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover {
+      color: #3a3a3c; }
+    .navbar-inverse .dropdown-header {
+      color: #3a3a3c; } }
+
+.addposting .backer {
+  height: 200px;
+  background-color: #e76e7c; }
+
+.addposting .title {
+  background-color: #9f2a59;
+  color: white;
+  padding: 10px 20px 20px 20px;
+  margin-top: -150px; }
+
+.addposting .input {
+  background-color: #f8f4db;
+  padding-top: 30px; }
+
 .allusers img {
   border-radius: 15px;
   max-width: 100%;
@@ -9,6 +66,18 @@
 .allusers .ratings .glyphicon-star {
   color: #41a1f4; }
 
+.map {
+  margin-bottom: 15px;}
+  .map #map {
+    /*position: absolute;*/
+    background-size: 350px;
+    height: 400px; }
+.gif {
+  background: transparent url("https://files.slack.com/files-pri/T027GBYPB-F10SADXDZ/loading.gif") no-repeat center center;
+  background-size: 350px;
+  height: 400px;
+  position: absolute;;
+  z-index: 1;}
 .profile img {
   border-radius: 15px;
   max-width: 100%;
@@ -20,9 +89,6 @@
 .profile .ratings .glyphicon-star {
   color: #41a1f4; }
 
-body {
-  padding-top: 50px; }
-
 .signup {
   margin-top: 100px; }
   .signup h3 {
@@ -33,16 +99,6 @@ body {
     width: 100%; }
   .signup .leftborder {
     border-left: 1px solid; }
-
-.secondary_nav {
-  padding-top: 15px; }
-
-.map {
-  margin-bottom: 15px; }
-  .map #map {
-    background: transparent url("http://downgraf.com/wp-content/uploads/2014/09/01-progress.gif") no-repeat center center;
-    background-size: 150px;
-    height: 300px; }
 
 .postingsnav {
   margin-top: 50px;
@@ -72,7 +128,7 @@ body {
     margin-right: 15px; }
 
 .postings {
-  margin-bottom: 15px; }
+  margin-bottom: 20px; }
   .postings .col-md-10 {
     border: 1px solid;
     border-radius: 15px;
@@ -94,48 +150,15 @@ body {
     .postings .col-md-10 .true {
       color: yellow; }
 
-#footer {
-  margin-top: 50px;
-  padding: 30px;
-  text-align: center;
-  color: white;
-  background-color: #2d2d2d;
-  height: 100px;
+.footer {
+  position: absolute;
   bottom: 0;
-  width: 100%; }
-
-.starRating:not(old) {
-  display: inline-block;
-  width: 7.5em;
-  height: 1.5em;
-  overflow: hidden;
-  vertical-align: bottom; }
-
-.starRating:not(old) > input {
-  margin-right: -100%;
-  opacity: 0; }
-
-.starRating:not(old) > label {
-  display: block;
-  float: right;
-  position: relative;
-  background: url("/pictures/star-off.svg");
-  background-size: contain; }
-
-.starRating:not(old) > label:before {
-  content: '';
-  display: block;
-  width: 1.5em;
-  height: 1.5em;
-  background: url("/pictures/star-on.svg");
-  background-size: contain;
-  opacity: 0;
-  transition: opacity 0.2s linear; }
-
-.starRating:not(old) > label:hover:before,
-.starRating:not(old) > label:hover ~ label:before,
-.starRating:not(:hover) > :checked ~ label:before {
-  opacity: 1; }
+  width: 100%;
+  height: 100px;
+  color: white;
+  background-color: #a6a93c;
+  padding: 30px;
+  text-align: center; }
 
 .listings .glyphicon {
   color: #41a1f4; }
@@ -155,10 +178,38 @@ body {
     margin-bottom: 15px;
     background-color: lightgrey; }
     .listingBox .requestSubmitButton h3 {
-      padding: 9px;
+      padding: 8px;
       color: black;
       display: inline-block; }
   .listingBox #requestHomepageButton {
     margin: 25px;
     float: right;
     margin-right: 60px; }
+
+.shadow {
+  -webkit-transition: all 200ms ease-in;
+  -webkit-transform: scale(1);
+  -ms-transition: all 200ms ease-in;
+  -ms-transform: scale(1);
+  -moz-transition: all 200ms ease-in;
+  -moz-transform: scale(1);
+  transition: all 200ms ease-in;
+  transform: scale(1); }
+
+.shadow:hover {
+  -ms-transform: scale(1.25);
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow: 3px 3px 5px 6px #ccc;
+  z-index: 2;
+  -webkit-transition: all 300ms ease-in;
+  -webkit-transform: scale(1.02);
+  -ms-transition: all 300ms ease-in;
+  -ms-transform: scale(1.02);
+  -moz-transition: all 300ms ease-in;
+  -moz-transform: scale(1.02);
+  transition: all 300ms ease-in;
+  transform: scale(1.02); }
+
+#divLink {
+  display: block;
+  height: 100%; }

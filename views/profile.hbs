@@ -1,131 +1,148 @@
-{{#if transactions}}
-  Pending Milk Drops:
-  {{#each transactions}}
-    <div class="alert alert-success" role="alert">{{this.first_name}} {{this.last_name}} has requested your post {{this.title}}. Call him at {{this.phone}}
-        <a href="/users/accept/{{this.id}}"><button type="button" class="btn btn-success" name="button">Accept</button></a>
-        <a href="/users/reject/{{this.id}}"><button type="button" class="btn btn-danger" name="button">Reject</button></a>
-    </div>
-  {{/each}}
-{{/if}}
+<div class="container">
 
-<div class="row profile">
-  <form action="/users/profile/{{user.id}}" method="post">
-    <div class="row page-header">
-
-      <div class="col-md-6">
-        <div class="row">
-          <div class="col-md-offset-2 col-md-8 text-center">
-            <div class="form-group">
-              <img src="{{user.portrait_link}}" alt="{{user.first_name}} {{user.last_name}}" />
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-offset-2 col-md-8 text-center">
-            <div class="form-group">
-              <label for="portrait_link">Portait Link</label>
-              <input type="text" class="form-control" id="portrait_link" name="portrait_link" value="{{user.portrait_link}}">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <div class="ratings {{user.rating}}"></div>
-          </div>
-        </div>
+  {{#if notifications}}
+    {{#each notifications}}
+      Notifications:
+      <hr>
+      <div class="alert alert-warning" role="alert">
+        {{this.message}}...<a href="/users/clearNotification/{{this.id}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
       </div>
+    {{/each}}
+  {{/if}}
 
-      <div class="col-md-6">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="first_name">First Name</label>
-              <input type="text" class="form-control" id="first_name" name="first_name" value="{{user.first_name}}">
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="last_name">Last Name</label>
-              <input type="text" class="form-control" id="last_name" name="last_name" value="{{user.last_name}}">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" class="form-control" id="email" name="email" value="{{user.email}}">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <label for="phone">Phone</label>
-              <input type="text" class="form-control" id="phone" name="phone" value="{{user.phone}}">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <label for="address_1">Address 1</label>
-              <input type="text" class="form-control" id="address_1" name="address_1" value="{{user.address_1}}">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <label for="address_2">Address 2</label>
-              <input type="text" class="form-control" id="address_2" name="address_2" value="{{user.address_2}}">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="city">City</label>
-              <input type="text" class="form-control" id="city" name="city" value="{{user.city}}">
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="form-group">
-              <label for="state">State</label>
-              <input type="text" class="form-control" id="state" name="state" value="{{user.state}}">
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <label for="zip_code">Zip Code</label>
-              <input type="text" class="form-control" id="zip_code" name="zip_code" value="{{user.zip_code}}">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 text-right">
-            <a href="/users/profile/{{user.id}}/delete">
-              <span class="btn btn-danger">Delete Profile</span>
-            </a>
-            <button type="submit" class="btn btn-primary">Update Profile</button>
-          </div>
-        </div>
+  {{#if transactions}}
+    Pending Milk Drops:
+    <hr>
+    {{#each transactions}}
+      <div class="alert alert-success" role="alert">{{this.first_name}} {{this.last_name}} has requested your post {{this.title}}. Call him at {{this.phone}}
+        <a href="/users/accept/{{this.id}}/{{this.requester_id}}">
+          <button type="button" class="btn btn-success" name="button">Accept</button>
+        </a>
+        <a href="/users/reject/{{this.id}}/{{this.requester_id}}">
+          <button type="button" class="btn btn-danger" name="button">Reject</button>
+        </a>
       </div>
+    {{/each}}
+  {{/if}}
 
-    </div>
-  </form>
-</div>
+  <div class="row profile">
+    <form action="/users/profile/{{user.id}}" method="post">
+      <div class="row page-header">
 
-{{#each listings}}
-  <div class="row postings">
-    <div class="col-md-offset-1 col-md-10">
-      <div class="row">
-        <div class="col-md-2 text-center">
-          <img src="{{portrait_link}}" alt="{{title}}" />
-          <!-- <br><br><p>Rate this person</p> -->
-          <br>
-          <br>
-          <span class="starRating">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-offset-2 col-md-8 text-center">
+              <div class="form-group">
+                <img src="{{user.portrait_link}}" alt="{{user.first_name}} {{user.last_name}}" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-offset-2 col-md-8 text-center">
+              <div class="form-group">
+                <label for="portrait_link">Portait Link</label>
+                <input type="text" class="form-control" id="portrait_link" name="portrait_link" value="{{user.portrait_link}}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <div class="ratings {{user.rating}}"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" value="{{user.first_name}}">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" value="{{user.last_name}}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{user.email}}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" class="form-control" id="phone" name="phone" value="{{user.phone}}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="address_1">Address 1</label>
+                <input type="text" class="form-control" id="address_1" name="address_1" value="{{user.address_1}}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="address_2">Address 2</label>
+                <input type="text" class="form-control" id="address_2" name="address_2" value="{{user.address_2}}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" class="form-control" id="city" name="city" value="{{user.city}}">
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label for="state">State</label>
+                <input type="text" class="form-control" id="state" name="state" value="{{user.state}}">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="zip_code">Zip Code</label>
+                <input type="text" class="form-control" id="zip_code" name="zip_code" value="{{user.zip_code}}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <a href="/users/profile/{{user.id}}/delete">
+                <span class="btn btn-danger">Delete Profile</span>
+              </a>
+              <button type="submit" class="btn btn-primary">Update Profile</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+  {{#each listings}}
+    <div class="row postings">
+      <div class="col-md-offset-1 col-md-10">
+        <div class="row">
+          <div class="col-md-2 text-center">
+            <img src="{{portrait_link}}" alt="{{title}}" />
+            <!-- <br><br><p>Rate this person</p> -->
+            <br>
+            <br>
+            <span class="starRating">
             <input id="rating5" type="radio" name="rating" value="5">
             <label for="rating5">5</label>
             <input id="rating4" type="radio" name="rating" value="4">
@@ -138,24 +155,26 @@
             <label for="rating1">1</label>
           </span>
 
-        </div>
+          </div>
 
-        <div class="col-md-7">
-          <span class="glyphicon glyphicon-star verified {{verified}}" aria-hidden="true"></span>
-          <p>{{description}}</p>
-        </div>
-        <div class="col-md-3">
-          <p>City: {{city}}</p>
-          <p>Amount: {{amount}}oz</p>
-          <p>Cost: ${{cost_per_ounce}}</p>
-          <p>Date: {{created_at}}</p>
-          <form action="/request" method="post">
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary">Request {{requested}}</button>
-            </div>
-          </form>
+          <div class="col-md-7">
+            <span class="glyphicon glyphicon-star verified {{verified}}" aria-hidden="true"></span>
+            <p>{{description}}</p>
+          </div>
+          <div class="col-md-3">
+            <p>City: {{city}}</p>
+            <p>Amount: {{amount}}oz</p>
+            <p>Cost: ${{cost_per_ounce}}</p>
+            <p>Date: {{created_at}}</p>
+            <form action="/request" method="post">
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary">Request {{requested}}</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-{{/each}}
+  {{/each}}
+
+</div>
