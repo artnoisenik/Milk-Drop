@@ -74,7 +74,7 @@ router.get('/reject/:id/:requester_id', authorizedUser, function(req, res, next)
 });
 
 router.get('/clearNotification/:id', authorizedUser, function(req, res, next){
-  knex('notifications').where({user_id: req.signedCookies.id, id: req.params.id}).update({displayed: true}).then(function(){
+  knex('notifications').where({user_id: req.signedCookies.userID, id: req.params.id}).update({displayed: true}).then(function(){
     res.redirect('/users/profile');
   });
 });
@@ -149,12 +149,8 @@ router.get('/profile', authorizedUser, function(req, res, next) {
             .innerJoin('listings', 'transactions.listing_id', 'listings.id')
             .innerJoin('users', 'transactions.requester_id', 'users.id')
             .then(function(transactions) {
-              console.log("transactions");
-              console.log(transactions);
               knex('notifications').where({ user_id: req.signedCookies.userID, displayed: false })
               .then(function(notifications){
-                // console.log("notifications");
-                // console.log(notifications);
                 res.render('profile', {
                   title: 'Milk Drop',
                   name: req.signedCookies.name,
