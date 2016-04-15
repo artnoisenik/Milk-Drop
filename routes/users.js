@@ -206,18 +206,16 @@ router.get('/admin', authorizedUser, function(req, res, next) {
 })
 
 router.get('/admin/alllistings', authorizedUser, function(req, res, next) {
-  knex('listings')
-    .join('ratings', 'reciever_id', 'listings.user_id')
-    .join('users', 'users.id', 'listings.user_id')
-    .then(function(listings) {
-      console.log(listings);
-      res.render('adminlisting', {
-        title: 'Milk Drop',
-        name: req.signedCookies.name,
-        layout: layout,
-        listings: listings
-      });
+  queries.adminAllListings()
+  .then(function(listings) {
+    console.log(listings);
+    res.render('adminlisting', {
+      title: 'Milk Drop',
+      name: req.signedCookies.name,
+      layout: layout,
+      listings: listings
     });
+  });
 })
 
 router.post('/admin/listings/:id/delete', function(req, res, next) {

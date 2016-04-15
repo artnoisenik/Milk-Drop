@@ -2,8 +2,11 @@
 
   {{#if notifications}}
     {{#each notifications}}
-      Notifications:
-      <hr>
+      <div class="row">
+        <div class="col-md-12">
+          <h3>Notifications:</h3>
+        </div>
+      </div>
       <div class="alert alert-warning" role="alert">
         {{this.message}}...<a href="/users/clearNotification/{{this.id}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
       </div>
@@ -11,16 +14,26 @@
   {{/if}}
 
   {{#if transactions}}
-    Pending Milk Drops:
-    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Pending Milk Drops:</h3>
+      </div>
+    </div>
     {{#each transactions}}
-      <div class="alert alert-success" role="alert">{{this.first_name}} {{this.last_name}} has requested your post {{this.title}}. Call him at {{this.phone}}
-        <a href="/users/accept/{{this.id}}/{{this.requester_id}}">
-          <button type="button" class="btn btn-success" name="button">Accept</button>
-        </a>
-        <a href="/users/reject/{{this.id}}/{{this.requester_id}}">
-          <button type="button" class="btn btn-danger" name="button">Reject</button>
-        </a>
+      <div class="alert alert-success" role="alert">
+        <div class="row">
+          <div class="col-md-8">
+            <p>{{this.first_name}} {{this.last_name}} has requested your posting: "{{this.title}}". Call them at {{this.phone}}</p>
+          </div>
+          <div class="col-md-4 text-right">
+            <a href="/users/accept/{{this.id}}/{{this.requester_id}}">
+              <button type="button" class="btn btn-success" name="button">Accept</button>
+            </a>
+            <a href="/users/reject/{{this.id}}/{{this.requester_id}}">
+              <button type="button" class="btn btn-danger" name="button">Reject</button>
+            </a>
+          </div>
+        </div>
       </div>
     {{/each}}
   {{/if}}

@@ -16,7 +16,7 @@ body {
     padding-left: 9px;
     float: none;
     width: 665px;
-    margin: 50px auto 0 auto; }
+    margin: 50px auto 0; }
   .navbar-inverse img {
     margin-top: -50px;
     height: 100%;
@@ -25,7 +25,9 @@ body {
     color: #a6a93c; }
   .navbar-inverse .navbar-nav > li > a:hover {
     color: #3a3a3c; }
-  .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:focus, .navbar-inverse .navbar-nav > .open > a:hover {
+  .navbar-inverse .navbar-nav > .open > a,
+  .navbar-inverse .navbar-nav > .open > a:focus,
+  .navbar-inverse .navbar-nav > .open > a:hover {
     background-color: #3a3a3c; }
   .navbar-inverse .navbar-nav > li > a:focus {
     color: #3a3a3c; }
@@ -49,7 +51,7 @@ body {
 .addposting .title {
   background-color: #9f2a59;
   color: white;
-  padding: 10px 20px 20px 20px;
+  padding: 10px 20px 20px;
   margin-top: -150px; }
 
 .addposting .input {
@@ -72,6 +74,7 @@ body {
   margin-left: -14px;
   margin-top: -12px; }
   .map #map {
+<<<<<<< HEAD
     width: 100vw;
     height: 100%;
     position: absolute; }
@@ -89,6 +92,11 @@ body {
   height: 400px;
   margin-bottom: 10px;
   background-size: 350px; }
+=======
+    background: transparent url("/images/loading.gif") no-repeat center center;
+    background-size: 350px;
+    height: 400px; }
+>>>>>>> feature
 
 .footer {
   position: absolute;
