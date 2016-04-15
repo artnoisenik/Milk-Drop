@@ -13,7 +13,6 @@ body {
   background-color: #f8f4db;
   border-color: #3a3a3c; }
   .navbar-inverse .navbar-nav {
-    padding-left: 9px;
     float: none;
     width: 665px;
     margin: 50px auto 0; }
@@ -74,7 +73,6 @@ body {
   margin-left: -14px;
   margin-top: -12px; }
   .map #map {
-<<<<<<< HEAD
     width: 100vw;
     height: 100%;
     position: absolute; }
@@ -92,11 +90,6 @@ body {
   height: 400px;
   margin-bottom: 10px;
   background-size: 350px; }
-=======
-    background: transparent url("/images/loading.gif") no-repeat center center;
-    background-size: 350px;
-    height: 400px; }
->>>>>>> feature
 
 .footer {
   position: absolute;
@@ -160,8 +153,7 @@ body {
 .postings {
   margin-bottom: 20px; }
   .postings .col-md-10 {
-    background-color: rgb(248, 244, 219);;
-    border: 2px solid rgb(234, 229, 199);
+    border: 1px solid;
     border-radius: 15px;
     padding-top: 15px;
     padding-bottom: 15px; }
@@ -169,25 +161,17 @@ body {
       border-radius: 15px;
       max-width: 100%; }
     .postings .col-md-10 .ratings .glyphicon {
-      color: rgb(176, 218, 242);;
       font-size: 22px;
       margin-top: 15px; }
     .postings .col-md-10 .ratings .glyphicon-star {
-      color: rgb(93, 180, 230); }
-    /*.postings .ribbon .true {
-      display: none;}*/
+      color: #41a1f4; }
+    .postings .col-md-10 .verified {
+      font-size: 30px; }
     .postings .col-md-10 h3 {
+      margin-left: 15px;
       display: inline-block; }
-    .postings .ribbon {
-      margin-top: 15px;
-      width: 50px;
-      height: auto;}
-    /*.postings .ribbon .true {
-      visibility: visible;}*/
-    .postings .btn {
-      background-color: rgb(166, 169, 60);
-      color: white;
-    }
+    .postings .col-md-10 .true {
+      color: yellow; }
 
 .listings .glyphicon {
   color: #41a1f4; }
@@ -242,8 +226,5 @@ body {
 #divLink {
   display: block;
   height: 100%; }
-
-.addbtn .btn{
-  background-color: rgb(166, 169, 60);
-  color: white;
-}
+  #divLink .addbtn .btn {
+    background-color: #a6a93c; }
