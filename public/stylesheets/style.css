@@ -149,13 +149,16 @@ body {
       margin-top: 15px; }
     .postings .col-md-10 .ratings .glyphicon-star {
       color: rgb(93, 180, 230); }
-    .postings .col-md-10 .verified {
-      font-size: 30px; }
+    /*.postings .ribbon .true {
+      display: none;}*/
     .postings .col-md-10 h3 {
-      margin-left: 15px;
       display: inline-block; }
-    .postings .col-md-10 .true {
-      color: yellow; }
+    .postings .ribbon {
+      margin-top: 15px;
+      width: 50px;
+      height: auto;}
+    /*.postings .ribbon .true {
+      visibility: visible;}*/
     .postings .btn {
       background-color: rgb(166, 169, 60);
       color: white;
