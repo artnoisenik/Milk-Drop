@@ -63,11 +63,7 @@ function success(pos) {
 }//end success
 
 function showMap(err, data) {
-    if (data.lbounds) {
-        map.fitBounds(data.lbounds);
-    } else if (data.latlng) {
-        map.setView([data.latlng[0], data.latlng[1]], 15);
-    }
+  map.setView([data.latlng[0], data.latlng[1]], 11);
 }
 
 function geocodeThis() {
