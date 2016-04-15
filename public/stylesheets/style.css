@@ -15,7 +15,7 @@ body {
   .navbar-inverse .navbar-nav {
     float: none;
     width: 665px;
-    margin: 50px auto 0 auto; }
+    margin: 50px auto 0; }
   .navbar-inverse img {
     margin-top: -50px;
     height: 100%;
@@ -24,7 +24,9 @@ body {
     color: #a6a93c; }
   .navbar-inverse .navbar-nav > li > a:hover {
     color: #3a3a3c; }
-  .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:focus, .navbar-inverse .navbar-nav > .open > a:hover {
+  .navbar-inverse .navbar-nav > .open > a,
+  .navbar-inverse .navbar-nav > .open > a:focus,
+  .navbar-inverse .navbar-nav > .open > a:hover {
     background-color: #3a3a3c; }
   .navbar-inverse .navbar-nav > li > a:focus {
     color: #3a3a3c; }
@@ -48,7 +50,7 @@ body {
 .addposting .title {
   background-color: #9f2a59;
   color: white;
-  padding: 10px 20px 20px 20px;
+  padding: 10px 20px 20px;
   margin-top: -150px; }
 
 .addposting .input {
@@ -69,7 +71,7 @@ body {
 .map {
   margin-bottom: 15px; }
   .map #map {
-    background: transparent url("https://files.slack.com/files-pri/T027GBYPB-F10SADXDZ/loading.gif") no-repeat center center;
+    background: transparent url("/images/loading.gif") no-repeat center center;
     background-size: 350px;
     height: 400px; }
 
