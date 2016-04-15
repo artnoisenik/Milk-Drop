@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container alllistings">
 
   {{#each listings}}
     <div class="row postings">
-      <div class="col-md-offset-1 col-md-10">
+      <div class="col-md-12">
         <div class="row">
           <div class="col-md-2 text-center">
             <img src="{{portrait_link}}" alt="{{title}}" />
@@ -11,8 +11,11 @@
           <div class="col-md-7">
             <!-- <span class="glyphicon glyphicon-star verified {{verified}}" aria-hidden="true"></span> -->
             <a href='/posting/{{id}}'><h3>{{title}}</h3></a>
-            <h4>{{first_name}} {{last_name}}</h4>
+            <h4>Name: {{first_name}} {{last_name}}</h4>
             <p>{{description}}</p>
+            {{#if verified}}
+              <img src="/images/ribbon.png" alt="" class="ribbon verified {{verified}}" />
+            {{/if}}
           </div>
           <div class="col-md-3">
             <p>City: {{city}}</p>
@@ -22,6 +25,42 @@
             <form action="/users/admin/listings/{{id}}/delete" method="post">
               <div class="form-group">
                 <button type="submit" class="btn btn-primary">Delete</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/each}}
+
+
+  {{#each listings}}
+    <div class="row postings">
+      <div class="col-md-offset-1 col-md-10 shadow">
+        <a id='divLink' href='/posting/{{id}}'></a>
+        <!-- <img src="{{portrait_link}}" height='90px'/>
+        <h3 class='test'><a href='#'>{{title}}</a></h3> -->
+        <div class="row">
+          <div class="col-md-2 text-center">
+            <img src="{{portrait_link}}" alt="{{title}}" />
+            <div class="ratings {{rating}}"></div>
+          </div>
+          <div class="col-md-7">
+
+            <a href='/posting/{{id}}'><h3>{{title}}</h3></a>
+            <p>{{description}}</p>
+            {{#if verified}}
+            <img src="/images/ribbon.png" alt="" class="ribbon verified {{verified}}" />
+            {{/if}}
+          </div>
+          <div class="col-md-3">
+            <p>City: {{city}}</p>
+            <p>Amount: {{amount}}oz</p>
+            <p>Cost: ${{cost_per_ounce}}</p>
+            <p>Date: {{created_at}}</p>
+            <form action="/users/request/{{id}}" method="post">
+              <div class="form-group">
+                <button type="submit" class="btn">Request {{requested}}</button>
               </div>
             </form>
           </div>

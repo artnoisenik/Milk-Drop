@@ -1,30 +1,71 @@
-<div class="row listingBox">
-  <div class="row">
-    <div class="col-md-12 text-center">
-      <h2>Your request has been submitted!</h2>
-      <img src="http://cliparts.co/cliparts/pio/dBR/piodBRjiE.png" width="3%"/>
-    </div>
-  </div>
-  <div class="row">
+<div class="row request">
+
+  <div class="row backer">
     <div class="col-md-12">
-      <h4 class='text-center'>The supplier will be notified and will<br> contact you at their next convenience. <br>Thank you for using Milk Drop!</h4>
-      <br>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2 orderInfo">
-      <h3 class='text-center'>Listing Summary</h3><br>
-      <h4>Listing Title:  <strong>{{listing.title}}</strong></h4><br>
-      <h4>Listing Description: <strong>{{listing.description}}</strong></h4><br>
-      <h4>Listing Amount: <strong>{{listing.amount}}</strong> Oz.<h4><br>
-      <h4>Listing Cost/Oz.: $ <strong>{{listing.cost_per_ounce}}</strong></h4><br>
-      <h4>Listing Total: $ <strong>{{listing.total}}</strong></h4><br>
-      <div class="col-md-12 requestSubmitButton">
-        <h3>You're all set! Click Go! to return to the home page.</h3>
-        <a href="/">
-          <button type="button" class="btn btn-info" id='requestHomepageButton' name="button">Go!</button>
-        </a>
-      </div>
+
+  <div class="container">
+
+    <div class="col-md-offset-2 col-md-8">
+      <form class="form-horizontal" action="/users/addposting" method="post">
+
+        <div class="row title">
+          <div class="col-md-12">
+
+            <div class="row">
+              <div class="col-md-12">
+                <h2>Your request has been submitted! <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></h2>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row input">
+          <div class="col-md-12">
+
+            <div class="row">
+              <div class="col-md-12">
+                <h4 class='text-center'>The supplier will be notified and will<br> contact you at their next convenience. <br>Thank you for using Milk Drop!</h4>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <h3 class='text-center'>Listing Summary</h3>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <h4>Listing Title:  <strong>{{listing.title}}</strong></h4>
+                <h4>Listing Description: <strong>{{listing.description}}</strong></h4>
+                <h4>Listing Amount: <strong>{{listing.amount}}</strong> Oz.<h4>
+                <h4>Listing Cost/Oz.: $<strong>{{listing.cost_per_ounce}}.00</strong></h4>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <h3>Listing Total: $<strong>{{listing.total}}.00</strong></h3>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-offset-8 col-md-4">
+                <a href="/">
+                  <button type="button" class="form-control btn btn-info" name="button">Back to Postings</button>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </form>
     </div>
+
   </div>
+
 </div>
