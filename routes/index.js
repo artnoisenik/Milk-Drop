@@ -30,6 +30,7 @@ router.get('/', authorizedUser, function(req, res, next) {
       .leftJoin('users', 'listings.user_id', 'users.id')
       .select('latitude', 'longitude', 'title', 'description')
       .then(function(listingMapMarkers){
+        console.log(listings);
         res.render('index', {
           title: 'Milk Exchange',
           name: req.signedCookies.name,

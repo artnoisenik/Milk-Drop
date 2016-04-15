@@ -16,12 +16,10 @@ router.post('/request/:id', authorizedUser, function(req, res, next) {
   knex('listings').where({
     id: req.params.id
   }).then(function(listing) {
-    console.log('**************************************************************',listing);
-    console.log(req.signedCookies.userID);
     knex('transactions').insert({
-      listing_id: req.params.id,
-      supplier_id: listing[0],
+      supplier_id: listing[0].user_id,
       requester_id: req.signedCookies.userID,
+      listing_id: req.params.id,
       ended: false,
       accepted: false
     }).then(function() {
