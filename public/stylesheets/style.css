@@ -129,7 +129,7 @@ body {
     position: absolute; }
 
 .gif {
-  background: transparent url("https://files.slack.com/files-pri/T027GBYPB-F10SADXDZ/loading.gif") center;
+  background: transparent url("/images/loading.gif") center;
   width: 100vw;
   height: 100%;
   position: absolute;
