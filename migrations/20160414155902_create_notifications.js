@@ -9,6 +9,7 @@ exports.up = function(knex, Promise) {
     table.integer('user_id').unsigned().notNullable().references('id').inTable('users');
     table.integer('listing_id').unsigned().notNullable().references('id').inTable('listings');
     table.string('message', 500);
+    table.boolean('displayed');
   });
 };
 

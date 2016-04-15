@@ -22,7 +22,7 @@ router.post('/request/:id', authorizedUser, function(req, res, next) {
       listing_id: req.params.id,
       supplier_id: listing[0].user_id,
       requester_id: req.signedCookies.userID,
-      closed: true,
+      ended: false,
       accepted: false
     }).then(function() {
       res.render('request', {
@@ -34,14 +34,12 @@ router.post('/request/:id', authorizedUser, function(req, res, next) {
   });
 });
 
-router.get('/accept/:id', authorizedUser, function(req, res, next) {
+router.get('/accept/:id/:requester_id', authorizedUser, function(req, res, next) {
   knex('transactions').where('listing_id', req.params.id).update({
     accepted: true
   }).then(function() {
     knex('transactions').where('listing_id', req.params.id).then(function(transaction){
-      console.log('transaction');
-      console.log(transaction);
-      knex('notifications').insert({ user_id: transaction[0].requester_id, listing_id: transaction[0].id, message: "Your request has been accepted!"})
+      knex('notifications').insert({ user_id: transaction[0].requester_id, listing_id: transaction[0].id, message: "Your request has been accepted!", displayed: false})
       .then(function(){
         knex('listings').where('id', req.params.id).update({
           closed: true
@@ -50,6 +48,25 @@ router.get('/accept/:id', authorizedUser, function(req, res, next) {
         });
       })
     });
+  });
+});
+
+router.get('/reject/:id/:requester_id', authorizedUser, function(req, res, next){
+  knex('transactions').where({listing_id: req.params.id})
+  .then(function(transaction){
+    knex('notifications').insert({ user_id: transaction[0].requester_id, listing_id: transaction[0].id, message: "Your request has been denied!", displayed: false})
+    .then(function(){
+      knex('transactions').where({listing_id:req.params.id, requester_id: req.params.requester_id}).update({ended: true})
+      .then(function(){
+        res.redirect('/users/profile');
+      });
+    });
+  });
+});
+
+router.get('/clearNotification/:id', authorizedUser, function(req, res, next){
+  knex('notifications').where({user_id: req.signedCookies.id, id: req.params.id}).update({displayed: true}).then(function(){
+    res.redirect('/users/profile');
   });
 });
 
@@ -117,13 +134,18 @@ router.get('/profile', authorizedUser, function(req, res, next) {
         .then(function(user) {
           knex('transactions').where({
               supplier_id: req.signedCookies.userID,
-              accepted: false
+              accepted: false,
+              ended: false
             })
             .innerJoin('listings', 'transactions.listing_id', 'listings.id')
             .innerJoin('users', 'transactions.requester_id', 'users.id')
             .then(function(transactions) {
-              knex('notifications').where({ id: req.signedCookies.userID }).then(function(notifications){
-                console.log(notifications);
+              console.log("transactions");
+              console.log(transactions);
+              knex('notifications').where({ user_id: req.signedCookies.userID, displayed: false })
+              .then(function(notifications){
+                // console.log("notifications");
+                // console.log(notifications);
                 res.render('profile', {
                   title: 'Milk Drop',
                   name: req.signedCookies.name,

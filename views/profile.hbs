@@ -2,8 +2,8 @@
   {{#each notifications}}
   Notifications:
   <hr>
-  <div class="alert alert-primary" role="alert">
-    {{this.message}}<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+  <div class="alert alert-warning" role="alert">
+    {{this.message}}...<a href="/users/clearNotification/{{this.id}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
   </div>
   {{/each}}
 {{/if}}
@@ -13,8 +13,8 @@
   <hr>
   {{#each transactions}}
     <div class="alert alert-success" role="alert">{{this.first_name}} {{this.last_name}} has requested your post {{this.title}}. Call him at {{this.phone}}
-        <a href="/users/accept/{{this.id}}"><button type="button" class="btn btn-success" name="button">Accept</button></a>
-        <a href="/users/reject/{{this.id}}"><button type="button" class="btn btn-danger" name="button">Reject</button></a>
+        <a href="/users/accept/{{this.id}}/{{this.requester_id}}"><button type="button" class="btn btn-success" name="button">Accept</button></a>
+        <a href="/users/reject/{{this.id}}/{{this.requester_id}}"><button type="button" class="btn btn-danger" name="button">Reject</button></a>
     </div>
   {{/each}}
 {{/if}}
