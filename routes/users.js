@@ -258,11 +258,23 @@ router.post('/adminusers/:id/update', function(req, res, next) {
     });
 })
 
+router.get('/profile/:id/delete', authorizedUser, function(req, res, next){
+  if(req.signedCookies.userID === req.params.id){
+    queries.deleteProfile(req.params.id).then(function(){
+      res.clearCookie('userID');
+      res.clearCookie('admin');
+      res.clearCookie('name');
+      res.redirect('/signup');
+    })
+  }
+});
+
+
 router.get('/adminusers/:id/delete', function(req, res, next) {
   knex('users').where('users.id', req.params.id).del()
     .then(function() {
       res.redirect('/users/admin/allusers');
-    })
-})
+    });
+});
 
 module.exports = router;
