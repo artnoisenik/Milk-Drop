@@ -36,7 +36,7 @@ app.use(passport.session());
 passport.use(new Strategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: process.env.CALLBACK_URL + '/login/facebook/return',
+    callbackURL: 'https://milkdrop.herokuapp.com/login/facebook/return',
     passRecToCallback: true,
     profileFields: ['id', 'emails', 'name', 'picture.type(large)']
   },
