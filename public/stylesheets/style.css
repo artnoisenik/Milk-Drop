@@ -57,6 +57,28 @@ body {
   background-color: #f8f4db;
   padding-top: 30px; }
 
+.request h3 {
+  display: inline-block; }
+
+.request .glyphicon {
+  color: #a6a93c;
+  margin-left: 15px; }
+
+.request .backer {
+  height: 200px;
+  background-color: #e76e7c; }
+
+.request .title {
+  background-color: #9f2a59;
+  color: white;
+  padding: 10px 20px 20px;
+  margin-top: -150px; }
+
+.request .input {
+  background-color: #f8f4db;
+  padding-top: 30px;
+  padding-bottom: 20px; }
+
 .allusers img {
   border-radius: 15px;
   max-width: 100%;
@@ -67,6 +89,35 @@ body {
 
 .allusers .ratings .glyphicon-star {
   color: #41a1f4; }
+
+.alllistings {
+  margin-top: 50px; }
+  .alllistings .postings {
+    margin-bottom: 15px; }
+    .alllistings .postings .col-md-12 {
+      background-color: #f8f4db;
+      border: 2px solid #eae5c7;
+      border-radius: 15px;
+      padding-top: 15px;
+      padding-bottom: 15px; }
+      .alllistings .postings .col-md-12 img {
+        border-radius: 15px;
+        max-width: 100%; }
+      .alllistings .postings .col-md-12 .ratings .glyphicon {
+        color: #b0daf2;
+        font-size: 22px;
+        margin-top: 15px; }
+      .alllistings .postings .col-md-12 .ratings .glyphicon-star {
+        color: #5db4e6; }
+    .alllistings .postings .col-md-10 h3 {
+      display: inline-block; }
+    .alllistings .postings .ribbon {
+      margin-top: 15px;
+      width: 50px;
+      height: auto; }
+    .alllistings .postings .btn {
+      background-color: #a6a93c;
+      color: white; }
 
 .map {
   margin-bottom: 15px;
@@ -179,29 +230,6 @@ body {
 
 .listings .glyphicon {
   color: #41a1f4; }
-
-.listingBox {
-  margin-bottom: 50px; }
-  .listingBox h2 {
-    display: inline-block; }
-  .listingBox .orderInfo {
-    border: 1px solid black;
-    border-radius: 15px; }
-    .listingBox .orderInfo h4 {
-      padding-left: 20px; }
-  .listingBox .requestSubmitButton {
-    border: 1px solid grey;
-    border-radius: 15px;
-    margin-bottom: 15px;
-    background-color: lightgrey; }
-    .listingBox .requestSubmitButton h3 {
-      padding: 8px;
-      color: black;
-      display: inline-block; }
-  .listingBox #requestHomepageButton {
-    margin: 25px;
-    float: right;
-    margin-right: 60px; }
 
 .shadow {
   -webkit-transition: all 200ms ease-in;
