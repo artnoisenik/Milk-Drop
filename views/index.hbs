@@ -1,7 +1,11 @@
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.16.0/mapbox-gl.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.16.0/mapbox-gl.css' rel='stylesheet' />
 
-<div class="row secondary_nav">
+<div class="row map">
+  <div id="map" class=""></div>
+</div>
+
+<div class="row">
   <div class="col-md-offset-1 col-md-2">
     <form id="enterALocation" onsubmit="geocodeThis()">
       <div class="form-group">
@@ -18,40 +22,38 @@
   </div>
 </div>
 
-<div class="row map">
-  <div class="col-md-12">
-    <div id="map" class=""></div>
-  </div>
-</div>
+<div class="container">
 
-{{#each listings}}
-  <div class="row postings">
-    <div class="col-md-offset-1 col-md-10">
-      <div class="row">
-        <div class="col-md-2 text-center">
-          <img src="{{portrait_link}}" alt="{{title}}" />
-          <div class="ratings {{rating}}"></div>
-        </div>
-        <div class="col-md-7">
-          <span class="glyphicon glyphicon-star verified {{verified}}" aria-hidden="true"></span>
-          <a href='/posting/{{id}}'><h3>{{title}}</h3></a>
-          <p>{{description}}</p>
-        </div>
-        <div class="col-md-3">
-          <p>City: {{city}}</p>
-          <p>Amount: {{amount}}oz</p>
-          <p>Cost: ${{cost_per_ounce}}</p>
-          <p>Date: {{created_at}}</p>
-          <form action="/users/request/{{id}}" method="post">
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary">Request {{requested}}</button>
-            </div>
-          </form>
+  {{#each listings}}
+    <div class="row postings">
+      <div class="col-md-offset-1 col-md-10">
+        <div class="row">
+          <div class="col-md-2 text-center">
+            <img src="{{portrait_link}}" alt="{{title}}" />
+            <div class="ratings {{rating}}"></div>
+          </div>
+          <div class="col-md-7">
+            <span class="glyphicon glyphicon-star verified {{verified}}" aria-hidden="true"></span>
+            <a href='/posting/{{id}}'><h3>{{title}}</h3></a>
+            <p>{{description}}</p>
+          </div>
+          <div class="col-md-3">
+            <p>City: {{city}}</p>
+            <p>Amount: {{amount}}oz</p>
+            <p>Cost: ${{cost_per_ounce}}</p>
+            <p>Date: {{created_at}}</p>
+            <form action="/users/request/{{id}}" method="post">
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary">Request {{requested}}</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-{{/each}}
+  {{/each}}
+
+</div>
 
 <script src='https://api.tiles.mapbox.com/mapbox.js/v2.2.4/mapbox.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox.js/v2.2.4/mapbox.css' rel='stylesheet' />

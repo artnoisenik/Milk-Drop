@@ -66,6 +66,13 @@ body {
 .allusers .ratings .glyphicon-star {
   color: #41a1f4; }
 
+.map {
+  margin-bottom: 15px; }
+  .map #map {
+    background: transparent url("http://downgraf.com/wp-content/uploads/2014/09/01-progress.gif") no-repeat center center;
+    background-size: 150px;
+    height: 400px; }
+
 .profile img {
   border-radius: 15px;
   max-width: 100%;
@@ -87,16 +94,6 @@ body {
     width: 100%; }
   .signup .leftborder {
     border-left: 1px solid; }
-
-.secondary_nav {
-  padding-top: 15px; }
-
-.map {
-  margin-bottom: 15px; }
-  .map #map {
-    background: transparent url("http://downgraf.com/wp-content/uploads/2014/09/01-progress.gif") no-repeat center center;
-    background-size: 150px;
-    height: 300px; }
 
 .postingsnav {
   margin-top: 50px;
@@ -152,45 +149,11 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
-  /* Set the fixed height of the footer here */
   height: 100px;
   color: white;
   background-color: #a6a93c;
   padding: 30px;
   text-align: center; }
-
-.starRating:not(old) {
-  display: inline-block;
-  width: 7.5em;
-  height: 1.5em;
-  overflow: hidden;
-  vertical-align: bottom; }
-
-.starRating:not(old) > input {
-  margin-right: -100%;
-  opacity: 0; }
-
-.starRating:not(old) > label {
-  display: block;
-  float: right;
-  position: relative;
-  background: url("/pictures/star-off.svg");
-  background-size: contain; }
-
-.starRating:not(old) > label:before {
-  content: '';
-  display: block;
-  width: 1.5em;
-  height: 1.5em;
-  background: url("/pictures/star-on.svg");
-  background-size: contain;
-  opacity: 0;
-  transition: opacity 0.2s linear; }
-
-.starRating:not(old) > label:hover:before,
-.starRating:not(old) > label:hover ~ label:before,
-.starRating:not(:hover) > :checked ~ label:before {
-  opacity: 1; }
 
 .listings .glyphicon {
   color: #41a1f4; }
