@@ -33,9 +33,11 @@
             <div class="ratings {{rating}}"></div>
           </div>
           <div class="col-md-7">
-            <span class="glyphicon glyphicon-star verified {{verified}}" aria-hidden="true"></span>
             <a href='/posting/{{id}}'><h3>{{title}}</h3></a>
             <p>{{description}}</p>
+            {{#if verified}}
+            <img src="/images/ribbon.png" alt="" class="ribbon verified {{verified}}" />
+            {{/if}}
           </div>
           <div class="col-md-3">
             <p>City: {{city}}</p>
