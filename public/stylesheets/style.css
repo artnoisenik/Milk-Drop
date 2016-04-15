@@ -151,9 +151,10 @@ body {
     margin-right: 15px; }
 
 .postings {
-  margin-bottom: 20px; }
+  margin-bottom: 15px; }
   .postings .col-md-10 {
-    border: 1px solid;
+    background-color: #f8f4db;
+    border: 2px solid #eae5c7;
     border-radius: 15px;
     padding-top: 15px;
     padding-bottom: 15px; }
@@ -161,17 +162,20 @@ body {
       border-radius: 15px;
       max-width: 100%; }
     .postings .col-md-10 .ratings .glyphicon {
+      color: #b0daf2;
       font-size: 22px;
       margin-top: 15px; }
     .postings .col-md-10 .ratings .glyphicon-star {
-      color: #41a1f4; }
-    .postings .col-md-10 .verified {
-      font-size: 30px; }
-    .postings .col-md-10 h3 {
-      margin-left: 15px;
-      display: inline-block; }
-    .postings .col-md-10 .true {
-      color: yellow; }
+      color: #5db4e6; }
+  .postings .col-md-10 h3 {
+    display: inline-block; }
+  .postings .ribbon {
+    margin-top: 15px;
+    width: 50px;
+    height: auto; }
+  .postings .btn {
+    background-color: #a6a93c;
+    color: white; }
 
 .listings .glyphicon {
   color: #41a1f4; }
