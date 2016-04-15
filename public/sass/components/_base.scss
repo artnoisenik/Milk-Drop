@@ -255,10 +255,6 @@ body {
   }
 }
 .shadow {
-  // -moz-box-shadow:    3px 3px 5px 6px #ccc;
-  // -webkit-box-shadow: 3px 3px 5px 6px #ccc;
-  // box-shadow:         3px 3px 5px 6px #ccc;
-  // transform: scale(1);
   -webkit-transition: all 200ms ease-in;
     -webkit-transform: scale(1);
     -ms-transition: all 200ms ease-in;
@@ -286,4 +282,7 @@ body {
 #divLink {
   display:block;
   height: 100%;
+
+.addbtn .btn{
+  background-color: rgb(166, 169, 60);
 }

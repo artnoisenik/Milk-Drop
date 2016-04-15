@@ -14,10 +14,10 @@
       </div>
     </form>
   </div>
-  <div class="col-md-offset-6 col-md-2 text-right">
+  <div class="col-md-offset-6 col-md-2 text-right addbtn">
     <div class="form-group">
       <a href="/users/posting">
-        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Posting</button>
+        <button type="submit" class="btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Posting</button>
       </a>
     </div>
   </div>
@@ -37,9 +37,12 @@
             <div class="ratings {{rating}}"></div>
           </div>
           <div class="col-md-7">
-            <span class="glyphicon glyphicon-star verified {{verified}}" aria-hidden="true"></span>
-            <h3>{{title}}</h3></a>
+
+            <a href='/posting/{{id}}'><h3>{{title}}</h3></a>
             <p>{{description}}</p>
+            {{#if verified}}
+            <img src="/images/ribbon.png" alt="" class="ribbon verified {{verified}}" />
+            {{/if}}
           </div>
           <div class="col-md-3">
             <p>City: {{city}}</p>
@@ -48,7 +51,7 @@
             <p>Date: {{created_at}}</p>
             <form action="/users/request/{{id}}" method="post">
               <div class="form-group">
-                <button type="submit" class="btn btn-primary">Request {{requested}}</button>
+                <button type="submit" class="btn">Request {{requested}}</button>
               </div>
             </form>
           </div>

@@ -109,6 +109,12 @@ router.post('/addposting', function(req, res, next) {
     });
 })
 
+router.post('/deletePost/:id', function(req, res, next){
+  queries.deletePost(req.params.id).then(function(){
+    res.redirect('/users/profile/');
+  });
+})
+
 router.get('/post/edit/:id', function(req, res, next) {
   knex('listings')
     .where('id', req.params.id).first()
@@ -139,7 +145,7 @@ router.post('/post/edit/:id', function(req, res, next) {
 
 router.get('/profile', authorizedUser, function(req, res, next) {
   knex('listings')
-    .where('user_id', req.signedCookies.userID)
+    .where({user_id: req.signedCookies.userID, closed: false})
     .join('users', 'users.id', 'listings.user_id')
     .then(function(listings) {
       knex('users')
