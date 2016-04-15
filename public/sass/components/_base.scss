@@ -1,4 +1,71 @@
-
+html {
+  min-height: 100%;
+  position: relative;
+}
+body {
+  @media (max-width: 768px) {
+    padding-top: 50px;
+  }
+  padding-top: 150px;
+  margin-bottom: 200px;
+}
+.navbar-inverse {
+  background-color: rgb(166, 169, 60);
+  border-color: rgb(58, 58, 60);
+  .navbar-nav {
+    float: none;
+    width: 665px;
+    margin: 50px auto 0 auto;
+  }
+  img {
+    margin-top: -50px;
+    height: 100%;
+    width: 100px;
+  }
+  .navbar-nav>li>a {
+    color: rgb(248, 244, 219);
+  }
+  .navbar-nav>li>a:hover {
+    color: rgb(58, 58, 60);
+  }
+  .navbar-nav>.open>a, .navbar-nav>.open>a:focus, .navbar-nav>.open>a:hover {
+    background-color: rgb(58, 58, 60);
+  }
+  @media (max-width: 768px) {
+    .poof {
+      display: none;
+    }
+    .navbar-nav {
+      margin: 0;
+      width: auto;
+    }
+    .navbar-nav .open .dropdown-menu>li>a {
+      color: rgb(248, 244, 219);
+    }
+    .navbar-nav .open .dropdown-menu>li>a:hover {
+      color: rgb(58, 58, 60);
+    }
+    .dropdown-header {
+      color: rgb(58, 58, 60);
+    }
+  }
+}
+.addposting {
+  .backer {
+    height: 200px;
+    background-color: rgb(231, 110, 124);
+  }
+  .title {
+    background-color: rgb(198, 7, 81);
+    color: white;
+    padding: 10px 20px 20px 20px;
+    margin-top: -150px;
+  }
+  .input {
+    background-color: rgb(248, 244, 219);
+    padding-top: 30px;
+  }
+}
 .allusers {
   img {
     border-radius: 15px;
@@ -28,9 +95,6 @@
       color: #41a1f4;
     }
   }
-}
-body {
-  padding-top: 50px;
 }
 .signup {
   margin-top: 100px;
@@ -126,15 +190,16 @@ body {
     }
   }
 }
-#footer {
-  margin-top: 50px;
-  padding: 30px;
-  text-align: center;
-  color: white;
-  background-color: rgb(45, 45, 45);
-  height: 100px;
+.footer {
+  position: absolute;
   bottom: 0;
   width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 100px;
+  color: white;
+  background-color: rgb(166, 169, 60);
+  padding: 30px;
+  text-align: center;
 }
 .starRating:not(old) {
   display: inline-block;
