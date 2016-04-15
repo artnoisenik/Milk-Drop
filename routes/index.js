@@ -32,7 +32,7 @@ router.get('/', authorizedUser, function(req, res, next) {
       .then(function(listingMapMarkers){
         console.log(listings);
         res.render('index', {
-          title: 'Milk Exchange',
+          title: 'Milk Drop',
           name: req.signedCookies.name,
           layout: layout,
           listings: listings,
@@ -49,7 +49,7 @@ router.get('/posting/:id', function(req, res, next) {
     .join('users', 'users.id', 'listings.user_id')
     .then(function(listings) {
       res.render('singleposting', {
-        title: 'Milk Exchange',
+        title: 'Milk Drop',
         layout: layout,
         listings: listings
       })
@@ -66,7 +66,7 @@ router.get('/faq', function(req, res, next) {
 });
 router.get('/signup', function(req, res, next) {
   res.render('signup', {
-    title: 'Milk Exchange'
+    title: 'Milk Drop'
   });
 });
 

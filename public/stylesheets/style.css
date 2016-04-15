@@ -10,7 +10,7 @@ body {
       padding-top: 50px; } }
 
 .navbar-inverse {
-  background-color: #a6a93c;
+  background-color: #f8f4db;
   border-color: #3a3a3c; }
   .navbar-inverse .navbar-nav {
     float: none;
@@ -21,11 +21,13 @@ body {
     height: 100%;
     width: 100px; }
   .navbar-inverse .navbar-nav > li > a {
-    color: #f8f4db; }
+    color: #a6a93c; }
   .navbar-inverse .navbar-nav > li > a:hover {
     color: #3a3a3c; }
   .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:focus, .navbar-inverse .navbar-nav > .open > a:hover {
     background-color: #3a3a3c; }
+  .navbar-inverse .navbar-nav > li > a:focus {
+    color: #3a3a3c; }
   @media (max-width: 768px) {
     .navbar-inverse .poof {
       display: none; }
@@ -33,7 +35,7 @@ body {
       margin: 0;
       width: auto; }
     .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
-      color: #f8f4db; }
+      color: #a6a93c; }
     .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover {
       color: #3a3a3c; }
     .navbar-inverse .dropdown-header {
@@ -44,7 +46,7 @@ body {
   background-color: #e76e7c; }
 
 .addposting .title {
-  background-color: #c60751;
+  background-color: #9f2a59;
   color: white;
   padding: 10px 20px 20px 20px;
   margin-top: -150px; }
