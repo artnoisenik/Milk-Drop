@@ -329,7 +329,7 @@ exports.seed = function(knex, Promise) {
           amount: 7,
           cost_per_ounce: 3,
           description: 'Lots of milk!',
-          requested: true,
+          requested: false,
           closed: false
         }),
         knex('listings').insert({

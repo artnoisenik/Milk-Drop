@@ -28,7 +28,9 @@ router.post('/request/:id', authorizedUser, function(req, res, next) {
       ended: false,
       accepted: false
     }).then(function() {
-      knex('listings').where('id', req.params.id).update({ requested: true }).then(function() {
+      knex('listings').where('id', req.params.id).update({
+        requested: true
+      }).then(function() {
         if (listing) {
           if (listing[0].cost_per_ounce == '0') {
             listing[0].cost_per_ounce = 'Free';
@@ -49,37 +51,62 @@ router.post('/request/:id', authorizedUser, function(req, res, next) {
 });
 
 router.get('/accept/:id/:requester_id', authorizedUser, function(req, res, next) {
-  knex('transactions').where('listing_id', req.params.id).update({ accepted: true })
-  .then(function() {
-    knex('transactions').where('listing_id', req.params.id)
-    .then(function(transaction){
-      knex('notifications').insert({ user_id: transaction[0].requester_id, listing_id: transaction[0].id, message: "Your request has been accepted!", displayed: false})
-      .then(function(){
-        knex('listings').where('id', req.params.id).update({
-          closed: true
-        }).then(function() {
-          res.redirect('/users/profile');
+  knex('transactions').where('listing_id', req.params.id).update({
+      accepted: true
+    })
+    .then(function() {
+      knex('transactions').where('listing_id', req.params.id)
+        .then(function(transaction) {
+          console.log(transaction);
+          knex('notifications').insert({
+              user_id: transaction[0].requester_id,
+              listing_id: transaction[0].id,
+              message: "Your request has been accepted!",
+              displayed: false
+            })
+            .then(function() {
+              knex('listings').where('id', req.params.id).update({
+                closed: true
+              }).then(function() {
+                res.redirect('/users/profile');
+              });
+            })
         });
-      })
     });
-  });
 });
 
-router.get('/reject/:id/:requester_id', authorizedUser, function(req, res, next){
-  knex('transactions').where({listing_id: req.params.id})
-  .then(function(transaction){
-    knex('notifications').insert({ user_id: transaction[0].requester_id, listing_id: transaction[0].id, message: "Your request has been denied!", displayed: false})
-    .then(function(){
-      knex('transactions').where({listing_id:req.params.id, requester_id: req.params.requester_id}).update({ended: true})
-      .then(function(){
-        res.redirect('/users/profile');
-      });
+router.get('/reject/:id/:requester_id', authorizedUser, function(req, res, next) {
+  knex('transactions').where({
+      listing_id: req.params.id
+    })
+    .then(function(transaction) {
+      knex('notifications').insert({
+          user_id: transaction[0].requester_id,
+          listing_id: transaction[0].id,
+          message: "Your request has been denied!",
+          displayed: false
+        })
+        .then(function() {
+          knex('transactions').where({
+              listing_id: req.params.id,
+              requester_id: req.params.requester_id
+            }).update({
+              ended: true
+            })
+            .then(function() {
+              res.redirect('/users/profile');
+            });
+        });
     });
-  });
 });
 
-router.get('/clearNotification/:id', authorizedUser, function(req, res, next){
-  knex('notifications').where({user_id: req.signedCookies.userID, id: req.params.id}).update({displayed: true}).then(function(){
+router.get('/clearNotification/:id', authorizedUser, function(req, res, next) {
+  knex('notifications').where({
+    user_id: req.signedCookies.userID,
+    id: req.params.id
+  }).update({
+    displayed: true
+  }).then(function() {
     res.redirect('/users/profile');
   });
 });
@@ -93,24 +120,13 @@ router.get('/posting', authorizedUser, function(req, res, next) {
 });
 
 router.post('/addposting', function(req, res, next) {
-  knex('listings')
-    .insert({
-      user_id: req.signedCookies.userID,
-      title: req.body.title,
-      post_end: req.body.expiration_date,
-      amount: req.body.amount,
-      cost_per_ounce: req.body.cost_per_ounce,
-      description: req.body.description,
-      closed: false
-    })
-    .then(function() {
-      // res.render('newposting', { title: 'Milk Exchange', success: 'Post added' });
-      res.redirect('/');
-    });
-})
+  queries.addPosting(req.signedCookies.userID, req.body.title, req.body.expiration_date, req.body.amount, req.body.cost_per_ounce, req.body.description).then(function() {
+    res.redirect('/');
+  });
+});
 
-router.post('/deletePost/:id', function(req, res, next){
-  queries.deletePost(req.params.id).then(function(){
+router.post('/deletePost/:id', function(req, res, next) {
+  queries.deletePost(req.params.id).then(function() {
     res.redirect('/users/profile/');
   });
 })
@@ -145,7 +161,10 @@ router.post('/post/edit/:id', function(req, res, next) {
 
 router.get('/profile', authorizedUser, function(req, res, next) {
   knex('listings')
-    .where({user_id: req.signedCookies.userID, closed: false})
+    .where({
+      user_id: req.signedCookies.userID,
+      closed: false
+    })
     .join('users', 'users.id', 'listings.user_id')
     .then(function(listings) {
       knex('users')
@@ -157,21 +176,24 @@ router.get('/profile', authorizedUser, function(req, res, next) {
               accepted: false,
               ended: false
             })
-            .innerJoin('listings', 'transactions.listing_id', 'listings.id')
-            .innerJoin('users', 'transactions.requester_id', 'users.id')
+            .join('listings', 'transactions.listing_id', 'listings.id')
+            .join('users', 'transactions.requester_id', 'users.id')
             .then(function(transactions) {
-              knex('notifications').where({ user_id: req.signedCookies.userID, displayed: false })
-              .then(function(notifications){
-                res.render('profile', {
-                  title: 'Milk Drop',
-                  name: req.signedCookies.name,
-                  layout: layout,
-                  listings: listings,
-                  user: user[0],
-                  transactions: transactions,
-                  notifications: notifications
+              knex('notifications').where({
+                  user_id: req.signedCookies.userID,
+                  displayed: false
+                })
+                .then(function(notifications) {
+                  res.render('profile', {
+                    title: 'Milk Drop',
+                    name: req.signedCookies.name,
+                    layout: layout,
+                    listings: listings,
+                    user: user[0],
+                    transactions: transactions,
+                    notifications: notifications
+                  });
                 });
-              });
             });
         });
     });
@@ -207,15 +229,15 @@ router.get('/admin', authorizedUser, function(req, res, next) {
 
 router.get('/admin/alllistings', authorizedUser, function(req, res, next) {
   queries.adminAllListings()
-  .then(function(listings) {
-    console.log(listings);
-    res.render('adminlisting', {
-      title: 'Milk Drop',
-      name: req.signedCookies.name,
-      layout: layout,
-      listings: listings
+    .then(function(listings) {
+      console.log(listings);
+      res.render('adminlisting', {
+        title: 'Milk Drop',
+        name: req.signedCookies.name,
+        layout: layout,
+        listings: listings
+      });
     });
-  });
 })
 
 router.post('/admin/listings/:id/delete', function(req, res, next) {
@@ -267,9 +289,9 @@ router.post('/adminusers/:id/update', function(req, res, next) {
     });
 })
 
-router.get('/profile/:id/delete', authorizedUser, function(req, res, next){
-  if(req.signedCookies.userID === req.params.id){
-    queries.deleteProfile(req.params.id).then(function(){
+router.get('/profile/:id/delete', authorizedUser, function(req, res, next) {
+  if (req.signedCookies.userID === req.params.id) {
+    queries.deleteProfile(req.params.id).then(function() {
       res.clearCookie('userID');
       res.clearCookie('admin');
       res.clearCookie('name');
