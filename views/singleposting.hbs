@@ -1,40 +1,43 @@
-<div class="row postingsnav">
-  <div class="col-md-offset-1 col-md-10 text-right">
-    <a href="../"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span></a>
+<div class="container">
+
+  <div class="row postingsnav">
+    <div class="col-md-offset-1 col-md-10 text-right">
+      <a href="../"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span></a>
+    </div>
   </div>
-</div>
 
-{{#each listings}}
-  <div class="row postings">
-    <div class="col-md-offset-1 col-md-10">
+  {{#each listings}}
+    <div class="row postings">
+      <div class="col-md-offset-1 col-md-10">
 
-      <div class="row">
+        <div class="row">
 
-        <div class="col-md-2 text-center">
-          <img src="{{portrait_link}}" alt="{{title}}" />
-          <div class="ratings {{rating}}"></div>
-        </div>
+          <div class="col-md-2 text-center">
+            <img src="{{portrait_link}}" alt="{{title}}" />
+            <div class="ratings {{rating}}"></div>
+          </div>
 
-        <div class="col-md-7">
-          <span class="glyphicon glyphicon-star verified {{verified}}" aria-hidden="true"></span>
-          <h3>{{title}}</h3>
-          <p>{{description}}</p>
-        </div>
+          <div class="col-md-7">
+            <h3>{{title}}</h3>
+            <p>{{description}}</p>
+          </div>
 
-        <div class="col-md-3">
-          <p>City: {{city}}</p>
-          <p>Amount: {{amount}}oz</p>
-          <p>Cost: ${{cost_per_ounce}}</p>
-          <p>Date: {{created_at}}</p>
-          <form action="/request" method="post">
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary">Request {{requested}}</button>
-            </div>
-          </form>
+          <div class="col-md-3">
+            <p>City: {{city}}</p>
+            <p>Amount: {{amount}}oz</p>
+            <p>Cost: ${{cost_per_ounce}}</p>
+            <p>Date: {{created_at}}</p>
+            <form action="/request" method="post">
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary">Request</button>
+              </div>
+            </form>
+          </div>
+
         </div>
 
       </div>
-
     </div>
-  </div>
-{{/each}}
+  {{/each}}
+
+</div>

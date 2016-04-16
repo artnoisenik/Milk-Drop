@@ -319,7 +319,7 @@ exports.seed = function(knex, Promise) {
           amount: 5,
           cost_per_ounce: 0,
           description: 'Great milk!',
-          requested: true,
+          requested: false,
           closed: false
         }),
         knex('listings').insert({
@@ -339,7 +339,7 @@ exports.seed = function(knex, Promise) {
           amount: 7,
           cost_per_ounce: 3,
           description: 'Very high quality milk!',
-          requested: true,
+          requested: false,
           closed: false
         }),
         knex('listings').insert({
@@ -359,7 +359,7 @@ exports.seed = function(knex, Promise) {
           amount: 23,
           cost_per_ounce: 2,
           description: 'Looking to sell some extra milk at a good price.',
-          requested: true,
+          requested: false,
           closed: false
         }),
         knex('listings').insert({
@@ -389,7 +389,7 @@ exports.seed = function(knex, Promise) {
           amount: 20,
           cost_per_ounce: 3,
           description: 'I have 100% organic milk. That means I only eat 100% organic food!',
-          requested: true,
+          requested: false,
           closed: false
         }),
         knex('listings').insert({
@@ -409,7 +409,7 @@ exports.seed = function(knex, Promise) {
           amount: 12,
           cost_per_ounce: 4,
           description: 'High quality breast milk for sale. Hit me up!',
-          requested: true,
+          requested: false,
           closed: false
         }),
         knex('listings').insert({
